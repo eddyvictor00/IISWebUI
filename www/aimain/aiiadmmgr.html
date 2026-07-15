@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>AIIWeb AI Artificial Intelligence Stocks </title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">       
+        <meta name="author" content="">
+        <meta name="keywords" content="Stock Market BUY SELL Artificial Neural Network Prediction">
+        <meta name="description" content="AIIWeb (AI Investment) Stock Signal Prediction Using Neural Network AI forF buy or sell prediction. This application provides useful trade information for stock prices analysis and AI trading decision (Buy or Sell signal) for stock exchange market.">		
+
+
+        <!-- Favicon -->
+        <link href="aimain/aisub/img/favicon.ico" rel="icon">
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+        <!-- Icon Font Stylesheet -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link href="aimain/aisub/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="aimain/aisub/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="aimain/aisub/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Template Stylesheet -->
+        <link href="aimain/aisub/css/style.css" rel="stylesheet">
+        <link href="aimain/aisub/css/blink.css" rel="stylesheet">
+    </head>
+
+
+    <body>
+
+        <div class="container-xxl position-relative bg-white d-flex p-0">
+            <!-- Spinner Start -->
+            <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <!-- Spinner End -->
+
+            <!-- Sidebar Start -->
+            <div class="sidebar pe-4 pb-3">
+                <nav class="navbar bg-light navbar-light">
+                    <a href="" onclick="return refreshMyPage();" class="navbar-brand mx-4 mb-3">
+                        <h3 class="text-primary"><i class="fa fa-recycle me-2"></i>AII Web</h3>
+                    </a>
+                    <div class="d-flex align-items-center ms-4 mb-4">
+                        <div class="position-relative">
+                            <img class="rounded-circle" src="aimain/aisub/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                            <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                        </div>
+                        <div id="userinfoid" class="ms-3"></div>                        
+                    </div>
+
+                    <div id="sm-main" class="navbar-nav w-100" style="display">
+                        <a href="aiiaccount.html" onclick="return subMenu(0);" class="nav-item nav-link active" ><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-chart-pie fa-bank me-2"></i>Account</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <a href="aiiupdate.html" onclick="return subMenu(1);" class="dropdown-item ">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> Profile</a>
+                                <a href="aiibilling.html" onclick="return subMenu(2);" class="dropdown-item">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> Billing</a>
+                            </div>
+                        </div>  
+                        <a href="aiipriceplan.html" onclick="return subMenu(3);" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Price Plan</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-briefcase me-2"></i>Stock</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <a href="aiistock.html" onclick="return subMenu(11);" class="dropdown-item ">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> TR Acc</a>
+                                <a href="aiistocknn.html" onclick="return subMenu(12);" class="dropdown-item">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> AI_NN33 TR</a>
+                                <span id="trMenuId" ></span>
+                            </div>
+                        </div>               
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-book me-2"></i>Feature</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <!--<a href="aiisubscription.html" onclick="return subMenu(20);" class="dropdown-item ">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> Manage</a>-->
+                                <span id="scrubMenuId" ></span>
+                            </div>
+                        </div>  
+
+                        <!-- fund mgr --> 
+                        <div class="nav-item dropdown" id="sm-fundmgr" style="display:none">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-cubes me-2"></i>Fund Mgr</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <!--<a href="aiifundmgr.html" onclick="return subMenu(130);" class="dropdown-item ">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> Manage</a>-->                                
+                                <a href="aiifundmgr.html" onclick="return subMenu(131);" class="dropdown-item">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> BLOG</a>
+                                <a href="aiifundmgr.html" onclick="return subMenu(132);" class="dropdown-item">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> Fund TR</a>
+                            </div>
+                        </div> 
+                        <!-- Admin --> 
+                        <div class="nav-item dropdown" id="sm-admin" style="display:none">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Admin</a>
+                            <div id="adminMenuId" class="dropdown-menu bg-transparent border-0">
+                            </div>
+                        </div>  
+
+                    </div>
+                </nav>
+            </div>
+            <!-- Sidebar End -->
+
+
+            <!-- Content Start -->
+            <div class="content">
+                <!-- Navbar Start -->
+                <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                    <a href="" onclick="return refreshMyPage();" class="navbar-brand d-flex d-lg-none me-4">
+                        <h2 class="text-primary mb-0"><i class="fa fa-recycle"></i></h2>
+                    </a>
+                    <a href="#" class="sidebar-toggler flex-shrink-0">
+                        <i class="fa fa-bars"></i>
+                    </a>
+
+                    <div class="navbar-nav align-items-center ms-auto">
+
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                <span id="notifyCnt">
+                                    <i class="fa fa-bell-slash  me-lg-2" ></i>
+                                    <span class="d-none d-lg-inline-flex">Notification </span>
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                                <span id="myShortcomm"> No Message</span>
+                                <hr class="dropdown-divider">
+                                <a href="aiiaccount.html#notify_tag" class="dropdown-item text-left">See all notifications</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                <img class="rounded-circle me-lg-2" src="aimain/aisub/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                <span id="userNid" class="d-none d-lg-inline-flex"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                                <a href=""  onclick="return refreshMyPage();" class="dropdown-item">Refresh</a>                                
+                                <a href="aiiupdate.html" onclick="return subMenu(1);" class="dropdown-item">My Profile</a>
+                                <a href="aiipriceplan.html" onclick="return subMenu(3);" class="dropdown-item">Price Plan</a>
+                                <a href="aiiend.html" class="dropdown-item">Log Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                <!-- Navbar End -->
+
+                <!-- Other Elements Start -->
+
+                <div class="container-fluid pt-4 px-4"  id="admsystem-tag" style="display">
+                    <div class="row g-4">
+
+                        <div class="col-sm-12 col-xl-12">
+                            <div class="bg-light rounded h-100 p-4">
+                                <h6 class="mb-4">System Configuration and Message</h6>
+                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="pills-transaction-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-transaction" type="button" role="tab"
+                                                aria-controls="pills-transaction" aria-selected="true">System Msg</button>
+                                    </li>                                    
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link " id="pills-trmodel-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-trmodel" type="button" role="tab" aria-controls="pills-trmodel"
+                                                aria-selected="false">Feature Info</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="pills-action-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-action" type="button" role="tab"
+                                                aria-controls="pills-action" aria-selected="false">Offer Info</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="pills-perf-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-perf" type="button" role="tab"
+                                                aria-controls="pills-perf" aria-selected="false">Email Msg</button>
+                                    </li>
+
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="pills-setting-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-setting" type="button" role="tab"
+                                                aria-controls="pills-setting" aria-selected="false">Contact Msg</button>
+                                    </li>                                                                         
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link " id="pills-split-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-split" type="button" role="tab"
+                                                aria-controls="pills-split" aria-selected="false">Stock Split Msg</button>
+                                    </li>                                    
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link " id="pills-stock-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-stock" type="button" role="tab"
+                                                aria-controls="pills-stock" aria-selected="false">Stock Er Msg</button>
+                                    </li>                                                                                                               
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link " id="pills-newcust-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-newcust" type="button" role="tab"
+                                                aria-controls="pills-newcust" aria-selected="false">New Cust</button>
+                                    </li>                                    
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link " id="pills-RCmd-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-RCmd" type="button" role="tab"
+                                                aria-controls="pills-RCmd" aria-selected="false">RCmd Msg</button>
+                                    </li>                                       
+                                </ul>
+
+                                <!-- This is the divider line -->
+                                <hr class="mt-0 mb-4" style="border-top: 1px solid #dee2e6; opacity: 1;">
+
+                                <div class="tab-content" id="pills-tabContent">
+
+                                    <div class="tab-pane fade show active" id="pills-transaction" role="tabpanel" aria-labelledby="pills-transaction-tab">
+                                        <div class="card border-0 shadow-none bg-transparent">
+                                            <div class="card-body p-0"> 
+                                                <div id="systemmsgid" class="px-4"><span class="blink">Retrieving info....</span></div>                                                
+                                            </div>
+                                        </div>     
+                                    </div>                                    
+                                    <div class="tab-pane fade" id="pills-trmodel" role="tabpanel" aria-labelledby="pills-trmodel-tab">
+                                        <div class="card border-0 shadow-none bg-transparent">
+                                            <div class="card-body p-0"> 
+                                                <div id="featinfoid" class="px-4"><span class="blink">Retrieving feature info....</span></div>                                                
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-action" role="tabpanel" aria-labelledby="pills-action-tab">
+
+                                        <!-- Horizontal Form -->
+                                        <div class="card border-0 shadow-none bg-transparent">
+                                            <div class="card-body p-0"> 
+                                                <div class="row g-3">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-floating">
+                                                            <input type="text" class="form-control" id="symbol" placeholder="Symbol">
+                                                            <label for="symbol">Symbol</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <button class="btn btn-primary w-100 py-3" id="fundSubmit" type="button">Get Fundamental</button>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-floating">
+                                                            <textarea class="form-control" placeholder="message here" id="message" style="height: 100px"></textarea>
+                                                            <label for="message">Fundamental analysis report</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 text-center">
+                                                        <button class="btn btn-primary w-100 py-3" id="symbolSubmit" type="submit">Update Fundamental</button>
+                                                        <br>
+                                                        <span id="error-symbol"></span>
+
+                                                    </div>
+                                                </div>  
+                                                <br><br>
+                                                <div id="offerinfoid" ><span class="blink">Retrieving offer info....</span></div>                                                
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="pills-perf" role="tabpanel" aria-labelledby="pills-perf-tab">
+                                        <!-- Horizontal Form -->
+                                        <div class="card border-0 shadow-none bg-transparent">
+                                            <div class="card-body p-0"> 
+                                                <div id="emailmsgid" class="px-4"><span class="blink">Retrieving info....</span></div>                                                
+
+                                            </div>
+                                        </div>                              
+                                    </div>
+
+                                    <div class="tab-pane fade" id="pills-setting" role="tabpanel" aria-labelledby="pills-setting-tab">
+                                        <div class="card border-0 shadow-none bg-transparent">
+                                            <div class="card-body p-0"> 
+                                                <div id="contactmsgid" class="px-4"><span class="blink">Retrieving info....</span></div>                                                
+                                            </div>
+                                        </div>                                           
+                                    </div>    
+
+                                    <div class="tab-pane fade " id="pills-split" role="tabpanel" aria-labelledby="pills-split-tab">
+                                        <div class="card border-0 shadow-none bg-transparent">
+                                            <div class="card-body p-0"> 
+                                                <div id="splitmsgid" class="px-4"><span class="blink">Retrieving info....</span></div>                                                
+                                            </div>
+                                        </div>                                           
+                                    </div>      
+                                    <div class="tab-pane fade " id="pills-stock" role="tabpanel" aria-labelledby="pills-stock-tab">
+                                        <div class="card border-0 shadow-none bg-transparent">
+                                            <div class="card-body p-0"> 
+                                                <div id="stockmsgid" class="px-4"><span class="blink">Retrieving info....</span></div>                                                
+                                            </div>
+                                        </div>                                           
+                                    </div>   
+                                    <div class="tab-pane fade" id="pills-newcust" role="tabpanel" aria-labelledby="pills-newcust-tab">
+                                        <div class="card border-0 shadow-none bg-transparent">
+                                            <div class="card-body p-0"> 
+                                                <div id="newcustmsgid" class="px-4"><span class="blink">Retrieving info....</span></div>                                                
+                                            </div>
+                                        </div>                                           
+                                    </div>   
+                                    <div class="tab-pane fade" id="pills-RCmd" role="tabpanel" aria-labelledby="pills-RCmd-tab">
+                                        <div class="card border-0 shadow-none bg-transparent">
+                                            <div class="card-body p-0"> 
+                                                <button type="button" class="btn btn-primary btn-sm" id="RefCmdbtn" >
+                                                    Refresh
+                                                </button>
+                                                &nbsp; &nbsp; 
+
+                                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#StartTE">
+                                                    StartTE
+                                                </button>
+                                                <div class="modal fade" id="StartTE" tabindex="-1">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Start Remote Timer Event</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Start duration in hour (Default 1 hr) <br>
+                                                                <div class="row mb-3">                                                                
+                                                                    <label for="StartTEhr" class="col-md-4 col-lg-3 col-form-label">hour</label>
+                                                                    <div class="col-md-8 col-lg-9">
+                                                                        <input name="StartTEhr" type="text" class="form-control" id="StartTEhr">
+
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                    <button type="button" id="StartTEsubmit" class="btn btn-primary">Submit</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- End Basic Modal-->      
+
+                                                <button type="button"  class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#basicModalStopTE">
+                                                    StopTE
+                                                </button>
+                                                <div class="modal fade" id="basicModalStopTE" tabindex="-1">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Stop Remote Timer Event</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button type="button"  id="StopTEsubmit"  class="btn btn-primary">Save changes</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <br> <br>
+                                                <button type="button"  class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#basicModalCleanNN">
+                                                    TestStock
+                                                </button>                                                
+                                                <div class="modal fade" id="basicModalCleanNN" tabindex="-1">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Process Cmd Test Stock</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div id="CleanNNBodyId">
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button type="button"  id="CleanNNsubmit"  class="btn btn-primary">Save changes</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>                                                
+
+                                                &nbsp; &nbsp; 
+                                                <button type="button"  class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#basicModalMaintMonthly">
+                                                    MaintMonthly
+                                                </button>   
+
+                                                <div class="modal fade" id="basicModalMaintMonthly" tabindex="-1">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Process Cmd maintForce</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div id="MaintMonthlyBodyId">
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button type="button"  id="MaintMonthlysubmit"  class="btn btn-primary">Save changes</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>                                                
+
+                                                &nbsp; &nbsp; 
+
+
+                                                <!-- Basic Modal -->
+                                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#QuickCmd">
+                                                    QuickCmd
+                                                </button>
+                                                <div class="modal fade" id="QuickCmd" tabindex="-1">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">QuickCmd to add into Event Timer</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="QuickCmdbody">
+                                                                &nbsp; 1 - UpdateStockInfo<br>
+                                                                &nbsp; 2 - SysPUBSUBComm<br>
+                                                                &nbsp; 3 - PingIISWebUI<br>
+                                                                &nbsp; 4 - ProcessAdminSignal<br>
+                                                                &nbsp; 5 - processNeuralNet<br>
+                                                                &nbsp; 6 - ProcessTestInternet<br>
+                                                                &nbsp; 7 - processAllMaint<br> 
+                                                                &nbsp; 8 - UpdateAllStockTrend<br>                                                                 
+
+                                                                &nbsp; 12- AllUpdateStockInfo<br>
+                                                                &nbsp; 13- AllSigAdminTrading<br>
+                                                                &nbsp; 14- ProcessCustSignal<br>
+                                                                &nbsp; 15- AllTradingSignal<br>
+                                                                &nbsp; 16- FundamentalAddRemove<br>
+                                                                &nbsp; 17- ClearSystemCache<br>                                                                
+                                                                <br><br>
+                                                                <div class="row mb-3">
+                                                                    <label for="qcmd" class="col-md-4 col-lg-3 col-form-label">Quick Cmd</label>
+                                                                    <div class="col-md-8 col-lg-9">
+                                                                        <input name="qcmd" type="text" class="form-control" id="qcmd">
+                                                                    </div>
+                                                                    <label for="incmd" class="col-md-4 col-lg-3 col-form-label">Input Cmd</label>
+                                                                    <div class="col-md-8 col-lg-9">
+                                                                        <input name="incmd" type="text" class="form-control" id="incmd">
+                                                                    </div>                                                                
+                                                                    <div id="QuickCmdMsgId">
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                    <button type="button" id="QuickCmdsubmit" class="btn btn-primary">Submit</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- End Basic Modal-->
+
+                                                </div>
+
+                                                <br><br>
+                                                <div id="RCmdid" >No Message</div>                                                
+                                            </div>
+                                        </div>                                           
+                                    </div>                                      
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <!-- Other Elements End -->
+
+                </div>
+                <!-- Content End -->
+                <!-- Footer Start -->
+                <iframe src="aiisubTPfooter.html" onload="this.before((this.contentDocument.body || this.contentDocument).children[0]);this.remove()"></iframe>
+                <!-- Footer End -->                
+            </div>
+
+            <!-- Back to Top -->
+            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        </div>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="aimain/aisub/lib/chart/chart.min.js"></script>
+        <script src="aimain/aisub/lib/easing/easing.min.js"></script>
+        <script src="aimain/aisub/lib/waypoints/waypoints.min.js"></script>
+        <script src="aimain/aisub/lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="aimain/aisub/lib/tempusdominus/js/moment.min.js"></script>
+        <script src="aimain/aisub/lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="aimain/aisub/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="aimain/aisub/js/main.js"></script>
+
+        <script src="aimain/aisub/jsmain/iisweb.js"></script>
+        <script src="aimain/aisub/jssub/aiiindex_submenu.js"></script>           
+        <script src="aimain/aisub/jssub/aiiadmmgr.js"></script>      
+    </body>
+
+</html>

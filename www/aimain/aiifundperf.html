@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>AIIWeb AI Artificial Intelligence Stocks </title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">       
+        <meta name="author" content="">
+        <meta name="keywords" content="Stock Market BUY SELL Artificial Neural Network Prediction">
+        <meta name="description" content="AIIWeb (AI Investment) Stock Signal Prediction Using Neural Network AI for buy or sell prediction. This application provides useful trade information for stock prices analysis and AI trading decision (Buy or Sell signal) for stock exchange market.">		
+
+
+        <!-- Favicon -->
+        <link href="aimain/aisub/img/favicon.ico" rel="icon">
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+        <!-- Icon Font Stylesheet -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link href="aimain/aisub/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="aimain/aisub/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="aimain/aisub/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="aimain/aisub/css/style.css" rel="stylesheet">
+        <link href="aimain/aisub/css/blink.css" rel="stylesheet">
+
+        <link href="aimain/aisub/cssblog/style.css" type="text/css"  rel="stylesheet"/>        
+        <style>
+            .card {
+                margin: 20px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+            
+            .loading-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(255, 255, 255, 0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10;
+            }
+            
+            .spinner-border {
+                width: 3rem;
+                height: 3rem;
+            }
+            
+            .image-container {
+                position: relative;
+                min-height: 300px;
+            }
+            
+            .btn-primary {
+                margin-right: 10px;
+            }
+          
+        </style>        
+    </head>
+
+
+    <body>
+        <div class="container-xxl position-relative bg-white d-flex p-0">
+            <!-- Spinner Start -->
+            <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <!-- Spinner End -->
+
+            <!-- Sidebar Start -->
+            <div class="sidebar pe-4 pb-3">
+                <nav class="navbar bg-light navbar-light">
+                    <a href="" onclick="return refreshMyPage();" class="navbar-brand mx-4 mb-3">
+                        <h3 class="text-primary"><i class="fa fa-recycle me-2"></i>AII Web</h3>
+                    </a>
+                    <div class="d-flex align-items-center ms-4 mb-4">
+                        <div class="position-relative">
+                            <img class="rounded-circle" src="aimain/aisub/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                            <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                        </div>
+                        <div id="userinfoid" class="ms-3"></div>                        
+                    </div>
+
+                    <div id="sm-main" class="navbar-nav w-100" style="display:block">
+                        <a href="aiiaccount.html" onclick="return subMenu(0);" class="nav-item nav-link active" ><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-chart-pie fa-bank me-2"></i>Account</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <a href="aiiupdate.html" onclick="return subMenu(1);" class="dropdown-item ">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> Profile</a>
+                                <a href="aiibilling.html" onclick="return subMenu(2);" class="dropdown-item">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> Billing</a>
+                            </div>
+                        </div>  
+                        <a href="aiipriceplan.html" onclick="return subMenu(3);" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Price Plan</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-briefcase me-2"></i>Stock</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <a href="aiistock.html" onclick="return subMenu(11);" class="dropdown-item ">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> TR Acc</a>
+                                <a href="aiistocknn.html" onclick="return subMenu(12);" class="dropdown-item">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> AI_NN33 TR</a>
+                                <span id="trMenuId" ></span>
+                            </div>
+                        </div>               
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-book me-2"></i>Feature</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <!--<a href="aiisubscription.html" onclick="return subMenu(20);" class="dropdown-item ">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> Manage</a>-->
+                                <span id="scrubMenuId" ></span>
+                            </div>
+                        </div>  
+
+                        <!-- fund mgr --> 
+                        <div class="nav-item dropdown" id="sm-fundmgr" style="display:none">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-cubes me-2"></i>Fund Mgr</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <!--<a href="aiifundmgr.html" onclick="return subMenu(130);" class="dropdown-item ">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> Manage</a>-->                                
+                                <a href="aiifundmgr.html" onclick="return subMenu(131);" class="dropdown-item">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> BLOG</a>
+                                <a href="aiifundmgr.html" onclick="return subMenu(132);" class="dropdown-item">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> Fund TR</a>
+                            </div>
+                        </div> 
+                        <!-- Admin --> 
+                        <div class="nav-item dropdown" id="sm-admin" style="display:none">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Admin</a>
+                            <div id="adminMenuId" class="dropdown-menu bg-transparent border-0">
+                            </div>
+                        </div>  
+
+                    </div>
+                </nav>
+            </div>
+            <!-- Sidebar End -->
+
+
+            <!-- Content Start -->
+            <div class="content">
+                <!-- Navbar Start -->
+                <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                    <a href="" onclick="return refreshMyPage();" class="navbar-brand d-flex d-lg-none me-4">
+                        <h2 class="text-primary mb-0"><i class="fa fa-recycle"></i></h2>
+                    </a>
+                    <a href="#" class="sidebar-toggler flex-shrink-0">
+                        <i class="fa fa-bars"></i>
+                    </a>
+
+                    <div class="navbar-nav align-items-center ms-auto">
+
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                <span id="notifyCnt">
+                                    <i class="fa fa-bell-slash  me-lg-2" ></i>
+                                    <span class="d-none d-lg-inline-flex">Notification </span>
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                                <span id="myShortcomm"> No Message</span>
+                                <hr class="dropdown-divider">
+                                <a href="aiiaccount.html#notify_tag" class="dropdown-item text-left">See all notifications</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                <img class="rounded-circle me-lg-2" src="aimain/aisub/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                <span id="userNid" class="d-none d-lg-inline-flex"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                                <a href=""  onclick="return refreshMyPage();" class="dropdown-item">Refresh</a>                                
+                                <a href="aiiupdate.html" onclick="return subMenu(1);" class="dropdown-item">My Profile</a>
+                                <a href="aiipriceplan.html" onclick="return subMenu(3);" class="dropdown-item">Price Plan</a>
+                                <a href="aiiend.html" class="dropdown-item">Log Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                <!-- Navbar End -->
+
+
+
+                <!-- Other Elements Start -->
+                <div class="container-fluid pt-4 px-4">
+                    <div class="row g-4">
+                        <div class="col-sm-12 col-xl-4">
+                            <div class="bg-light text-left rounded p-4">
+                                <div id="fundinfoid"><span class="blink">Retrieving Fund info....</span></div>       
+                                <br>                                
+
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xl-8">
+                            <div class="bg-light rounded h-100 p-4">
+                                <h6 class="mb-4">Fund Performance <span id="trheaderid"></span></h6>
+                                The performance calculation is determined by averaging the performance of each stock within the account. This approach evaluates the overall account performance by aggregating the individual stock performances.                                
+                                <div id="mytrid"><span class="blink">Retrieving stock info....</span></div>
+
+                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="pills-trmodel-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-trmodel" type="button" role="tab" aria-controls="pills-trmodel"
+                                                aria-selected="true">Performace</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="pills-transaction-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-transaction" type="button" role="tab"
+                                                aria-controls="pills-transaction" aria-selected="false">Transaction</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="pills-setting-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-setting" type="button" role="tab"
+                                                aria-controls="pills-setting" aria-selected="false">Setting</button>
+                                    </li>                                    
+                                </ul>
+                                <div class="tab-content" id="pills-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-trmodel" role="tabpanel" aria-labelledby="pills-trmodel-tab">
+
+                                        <!-- Graph Start -->
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Price Chart</h5>
+                                                <div class="image-container">
+                                                    <div id="loadingSpinner" class="loading-overlay" style="display: none;">
+                                                        <div class="spinner-border text-primary" role="status">
+                                                            <span class="visually-hidden">Loading...</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-start mb-2">
+                                                            <button id="refreshSpace3Btn" class="btn btn-outline-primary btn-sm mt-2 me-2">3-Month</button>
+                                                            <button id="refreshSpace6Btn" class="btn btn-outline-primary btn-sm mt-2 me-2">6-Month</button>
+                                                            <button id="refreshSpace12Btn" class="btn btn-outline-primary btn-sm mt-2 me-2">1-Year</button>
+                                                    </div>                                                    
+
+                                                    <img id="space3image" src="img/loader.gif" onerror="reload3Image(this);" class="d-block w-100 mt-3" alt="Price Chart">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Graph End -->
+
+                                    </div>
+
+                                    <div class="tab-pane fade" id="pills-transaction" role="tabpanel" aria-labelledby="pills-transaction-tab">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Detail Transaction History</h5>
+                                                <button type="button" id="detailclick" class="btn btn-primary btn-sm"  >
+                                                    Detail
+                                                </button>    
+                                                <br>                                                
+                                                <!-- Small tables -->
+                                                <span id="trtranid">No Transaction</span>
+
+                                                <!-- End small tables -->
+                                            </div>
+                                            <div class="col-md-12"><br> <p>Assumption:
+                                                    <br>Each transaction is approximately $6000.
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-setting" role="tabpanel" aria-labelledby="pills-setting-tab">
+                                        <div class="row mb-3">
+                                            <label for="clear" class=" col-form-label">
+                                                Warning: This will delete all Fund performance. All transactions cannot be recovered once deleted.
+                                            </label>
+
+                                        </div>
+
+                                        <div class="text-left">
+                                            <button type="button" class="btn btn-primary btn-sm" onclick="return clearclickFun();" data-bs-toggle="modal" data-bs-target="#clear">
+                                                Delete Fund performance
+                                            </button>
+                                            <div class="modal fade" id="clear" tabindex="-1">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Delete Fund Balance</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            The transaction history will be deleted permanently.
+                                                            <br>Note that this operation will take a few minutes to complete.
+                                                            <span id="clearBodyId"></span>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" id="clearsubmit" class="btn btn-primary">Submit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!-- End Basic Modal-->                                                
+
+
+                                        </div>                                        
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <!-- Other Elements End -->
+
+                <!-- Footer Start -->
+                <iframe src="aiisubTPfooter.html" onload="this.before((this.contentDocument.body || this.contentDocument).children[0]);this.remove()"></iframe>
+                <!-- Footer End -->
+
+            </div>
+            <!-- Content End -->
+
+            <!-- Back to Top -->
+            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        </div>
+
+        <!-- JavaScript Libraries -->
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="aimain/aisub/lib/chart/chart.min.js"></script>
+        <script src="aimain/aisub/lib/easing/easing.min.js"></script>
+        <script src="aimain/aisub/lib/waypoints/waypoints.min.js"></script>
+        <script src="aimain/aisub/lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="aimain/aisub/lib/tempusdominus/js/moment.min.js"></script>
+        <script src="aimain/aisub/lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="aimain/aisub/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+
+        <!-- Template Javascript -->
+        <script src="aimain/aisub/js/main.js"></script>
+
+        <script src="aimain/aisub/jsmain/iisweb.js"></script>
+        <script src="aimain/aisub/jssub/aiiindex_submenu.js"></script>             
+        <script src="aimain/aisub/jssub/aiifundperf.js"></script>      
+    </body>
+
+</html>

@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>AIIWeb AI Artificial Intelligence Stocks </title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">       
+        <meta name="author" content="">
+        <meta name="keywords" content="Stock Market BUY SELL Artificial Neural Network Prediction">
+        <meta name="description" content="AIIWeb (AI Investment) Stock Signal Prediction Using Neural Network AI for buy or sell prediction. This application provides useful trade information for stock prices analysis and AI trading decision (Buy or Sell signal) for stock exchange market.">		
+
+
+        <!-- Favicon -->
+        <link href="aimain/aisub/img/favicon.ico" rel="icon">
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+        <!-- Icon Font Stylesheet -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link href="aimain/aisub/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="aimain/aisub/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="aimain/aisub/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="aimain/aisub/css/style.css" rel="stylesheet">
+        <link href="aimain/aisub/css/blink.css" rel="stylesheet">
+
+    </head>
+
+
+
+    <body>
+        <div class="container-xxl position-relative bg-white d-flex p-0">
+            <!-- Spinner Start -->
+            <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <!-- Spinner End -->
+
+            <!-- Sidebar Start -->
+            <div class="sidebar pe-4 pb-3">
+                <nav class="navbar bg-light navbar-light">
+                    <a href="" onclick="return refreshMyPage();" class="navbar-brand mx-4 mb-3">
+                        <h3 class="text-primary"><i class="fa fa-recycle me-2"></i>AII Web</h3>
+                    </a>
+                    <div class="d-flex align-items-center ms-4 mb-4">
+                        <div class="position-relative">
+                            <img class="rounded-circle" src="aimain/aisub/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                            <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                        </div>
+                        <div id="userinfoid" class="ms-3"></div>                        
+                    </div>
+
+                    <div id="sm-main" class="navbar-nav w-100" style="display">
+                        <a href="aiiaccount.html" onclick="return subMenu(0);" class="nav-item nav-link active" ><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-chart-pie fa-bank me-2"></i>Account</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <a href="aiiupdate.html" onclick="return subMenu(1);" class="dropdown-item ">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> Profile</a>
+                                <a href="aiibilling.html" onclick="return subMenu(2);" class="dropdown-item">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> Billing</a>
+                            </div>
+                        </div>  
+                        <a href="aiipriceplan.html" onclick="return subMenu(3);" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Price Plan</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-briefcase me-2"></i>Stock</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <a href="aiistock.html" onclick="return subMenu(11);" class="dropdown-item ">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> TR Acc</a>
+                                <a href="aiistocknn.html" onclick="return subMenu(12);" class="dropdown-item">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> AI_NN33 TR</a>
+                                <span id="trMenuId" ></span>
+                            </div>
+                        </div>               
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-book me-2"></i>Feature</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <!--<a href="aiisubscription.html" onclick="return subMenu(20);" class="dropdown-item ">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> Manage</a>-->
+                                <span id="scrubMenuId" ></span>
+                            </div>
+                        </div>  
+
+                        <!-- fund mgr --> 
+                        <div class="nav-item dropdown" id="sm-fundmgr" style="display:none">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-cubes me-2"></i>Fund Mgr</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <!--<a href="aiifundmgr.html" onclick="return subMenu(130);" class="dropdown-item ">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> Manage</a>-->                                
+                                <a href="aiifundmgr.html" onclick="return subMenu(131);" class="dropdown-item">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> BLOG</a>
+                                <a href="aiifundmgr.html" onclick="return subMenu(132);" class="dropdown-item">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-right" ></i> Fund TR</a>
+                            </div>
+                        </div> 
+                        <!-- Admin --> 
+                        <div class="nav-item dropdown" id="sm-admin" style="display:none">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Admin</a>
+                            <div id="adminMenuId" class="dropdown-menu bg-transparent border-0">
+                            </div>
+                        </div>  
+
+                    </div>
+                </nav>
+            </div>
+            <!-- Sidebar End -->
+
+
+            <!-- Content Start -->
+            <div class="content">
+                <!-- Navbar Start -->
+                <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                    <a href="" onclick="return refreshMyPage();" class="navbar-brand d-flex d-lg-none me-4">
+                        <h2 class="text-primary mb-0"><i class="fa fa-recycle"></i></h2>
+                    </a>
+                    <a href="#" class="sidebar-toggler flex-shrink-0">
+                        <i class="fa fa-bars"></i>
+                    </a>
+
+                    <div class="navbar-nav align-items-center ms-auto">
+
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                <span id="notifyCnt">
+                                    <i class="fa fa-bell-slash  me-lg-2" ></i>
+                                    <span class="d-none d-lg-inline-flex">Notification </span>
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                                <span id="myShortcomm"> No Message</span>
+                                <hr class="dropdown-divider">
+                                <a href="aiiaccount.html#notify_tag" class="dropdown-item text-left">See all notifications</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                <img class="rounded-circle me-lg-2" src="aimain/aisub/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                <span id="userNid" class="d-none d-lg-inline-flex"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                                <a href=""  onclick="return refreshMyPage();" class="dropdown-item">Refresh</a>                                
+                                <a href="aiiupdate.html" onclick="return subMenu(1);" class="dropdown-item">My Profile</a>
+                                <a href="aiipriceplan.html" onclick="return subMenu(3);" class="dropdown-item">Price Plan</a>
+                                <a href="aiiend.html" class="dropdown-item">Log Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                <!-- Navbar End -->
+
+
+                <!-- Other Elements Start -->
+                <div class="card">
+                    <div class="card-body">
+
+
+                        <section id="faq" class="section">
+
+                            <div class="title-box text-center">
+                                <h2 class="title">FAQ</h2>
+                            </div>
+
+                        </section>
+
+                        <section id="detailplan" class="section">
+
+                            <big>
+                                <div class="container">
+
+                                    <h2>Price plan detail</h2>
+                                    <div class="row">                    
+                                        <b>Basic Plan:</b> Start Your AI-Powered Trading Journey
+                                        <p> </p>
+                                        <ul>
+                                            <li>Monthly Subscription: $50</li>                              
+                                            <li>Up to 2 stock analysis features</li>
+                                            <li>Suggested Entry & Exit Signals</li>
+                                            <li>Access to AI-powered Data Analysis</li>
+                                            <li>Simulated Training</li>
+                                            <li>Standard customer support</li>
+
+
+                                        </ul> 
+                                    </div> 
+                                    <div class="row">
+                                        <p><br> </p><p> </p>
+                                        <b>Standard Plan:</b> Elevate Your Investment Game
+                                        <p> </p>
+
+                                        <ul>
+                                            <li>Monthly Subscription: $100</li>
+                                            <li>Up to 8 stock analysis features</li>
+                                            <li>Suggested Entry & Exit Signals</li>
+                                            <li>Access to AI-powered Data Analysis</li>
+                                            <li>Simulated Training</li>
+                                            <li>Enhanced customer support</li>
+                                            <li>Customizable alerts</li>                                         
+                                        </ul> 
+                                    </div> 
+                                    <div class="row">
+                                        <p><br> </p><p> </p>
+                                        <b>Premium Plan:</b> Unleash the Full Potential
+                                        <p> </p>
+                                        <ul>
+                                            <li>Monthly Subscription: $200</li>
+                                            <li>Up to 20 stock analysis features</li>
+                                            <li>Suggested Entry & Exit Signals</li>
+                                            <li>Access to AI-powered Data Analysis</li>
+                                            <li>Simulated Training</li>
+                                            <li>Priority customer support</li>
+                                            <li>Customizable alerts</li>                                            
+
+                                        </ul> 
+                                    </div>    
+                                    <div class="row">
+                                        <p><br> </p><p> </p>
+                                        <b>Professional Plan:</b> Unleash the Full Potential
+                                        <p> </p>
+                                        <ul>
+                                            <li>Monthly Subscription: $400</li>
+                                            <li>Up to 40 stock analysis features</li>
+                                            <li>Suggested Entry & Exit Signals</li>
+                                            <li>Access to AI-powered Data Analysis</li>
+                                            <li>Simulated Training</li>
+                                            <li>Priority customer support</li>
+                                            <li>Customizable alerts</li>                                            
+
+                                        </ul> 
+                                    </div>    
+                                    <div class="row">
+                                        <p><br> </p><p> </p>
+                                        <b>Enterprise Plan:</b> Unleash the Full Potential
+                                        <p> </p>
+                                        <ul>
+                                            <li>Monthly Subscription: $800</li>
+                                            <li>Up to 80 stock analysis features</li>
+                                            <li>Suggested Entry & Exit Signals</li>
+                                            <li>Access to AI-powered Data Analysis</li>
+                                            <li>Simulated Training</li>
+                                            <li>Priority customer support</li>
+                                            <li>Customizable alerts</li>                                            
+
+                                        </ul> 
+                                    </div>    
+
+                                </div>
+                                <p><br> </p><p> </p>
+                                <div class="container">
+                                    <h2>Channel Commissions for Our Partners or Sales Force</h2>
+                                    <div class="row">       
+                                        <b>Commission for Promotion Sale:</b> Join AII Web as a Sales Support and earn commissions when a new user subscribes to AII Web.
+                                        <p> </p>
+                                        <ul>
+                                            <li>Earn a generous 20% commission on the price plan from others who use your promotion code during registration.</li>
+                                            <li>Please note that the commission is calculated based on the price plan amount after tax. For example, if the price plan is $100, our partner will receive 20% of the $88.50 price plan amount after tax, totaling $17.70 every month.</li>
+                                        </ul>                    
+                                    </div>                                     
+                    <div class="row">
+                        <p><br> </p><p> </p>
+                        <b>Commission for Fund Managers:</b> Become an AII Web Fund Manager and earn commissions when users subscribe to your portfolio.
+                        <p> </p>
+                        <ul>
+                            <li>Earn a lucrative 50% commission on the fund feature price ($60) from other users who subscribe to your fund portfolio.</li>
+                            <li>Similar to the promotion sale commission, this commission is also based on the price plan amount after tax. For instance, if the price plan is $60, the fund manager will receive 50% of the $53.10 price plan amount after tax, totaling $26.55 every month.</li>
+                        </ul> 
+                    </div> 
+                    <div class="row">
+                        <p><br> </p><p> </p>
+                        <b>Commission for New Trading Mode:</b> If you have a new idea for a Trading model, you can earn commissions when users subscribe to your model.
+                        <p> </p>
+                        <ul>
+                            <li>Earn a substantial 50% commission on the Trading model feature price ($100) from other users who subscribe to your fund portfolio.</li>
+                            <li>Like the other commissions, this one is also calculated based on the price plan amount after tax. For example, if the price plan is $100, our partner will receive 50% of the $88.50 price plan amount after tax, totaling $44.25 every month.</li>
+                        </ul> 
+                        <div class="col-md-6 col-sm-6">
+                            <br>Additional Configuration Service Support Fee:
+                            <p> </p>
+                            <ul>
+                                <li>For development and configuration services in the first month of $1000 fee is required.</li>
+                                <li>This service includes trading model development and integration setup.</li>
+                            </ul>                     
+                        </div> 
+                    </div>                 
+
+                    <div class="row">
+                        <p><br> </p><p> </p>
+                        <b>Commission for Value-added Service Integration:</b> For businesses looking to integrate with AII Investment Web services.
+                        <p> </p>
+                        <ul>
+                            <li>Earn a substantial 40% commission on the price plan from others who sign up through your site.</li>
+                            <li>As with the other commissions, this is calculated based on the price plan amount after tax. For example, if the price plan is $100, our partner will get 40% of the $88.50 price plan amount after tax, totaling $35.40 every month.</li>
+                        </ul> 
+                        <div class="col-md-6 col-sm-6">
+                            <br>Additional Consultation Service Support Fee:
+                            <p> </p>
+                            <ul>
+                                <li>For consultation services in the first 2 months, a monthly fee of $1000 is required.</li>
+                                <li>This service includes customer support and integration development.</li>
+                                <li>We will provide a sample development site for your integration, and you will manage payment validation from the users.</li>
+                            </ul>                     
+                        </div> 
+                    </div>                 
+
+                    <div class="row">
+                        <p><br> </p><p> </p>
+                        <b>Subscribe to API Plan:</b> Unlock Business Opportunities with AII Web's RESTful API
+                        <p> </p>
+                        <ul>
+                            <li>For businesses and organizations, our Enterprise API Plan offers customized pricing tailored to your unique needs.</li>
+                            <li>Monthly Subscription: $4000</li>
+                            <li>Includes access to up to 500 stock analysis features, advanced AI models via RESTful API service, and enhanced customer support.</li>
+                    </div>                                         
+                                </div>      
+                                <!-- End Content -->            
+                            </big>
+                        </section>        
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+
+                        <div id="faqbss" class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">
+                                        <div class="text-container">
+
+                                            <h2>Advanced Stock Scanner Feature</h2>
+                                            <p>
+                                                Unlock the potential of the market with our cutting-edge Stock Scanner feature. Designed to give you a competitive edge, this innovative tool actively searches for promising bullish stocks, leveraging the power of AI neural networks to ensure you get the best opportunities for your investments. 
+                                            </p>                                    
+
+                                            <h3>How It Works</h3>
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <div class="media-body"><strong>Comprehensive Market Analysis</strong>
+                                                        <p>Our system continuously monitors the stock market, scanning a vast array of stocks to identify those with the potential to surge.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <div class="media-body"><strong>AI-Powered Filtering</strong>
+                                                        <p>Utilizing sophisticated AI neural networks, the Stock Scanner meticulously analyzes each identified stock, filtering out only the most promising bullish candidates. This advanced filtering process ensures that you receive high-quality, actionable insights.</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <h3>Why Choose Our Stock Scanner?</h3>
+
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <div class="media-body"><strong>Enhanced Accuracy</strong>
+                                                        <p>By harnessing the power of AI, our Stock Scanner can detect complex patterns and trends that traditional methods might miss, providing you with more accurate and reliable stock picks.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <div class="media-body"><strong>Effortless Efficiency</strong>
+                                                        <p>Save time and effort with our automated scanning and filtering process. Instead of sifting through countless stocks manually, let our AI do the heavy lifting, delivering only the most promising bullish stocks directly to you.</p>
+                                                    </div>
+                                                </li>                                    
+                                            </ul>
+                                            <h3>Purchase Add On Feature</h3>
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <div class="media-body"><strong>BillPriceS20	$40.00</strong>
+                                                        <p>
+                                                            Billing Stock Scan for Bullish Nasdaq Stock
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <div class="media-body"><strong>BillPriceS22	$40.00</strong>
+                                                        <p>
+                                                            Billing Stock Scan for Bullish SP500 Stock
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <div class="media-body"><strong>BillPriceS26	$40.00</strong>
+                                                        <p>
+                                                            Billing Stock Scan for Bullish Toronto Stock
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                            </ul>                                
+                                        </div> <!-- end of container -->
+                                    </div> <!-- end of ex-basic -->
+
+                                </div> <!-- end of container -->
+                            </div> <!-- end of ex-basic -->
+
+                        </div> <!-- end of container -->                        
+
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+
+                        <div  id="faqbfund" class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">
+                                        <div class="text-container">
+
+                                            <h2>Fund Manager Portfolio Feature</h2>
+                                            <p>
+                                                Unlock the potential of expert trading strategies by subscribing to our exclusive Fund Manager Portfolios. Gain access to professional traders' portfolios and receive real-time notifications on stock signal changes.
+                                            </p>                                    
+
+                                            <h3>Why Subscribe to Our Fund Manager Portfolios?</h3>
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <div class="media-body"><strong>Access Expert Insights</strong>
+                                                        <p>Review and follow the portfolios of professional traders. Learn from their strategies and replicate their success in your own trading endeavors.
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <div class="media-body"><strong>Stay Informed with Real-Time Notifications</strong>
+                                                        <p>Never miss an opportunity. Receive instant notifications whenever there is a change in stock signals, allowing you to make timely and informed decisions.
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <div class="media-body"><strong>Comprehensive Portfolio Review</strong>
+                                                        <p>Gain full visibility into the fund managers’ portfolios. Analyze their investment choices and performance metrics to better understand market movements and trends.
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <h3>Key Benefits</h3>
+                                            <p>Join Our Community of Successful Traders.
+                                            </p>
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <div class="media-body"><strong>Professional Guidance</strong>
+                                                        <p>Benefit from the expertise of seasoned traders. Our fund managers employ advanced strategies and market analysis to curate their portfolios.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <div class="media-body"><strong>Enhanced Decision-Making</strong>
+                                                        <p>Stay ahead of the market with timely updates and insights. Make informed trading decisions with the confidence of professional backing.</p>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                            <h3>Purchase Add On Feature</h3>
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillMgr-fund11	$60.00</strong>
+                                                        <p>
+                                                            High_Growth_Fund Mgr
+                                                            <br>
+                                                            Feature: Growth Fund Manager - Multi-Sector Long/Short Strategy. This system-driven manager utilizes advanced analytics to identify strategic long and short positions across high-potential growth sectors. The fund dynamically allocates capital across a diversified landscape, including Healthcare, Technology Innovators, Blue-Chip Equities, Precious Metals, and Dividend Growth to optimize returns and manage volatility.
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillMgr-fund13	$60.00</strong>
+                                                        <p>
+                                                            Index_Fund_Mgr
+                                                            <br>
+                                                            Feature: Algorithmic Fund Manager - US Equity Index Strategy. This system-driven manager utilizes advanced analytics to identify strategic long and short positions within US Index ETFs. By dynamically allocating capital across high-potential growth sectors, the fund leverages broader market trends to capture alpha while maintaining a disciplined approach to risk management.
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillMgr-fund15	$60.00</strong>
+                                                        <p>
+                                                            High_Return_Fund Mgr
+                                                            <br>
+                                                            Feature: Proprietary Intelligence Manager - Internal Database Optimization. This system-driven manager utilizes a sophisticated search architecture to scan our proprietary internal database for high-conviction equities. By leveraging exclusive data insights to identify strategic long and short positions, the fund dynamically allocates capital to the highest-performing assets identified by our internal quantitative models.
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillMgr-fund23	$60.00</strong>
+                                                        <p>
+                                                            Politician_value Mgr
+                                                            <br>
+                                                            Feature: Legislative Sentiment Tracker - Institutional Political Intelligence. This system-driven manager monitors high-value transaction data disclosed under the STOCK Act to identify strategic long and short positions. The fund focuses exclusively on high-conviction trades by US policymakers, filtering for significant activity exceeding $100,000 within the trailing 90-day window. By tracking this unique alternative data source, the fund seeks to capture alpha based on the legislative and economic insights of institutional insiders.
+                                                        </p>
+                                                    </div>
+                                                </li>     
+                                            </ul>                                
+                                        </div> <!-- end of container -->
+                                    </div> <!-- end of ex-basic -->
+
+                                </div> <!-- end of container -->
+                            </div> <!-- end of ex-basic -->
+
+                        </div> <!-- end of container -->                        
+
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="card-body">
+
+                        <div id="faqbnn" class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">
+                                        <div class="text-container">
+
+                                            <h2>Custom AI Models Feature</h2>
+                                            <p>
+                                                Unlock the full potential of your trading strategy by subscribing to our custom Neural Network AI models, developed in collaboration with our expert partners. These models have been rigorously tested and proven to deliver profitable trading outcomes. 
+                                            </p>                                    
+
+                                            <h3>Why Choose Our Custom AI Models?</h3>
+
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <div class="media-body"><strong>Proven Profitability</strong>
+                                                        <p>Benefit from AI models that have a track record of success. Our custom models are designed to enhance your trading performance and maximize returns.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <div class="media-body"><strong>Expert Collaboration</strong>
+                                                        <p>Developed by industry experts, our AI models incorporate advanced strategies and insights, providing you with a robust and reliable trading tool.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <div class="media-body"><strong>Tailored to Your Needs</strong>
+                                                        <p>Our AI models are customizable to fit your specific trading preferences and goals. Whether you are a beginner or an experienced trader, our models can be tailored to suit your needs.</p>
+                                                    </div>
+                                                </li>                                    
+                                            </ul>
+
+                                            <h3>Key Features</h3>
+
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <div class="media-body"><strong>Advanced Neural Network Technology</strong>
+                                                        <p>Leverage state-of-the-art AI technology to analyze market trends and generate accurate trading signals.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <div class="media-body"><strong>Continuous Improvement</strong>
+                                                        <p>
+                                                            Our models are continuously updated and refined based on real-time market data, ensuring they remain effective in dynamic market conditions.
+                                                        </p>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+
+                                            <h3>Purchase Add On Feature</h3>
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillCustTR-NN91	$100.00</strong>
+                                                        <p>
+                                                            Experience the TR_NN91, an AI-driven trading model custom-developed to capture market equilibrium. By synchronizing the momentum-based insights of the TR31 and TR32 neural networks, this strategy only emits signals when high-confidence thresholds are met. This dual-model approach filters out market noise and reduces the risks inherent in single-strategy systems.                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillCustTR-NN92	$100.00</strong>
+                                                        <p>
+                                                            Experience the TR_NN92, where neural network intelligence meets disciplined rule-based logic. This model captures market trends by aligning the momentum data of TR31 and TR32. With its integrated sideways-trend filter, TR_NN92 significantly reduces false entries, offering a refined and resilient approach to automated trading.                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillCustTR-NN93	$100.00</strong>
+                                                        <p>
+                                                        Experience TR_NN93, where neural network intelligence meets disciplined rule-based logic. This model captures market trends by aligning the momentum data of TR31 and TR32, utilizing a consecutive-signal verification process. By requiring the current signal to confirm the previous one before execution, TR_NN93 filters out market noise, significantly enhancing entry accuracy and maximizing profit potential.                                                    </div>
+                                                </li>                                                
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillCustTR-NN81	$100.00</strong>
+                                                        <p>
+                                                        Experience TR_NN81, a powerful synthesis of the Lorentzian ML-Hybrid algorithm from Tradingview web system. We’ve taken one of the industry's most respected trading frameworks and optimized it for our system to capture high-probability opportunities. TR_NN81 transforms advanced mathematical classification into actionable signals, delivering a sophisticated edge in today’s competitive markets. 
+                                                </li>  
+
+                                            </ul>
+                                        </div> <!-- end of container -->
+                                    </div> <!-- end of ex-basic -->
+
+                                </div> <!-- end of container -->
+                            </div> <!-- end of ex-basic -->
+
+                        </div> <!-- end of container -->                        
+
+                    </div>
+                </div>
+                <!-- Footer Start -->
+                <iframe src="aiisubTPfooter.html" onload="this.before((this.contentDocument.body || this.contentDocument).children[0]);this.remove()"></iframe>
+                <!-- Footer End -->
+
+            </div>
+            <!-- Content End -->
+
+
+            <!-- Back to Top -->
+            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        </div>
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="aimain/aisub/lib/chart/chart.min.js"></script>
+        <script src="aimain/aisub/lib/easing/easing.min.js"></script>
+        <script src="aimain/aisub/lib/waypoints/waypoints.min.js"></script>
+        <script src="aimain/aisub/lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="aimain/aisub/lib/tempusdominus/js/moment.min.js"></script>
+        <script src="aimain/aisub/lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="aimain/aisub/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="aimain/aisub/js/main.js"></script>
+
+        <script src="aimain/aisub/jsmain/iisweb.js"></script>
+        <script src="aimain/aisub/jssub/aiiindex_submenu.js"></script>  
+        <script src="aimain/aisub/jssub/aiiaccFAQ.js"></script>  
+
+    </body>
+
+</html>

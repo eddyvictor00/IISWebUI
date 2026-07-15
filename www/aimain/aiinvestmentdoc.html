@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AII Web — Institutional Signal API Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:       #0B1F3A;
+    --navy-mid:   #122444;
+    --navy-light: #1A3158;
+    --gold:       #C9A02E;
+    --gold-light: #E4C06A;
+    --gold-dim:   #7A5F1A;
+    --white:      #F5F2EC;
+    --grey:       #A8A49C;
+    --grey-dim:   #6B6760;
+    --border:     rgba(201,160,46,0.18);
+    --card-bg:    rgba(255,255,255,0.033);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    font-size: 16px;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─────────────────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.4;
+  }
+
+  /* ─── GOLD GRADIENT ORBS ─────────────────────────────────────────── */
+  .orb {
+    position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
+    filter: blur(120px); opacity: 0.07;
+  }
+  .orb-1 { width: 600px; height: 600px; background: var(--gold); top: -200px; right: -150px; }
+  .orb-2 { width: 400px; height: 400px; background: #1E5799; bottom: 10%; left: -100px; }
+
+  /* ─── LAYOUT ─────────────────────────────────────────────────────── */
+  .wrapper { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 40px 80px; }
+
+  /* ─── TOP BAR ────────────────────────────────────────────────────── */
+  .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 28px 0 0;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--grey-dim);
+  }
+  .topbar-logo { color: var(--gold); font-weight: 500; font-size: 13px; letter-spacing: 0.2em; }
+  .topbar-conf { font-size: 10px; }
+
+  /* ─── HERO ───────────────────────────────────────────────────────── */
+  .hero { padding: 60px 0 50px; border-bottom: 1px solid var(--border); }
+  .hero-eyebrow {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px; font-weight: 500;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 17px; color: var(--grey); max-width: 640px;
+    line-height: 1.65; margin-bottom: 36px; font-weight: 300;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--gold); color: var(--navy);
+    padding: 13px 28px; border-radius: 2px;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .hero-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .hero-cta svg { width: 14px; height: 14px; }
+
+  /* ─── STAT STRIP ─────────────────────────────────────────────────── */
+  .stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border: 1px solid var(--border);
+    margin: 48px 0;
+    background: var(--card-bg);
+  }
+  .stat { padding: 28px 24px; border-right: 1px solid var(--border); }
+  .stat:last-child { border-right: none; }
+  .stat-value {
+    font-family: 'DM Mono', monospace;
+    font-size: 28px; font-weight: 500;
+    color: var(--gold); line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); }
+
+  /* ─── SECTION ────────────────────────────────────────────────────── */
+  .section { padding: 52px 0 8px; }
+  .section-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 28px;
+  }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; color: var(--gold-dim);
+    letter-spacing: 0.1em; min-width: 28px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 600; color: var(--white);
+    letter-spacing: -0.01em;
+  }
+  .section-rule { flex: 1; height: 1px; background: var(--border); }
+  .section p {
+    color: var(--grey); font-size: 15.5px; line-height: 1.75;
+    max-width: 720px; margin-bottom: 16px; font-weight: 300;
+  }
+
+  /* ─── PIPELINE ───────────────────────────────────────────────────── */
+  .pipeline { display: flex; flex-direction: column; gap: 0; margin: 8px 0 24px; }
+  .pipeline-step {
+    display: grid; grid-template-columns: 100px 1fr;
+    border: 1px solid var(--border);
+    border-bottom: none;
+    transition: background 0.2s;
+  }
+  .pipeline-step:last-child { border-bottom: 1px solid var(--border); }
+  .pipeline-step:hover { background: rgba(201,160,46,0.04); }
+  .ps-model {
+    padding: 20px 16px;
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    background: rgba(201,160,46,0.06);
+  }
+  .ps-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 15px; font-weight: 500; color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+  .ps-role { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey-dim); margin-top: 4px; text-align: center; }
+  .ps-body { padding: 18px 24px; }
+  .ps-title { font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 4px; letter-spacing: 0.01em; }
+  .ps-desc { font-size: 13px; color: var(--grey); line-height: 1.6; font-weight: 300; }
+  .ps-arrow {
+    text-align: center; color: var(--gold-dim);
+    font-size: 18px; line-height: 1; padding: 4px 0;
+    letter-spacing: 0;
+  }
+
+  /* ─── RISK GRID ──────────────────────────────────────────────────── */
+  .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); margin: 8px 0 24px; }
+  .risk-card {
+    background: var(--navy-mid); padding: 24px;
+    transition: background 0.2s;
+  }
+  .risk-card:hover { background: var(--navy-light); }
+  .risk-icon { font-size: 20px; margin-bottom: 10px; }
+  .risk-title { font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 6px; letter-spacing: 0.02em; }
+  .risk-desc { font-size: 13px; color: var(--grey); line-height: 1.6; font-weight: 300; }
+
+  /* ─── VERIFY BOX ─────────────────────────────────────────────────── */
+  .verify-box {
+    border: 1px solid var(--gold);
+    padding: 36px 40px; margin: 8px 0 24px;
+    background: rgba(201,160,46,0.04);
+    position: relative; overflow: hidden;
+  }
+  .verify-box::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%; background: var(--gold);
+  }
+  .verify-label {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 10px; font-weight: 500;
+  }
+  .verify-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: var(--white); margin-bottom: 12px; font-weight: 600;
+  }
+  .verify-box p { font-size: 14px; color: var(--grey); margin-bottom: 20px; max-width: 600px; }
+  .verify-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px; color: var(--gold);
+    text-decoration: none; border-bottom: 1px solid var(--gold-dim);
+    padding-bottom: 2px; transition: color 0.15s, border-color 0.15s;
+  }
+  .verify-link:hover { color: var(--gold-light); border-color: var(--gold-light); }
+  .verify-badges {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px;
+  }
+  .badge {
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    border: 1px solid var(--border); color: var(--grey-dim);
+    padding: 4px 10px; border-radius: 1px;
+  }
+
+  /* ─── API TABLE ──────────────────────────────────────────────────── */
+  .api-table { width: 100%; border-collapse: collapse; margin: 8px 0 24px; }
+  .api-table tr { border-bottom: 1px solid var(--border); }
+  .api-table tr:last-child { border-bottom: none; }
+  .api-table tr:hover td { background: rgba(201,160,46,0.03); }
+  .api-table td { padding: 14px 16px; vertical-align: top; font-size: 14px; }
+  .api-table td:first-child {
+    width: 200px; color: var(--white); font-weight: 500;
+    font-size: 13px; padding-right: 24px; white-space: nowrap;
+  }
+  .api-table td:last-child { color: var(--grey); line-height: 1.6; }
+
+  /* ─── WHY LIST ───────────────────────────────────────────────────── */
+  .why-list { display: flex; flex-direction: column; gap: 20px; margin: 8px 0 24px; }
+  .why-item { display: flex; gap: 18px; align-items: flex-start; }
+  .why-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; color: var(--gold); min-width: 24px;
+    padding-top: 3px; font-weight: 500;
+  }
+  .why-content {}
+  .why-title { font-size: 14px; font-weight: 500; color: var(--white); margin-bottom: 4px; }
+  .why-desc { font-size: 13.5px; color: var(--grey); line-height: 1.65; font-weight: 300; }
+
+  /* ─── NEXT STEPS ─────────────────────────────────────────────────── */
+  .steps { display: flex; flex-direction: column; gap: 0; margin: 8px 0 24px; }
+  .step {
+    display: flex; align-items: flex-start; gap: 20px;
+    padding: 20px 0; border-bottom: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-n {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px; color: var(--border); line-height: 1;
+    min-width: 36px; font-weight: 700; margin-top: -2px;
+  }
+  .step-text { font-size: 14.5px; color: var(--grey); line-height: 1.65; padding-top: 4px; }
+  .step-text strong { color: var(--white); font-weight: 500; }
+
+  /* ─── FOOTER ─────────────────────────────────────────────────────── */
+  footer {
+    margin-top: 64px; padding-top: 32px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: flex-start;
+    flex-wrap: wrap; gap: 20px;
+  }
+  .footer-brand { font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 4px; letter-spacing: 0.05em; }
+  .footer-contact { font-size: 12px; color: var(--grey-dim); line-height: 1.8; }
+  .footer-contact a { color: var(--gold-dim); text-decoration: none; }
+  .footer-contact a:hover { color: var(--gold); }
+  .footer-disc { font-size: 10.5px; color: var(--grey-dim); max-width: 420px; line-height: 1.6; margin-top: 4px; }
+
+  /* ─── ANIMATIONS ─────────────────────────────────────────────────── */
+  .fade-up {
+    opacity: 0; transform: translateY(18px);
+    animation: fadeUp 0.65s ease forwards;
+  }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .d1 { animation-delay: 0.05s; }
+  .d2 { animation-delay: 0.15s; }
+  .d3 { animation-delay: 0.25s; }
+  .d4 { animation-delay: 0.35s; }
+
+  @media (max-width: 640px) {
+    .wrapper { padding: 0 20px 60px; }
+    .stats { grid-template-columns: 1fr; }
+    .stat { border-right: none; border-bottom: 1px solid var(--border); }
+    .risk-grid { grid-template-columns: 1fr; }
+    .pipeline-step { grid-template-columns: 80px 1fr; }
+    footer { flex-direction: column; }
+    .api-table td:first-child { width: 140px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<div class="wrapper">
+
+  <!-- TOP BAR -->
+  <div class="topbar fade-up d1">
+    <span class="topbar-logo">AII WEB</span>
+    <span class="topbar-conf">CONFIDENTIAL &nbsp;|&nbsp; MAY 2026</span>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow fade-up d1">Institutional Partnership Proposal</div>
+    <h1 class="fade-up d2">AI-Powered Stock Signals<br>for <em>Investment Firms</em></h1>
+    <p class="hero-sub fade-up d3">
+      A proprietary hierarchical neural network that delivers high-conviction directional signals
+      for U.S. equity ETFs — with every trade log publicly accessible, in real time, unedited.
+    </p>
+    <a href="https://iiswebapi.onrender.com/aimain/aidashboard.html" target="_blank" class="hero-cta fade-up d4">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      View Live Performance Dashboard
+    </a>
+  </div>
+
+  <!-- STAT STRIP -->
+  <div class="stats fade-up d4">
+    <div class="stat">
+      <div class="stat-value">TR30→33</div>
+      <div class="stat-label">4-Model Signal Pipeline</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">0.70</div>
+      <div class="stat-label">Minimum Confidence Gate</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">Daily</div>
+      <div class="stat-label">Full Model Retraining</div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: EXECUTIVE SUMMARY -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">Executive Summary</span>
+      <div class="section-rule"></div>
+    </div>
+    <p>
+      AII Web has developed a proprietary hierarchical neural network trading signal engine that
+      delivers institutional-grade, high-conviction directional signals for U.S. equity ETFs.
+      Our system has been rigorously back-tested and live-validated on the Alpaca paper trading
+      platform across SPY and DIA — with every trade log publicly accessible and unedited.
+    </p>
+    <p>
+      We are inviting a select group of investment firms to integrate our signal API directly
+      into their execution infrastructure, gaining a systematic edge backed by transparent,
+      verifiable performance data.
+    </p>
+  </div>
+
+  <!-- SECTION 2: THE PROBLEM -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">The Problem We Solve</span>
+      <div class="section-rule"></div>
+    </div>
+    <p>
+      Conventional quantitative trading models train on all available market data — signal and
+      noise alike. The result is a model that learns to predict the average, performing adequately
+      across all market conditions but excelling in none. High-frequency noise is baked into the
+      weights, diluting conviction on genuine high-probability setups.
+    </p>
+    <p>
+      AII Web's architecture inverts this paradigm. We generate a broad high-frequency signal set,
+      then systematically purge every negative and low-alpha position from the training data.
+      The backpropagation neural network trains exclusively on verified <em style="color:var(--white);font-style:normal;">"winning" patterns</em> —
+      the precise technical conditions that historically precede significant profitable price moves.
+    </p>
+  </div>
+
+  <!-- SECTION 3: SIGNAL PIPELINE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-title">How the Signal Is Generated</span>
+      <div class="section-rule"></div>
+    </div>
+    <p>Four sequential models, each a stricter quality filter than the last.</p>
+
+    <div class="pipeline">
+      <div class="pipeline-step">
+        <div class="ps-model">
+          <div class="ps-tag">TR30</div>
+          <div class="ps-role">Classifier</div>
+        </div>
+        <div class="ps-body">
+          <div class="ps-title">Baseline Trend Identification</div>
+          <div class="ps-desc">20-indicator input vector (MACD, RSI, EMA, VWAP). 3-month sliding window over 5-year history. Binary long/short output. Confidence gate — signals suppressed below <strong style="color:var(--white)">0.70</strong>.</div>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="ps-model">
+          <div class="ps-tag">TR31</div>
+          <div class="ps-role">Profit Filter</div>
+        </div>
+        <div class="ps-body">
+          <div class="ps-title">Strategic Profit Filtering & Retraining</div>
+          <div class="ps-desc">Simulates TR30 signals. Parameter sweep maximizes net P&amp;L. Purges all negative-return trades. Retrains backprop NN exclusively on the success-only dataset.</div>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="ps-model">
+          <div class="ps-tag">TR32</div>
+          <div class="ps-role">Conservative</div>
+        </div>
+        <div class="ps-body">
+          <div class="ps-title">Advanced Capital Preservation Filter</div>
+          <div class="ps-desc">Applies a stricter margin-gap requirement than TR31. Higher pruning percentage. Fires only on setups with significant historical edge — prioritizes capital preservation over trade frequency.</div>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="ps-model">
+          <div class="ps-tag">TR33</div>
+          <div class="ps-role">Executor</div>
+        </div>
+        <div class="ps-body">
+          <div class="ps-title">Consensus Execution Engine</div>
+          <div class="ps-desc">Dual-layer consensus: best signal from TR31 or TR32. Trend-aligned via TR30. Price boundary check (30%–70% of historical window). Daily full pipeline retraining.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: RISK MANAGEMENT -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-title">Built-In Risk Management</span>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="risk-grid">
+      <div class="risk-card">
+        <div class="risk-icon">⏱</div>
+        <div class="risk-title">Trailing Stops & Hard Stop-Loss</div>
+        <div class="risk-desc">Every signal passes through dynamic trailing stop and hard stop-loss checks before execution, protecting against adverse intraday moves.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-icon">🔒</div>
+        <div class="risk-title">Over-Trading Prevention</div>
+        <div class="risk-desc">Multiple same-day transactions on a single instrument are restricted, controlling slippage and commission drag on your execution.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-icon">↺</div>
+        <div class="risk-title">Anti-Overfitting Reset</div>
+        <div class="risk-desc">At 450 training iterations the model triggers an automatic full reset, forcing a fresh learning phase and preventing weight decay from degrading signal quality.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-icon">📅</div>
+        <div class="risk-title">Daily Retraining</div>
+        <div class="risk-desc">The full pipeline — data fetch, simulation, and training — reruns every 24 hours, ensuring signals continuously adapt to evolving market regimes.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: VERIFY -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <span class="section-title">Verify the Results — Live &amp; Unedited</span>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="verify-box">
+      <div class="verify-label">Transparency Commitment</div>
+      <h3>Every trade. Every result. Publicly accessible.</h3>
+      <p>
+        We believe institutional trust is built on full transparency. Every trade our system has
+        executed on the Alpaca paper trading platform — including losses — is logged in real time
+        and accessible without restriction. No curated subset. No cherry-picked period.
+      </p>
+      <a href="https://iiswebapi.onrender.com/aimain/aidashboard.html" target="_blank" class="verify-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        iiswebapi.onrender.com/aimain/aidashboard.html
+      </a>
+      <div class="verify-badges">
+        <span class="badge">Real-Time</span>
+        <span class="badge">Unedited</span>
+        <span class="badge">Full Trade History</span>
+        <span class="badge">No Login Required</span>
+        <span class="badge">SPY &amp; DIA</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: API -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <span class="section-title">API Integration for Your Firm</span>
+      <div class="section-rule"></div>
+    </div>
+    <p>
+      The AII Web signal engine is available as a dedicated API endpoint designed for direct
+      integration into your existing order management or execution infrastructure.
+    </p>
+
+    <table class="api-table">
+      <tr>
+        <td>Signal Output</td>
+        <td>Long / Short / Flat directive per instrument, with confidence score attached</td>
+      </tr>
+      <tr>
+        <td>Delivery</td>
+        <td>REST API with JSON response; low-latency, suitable for automated programmatic ingestion</td>
+      </tr>
+      <tr>
+        <td>Update Frequency</td>
+        <td>Daily retrained model; intraday signal refresh available upon request</td>
+      </tr>
+      <tr>
+        <td>Validation Layer</td>
+        <td>TA Score (e.g. Bullish: 70) included with each signal for human-readable context and secondary validation</td>
+      </tr>
+      <tr>
+        <td>Transparency</td>
+        <td>Full back-test and live-test logs accessible via public dashboard at all times</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- SECTION 7: WHY -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <span class="section-title">Why Partner with AII Web</span>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="why-list">
+      <div class="why-item">
+        <div class="why-num">01</div>
+        <div class="why-content">
+          <div class="why-title">Verifiable Edge</div>
+          <div class="why-desc">Unlike black-box vendors who provide audited-only back-tests, our live paper trading logs are accessible in real time. Stress-test our signal against any period before committing capital.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">02</div>
+        <div class="why-content">
+          <div class="why-title">Systematic, Not Discretionary</div>
+          <div class="why-desc">The TR33 consensus engine removes human emotion from signal generation entirely. Every recommendation is the output of a deterministic, rules-based pipeline.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">03</div>
+        <div class="why-content">
+          <div class="why-title">Adaptive by Design</div>
+          <div class="why-desc">Daily retraining and the automatic 450-iteration reset mean the system continuously recalibrates to current market structure — not last quarter's regime.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">04</div>
+        <div class="why-content">
+          <div class="why-title">Transparent Architecture</div>
+          <div class="why-desc">We publish our methodology in full. You are not buying a signal from a vendor who cannot explain how it is generated. The full technical paper is available on request.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">05</div>
+        <div class="why-content">
+          <div class="why-title">Institutional-Ready Integration</div>
+          <div class="why-desc">JSON REST API, low latency, confidence scores, and TA context scores — designed for teams that need programmatic ingestion, not manual chart interpretation.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 8: NEXT STEPS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <span class="section-title">Next Steps</span>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-text"><strong>Review the live performance dashboard</strong> — accessible at the link above. No login or registration required. Full unedited trade history visible immediately.</div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-text"><strong>Request an API sandbox credential</strong> to test signal delivery directly in your own environment before any commercial commitment.</div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div class="step-text"><strong>Schedule a technical walkthrough</strong> with the AII Web team — covering architecture, signal format, integration options, and Q&amp;A.</div>
+      </div>
+      <div class="step">
+        <div class="step-n">4</div>
+        <div class="step-text"><strong>Agree on coverage scope, delivery format, and commercial terms</strong> tailored to your firm's execution infrastructure and asset universe.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="footer-brand">AII Web — Algorithmic Intelligence Investments</div>
+      <!-- <div class="footer-contact">
+        91 E 4th St, Oswego, New York<br>
+        <a href="mailto:info@aiiweb.com">info@aiiweb.com</a> &nbsp;|&nbsp; (585) 468-5638<br>
+        <a href="https://iiswebapi.onrender.com/aimain/aiiindex.html" target="_blank">iiswebapi.onrender.com</a>
+      </div> -->
+    </div>
+    <div class="footer-disc">
+      This document is confidential and intended solely for the named recipient.
+      Past performance of any trading strategy does not guarantee future results.
+      Paper trading results may not reflect real-market liquidity or execution costs.
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

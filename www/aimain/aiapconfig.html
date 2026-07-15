@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AII Stock App - Configuration</title>
+    <!-- Favicon -->
+    <link href="aimain/img/favicon.ico" rel="icon">      
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load jQuery --><script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="aimain/jsmain/iisweb.js"></script>         
+    <script src="aimain/aisub/jssub/aiiindex_submenu.js"></script>          
+    <script src="aimain/aiapp/js/aiapconfig.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        html, body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; 
+            height: 100vh; 
+            width: 100vw;
+            display: block;
+        }
+
+        #app-container {
+            height: 100vh;
+            width: 100%; 
+            display: flex;
+            flex-direction: column;
+            background-color: #161b22; 
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+        }
+
+        #main-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            /* Adjust padding-top to account for the fixed header height (approx 4rem) */
+            padding-top: 4rem; 
+            padding-bottom: 4rem;
+            background-color: #161b22; 
+
+            &::-webkit-scrollbar { display: none; }
+            -ms-overflow-style: none;  
+            scrollbar-width: none;  
+        }
+        
+        /* Custom Navigation Icons */
+        .nav-icon { font-size: 16px; }
+        .text-green-500 { color: #34d399; }
+        .text-red-500 { color: #f87171; }
+        .text-sky-400 { color: #38b2ac; }
+
+        .icon-home::before { content: "🏠"; }
+        .icon-positions::before { content: "📊"; }
+        .icon-config::before { content: "⚙️"; }
+        .icon-profile::before { content: "👤"; }
+
+        /* Custom Spinner Styling for Loading Overlay */
+        .custom-spinner {
+            border: 3px solid rgba(255, 255, 255, 0.2); /* Light gray for the full circle outline */
+            border-top: 3px solid #38b2ac; /* Sky-400 for the rotating part */
+            border-radius: 50%;
+            width: 20px; /* Very small size */
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #374151;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #38b2ac;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay - Shown immediately, covers everything, has a high Z-index -->
+    <div id="loading-overlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gray-900 transition-opacity duration-300">
+        <div class="custom-spinner mb-2"></div>
+        <p class="text-sm text-gray-400">Loading settings...</p>
+    </div>
+    <div id="save-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 hidden">
+        <div class="bg-gray-800 rounded-xl p-6 w-96 border border-gray-700 shadow-2xl text-center flex flex-col max-h-[90vh]">
+            <h3 class="text-xl font-bold mb-2 text-white">Review Changes</h3>
+            <p class="text-xs text-gray-400 mb-4">Please review your subscription updates below before confirming.</p>
+            
+            <div id="cart-summary" class="bg-gray-900 border border-gray-700 rounded-lg p-3 text-left overflow-y-auto mb-4 flex-grow text-sm space-y-2 max-h-60">
+                </div>
+
+            <div class="flex justify-between items-center mb-6 border-t border-gray-700 pt-3 px-1">
+                <span class="text-sm font-semibold text-gray-400">Total Price Added:</span>
+                <span id="cart-total-price" class="text-base font-bold text-emerald-400">$0.00</span>
+            </div>
+
+            <div class="flex space-x-3">
+                <button id="cancel-save-btn" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 rounded-lg transition">
+                    Cancel
+                </button>
+                <button id="confirm-save-btn" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Main container to limit width on large screens and center content -->
+    <div id="app-container" class="mx-auto bg-gray-900 w-full sm:max-w-xl md:max-w-3xl lg:max-w-5xl h-screen">
+        
+        <!-- FIXED HEADER for the title -->
+        <header id="fixed-header" class="fixed top-0 left-0 right-0 z-20 bg-gray-900 border-b border-gray-700 w-full sm:max-w-xl md:max-w-3xl lg:max-w-5xl mx-auto p-3 flex justify-between items-center">
+            <h1 class="text-xl font-bold">Settings</h1>
+            <button id="refresh-button" class="text-2xl text-sky-400 hover:text-sky-300 transition" aria-label="Refresh Data">
+                <span class="refresh-icon">&#x21BB;</span>
+            </button>
+        </header>
+
+        <div id="main-content">
+            <!-- Content is rendered here by JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Fixed Bottom Navigation Bar -->
+    <nav id="nav-bar" class="fixed bottom-0 left-0 right-0 z-30 bg-gray-900 border-t border-gray-700 w-full sm:max-w-xl md:max-w-3xl lg:max-w-5xl mx-auto">
+        <div class="flex justify-around items-center h-16 w-full">
+            <button class="nav-item flex flex-col items-center justify-center p-2 transition text-gray-400" data-page="aiaphome">
+                <span class="icon-home nav-icon"></span>
+                <span class="text-xs mt-1">Home</span>
+            </button>
+
+            <button class="nav-item flex flex-col items-center justify-center p-2 transition text-gray-400" data-page="aiappositions">
+                <span class="icon-positions nav-icon"></span>
+                <span class="text-xs mt-1">Positions</span>
+            </button>
+
+            <button class="nav-item flex flex-col items-center justify-center p-2 transition text-sky-400 border-t-2 border-sky-400" data-page="aiapconfig">
+                <span class="icon-config nav-icon"></span>
+                <span class="text-xs mt-1">Config</span>
+            </button>
+
+            <button class="nav-item flex flex-col items-center justify-center p-2 transition text-gray-400" data-page="aiapprofile">
+                <span class="icon-profile nav-icon"></span>
+                <span class="text-xs mt-1">Profile</span>
+            </button>
+        </div>
+    </nav>
+</body>
+</html>

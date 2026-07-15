@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>AIIWeb AI Artificial Intelligence Stocks </title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">       
+        <meta name="author" content="">
+        <meta name="keywords" content="Stock Market BUY SELL Artificial Neural Network Prediction">
+        <meta name="description" content="AIIWeb (AI Investment) Stock Signal Prediction Using Neural Network AI for buy or sell prediction. This application provides useful trade information for stock prices analysis and AI trading decision (Buy or Sell signal) for stock exchange market.">		
+
+
+        <link href="aimain/img/favicon.ico" rel="icon">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">  
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <link href="aimain/lib/animate/animate.min.css" rel="stylesheet">
+        <link href="aimain/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+        <link href="aimain/css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="aimain/css/style.css" rel="stylesheet">
+        <link href="aimain/css/blink.css" rel="stylesheet">        
+
+        <link href="aimain/subcss/bootstrap.css" rel="stylesheet">
+        <link href="aimain/subcss/styles.css" rel="stylesheet">        
+        
+        <style>
+            .academic-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 20px 0;
+            }
+            .academic-table th, .academic-table td {
+                border-top: 1px solid #ccc;
+                border-bottom: 1px solid #ccc;
+                padding: 10px;
+                text-align: left;
+            }
+            .academic-table th {
+                background-color: #f8f9fa;
+                font-weight: bold;
+            }
+            .caption-text {
+                font-style: italic;
+                font-size: 0.95rem;
+                text-align: center;
+                margin-bottom: 5px;
+                color: #333;
+            }
+            .code-inline {
+                font-family: monospace;
+                background-color: #f1f1f1;
+                padding: 2px 5px;
+                border-radius: 3px;
+            }
+        </style>
+    </head>
+
+
+    <body>
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+        </div>
+        <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
+            <div class="top-bar row gx-0 align-items-center d-none d-lg-flex">
+                <div class="col-lg-6 px-5 text-start">
+                    <small><i class="fa fa-map-marker-alt text-primary me-2"></i></small>
+                    <small class="ms-4"><i class="fa fa-clock text-primary me-2"></i></small>
+                </div>
+                <div class="col-lg-6 px-5 text-end">
+                    <small><i class="fa fa-envelope text-primary me-2"></i></small>
+                    <small class="ms-4"><i class="fa fa-phone-alt text-primary me-2"></i></small>
+                </div>
+            </div>
+
+            <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
+                <a href="aiiindex.html" class="navbar-brand ms-4 ms-lg-0">
+                    <h1 class="display-5 text-primary m-0">AII Web</h1>
+                </a>
+                <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div id="m-main"  class="navbar-nav ms-auto p-4 p-lg-0" style="display">                        
+                        <a href="aiiindex.html" onclick="return myMenu(1);" class="nav-item nav-link ">Home</a>
+                        <a href="aiiindex.html#about" onclick="return myMenu(2);" class="nav-item nav-link">About</a>
+                        <a href="aiiindex.html#service" onclick="return myMenu(3);" class="nav-item nav-link">Services</a>
+
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Performance</a>
+                            <div class="dropdown-menu border-light m-0">
+                                <a href="Mfeature.html#feature" onclick="return myMenu(4);" class="dropdown-item">AI Feature</a>                                
+                                <a href="Mperform.html" onclick="return myMenu(5);" class="dropdown-item">Performance</a>                                
+                                <a href="Mlogindemo.html#loginId" onclick="return myMenu(7);" class="dropdown-item">Demo Account</a>
+                            </div>
+                        </div>
+                        <a href="Mlogin.html#pricing" onclick="return myMenu(8);" class="nav-item nav-link ">Pricing</a>                        
+                        <a href="Mlogin.html#loginId" onclick="return myMenu(9);" class="nav-item nav-link active">Login</a>                    
+                        <a href="aiiindex.html#contactUs" onclick="return myMenu(10);" class="nav-item nav-link">Contact</a>
+                    </div>
+                    <div class="d-none d-lg-flex ms-2">
+                        <a class="btn btn-light btn-sm-square rounded-circle ms-3" href="">
+                            <small class="fab fa-facebook-f text-primary"></small>
+                        </a>
+                        <a class="btn btn-light btn-sm-square rounded-circle ms-3" href="">
+                            <small class="fab fa-linkedin-in text-primary"></small>
+                        </a>                        
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container">
+                <h1 class="display-3 mb-4 animated slideInDown">FAQ</h1>
+                <nav aria-label="breadcrumb animated slideInDown">
+
+                </nav>
+            </div>
+        </div>
+        <div id="marking" class="ex-basic-2">
+            <div class="container">
+                <div class="card">
+                    <div class="card-body">   
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-lg-12">
+                                    <div class="text-container">
+
+                                        <h2>Unlock the Power of Neural Networks with AI Investment Web</h2>
+                                        <h3>Revolutionizing Signal Prediction for Financial Markets</h3>
+
+                                        <h3>Introduction to Neural Networks</h3>
+                                        <p>Neural networks are transforming the landscape of financial market analysis. Drawing inspiration from the human brain’s complex neural structures, these sophisticated mathematical models process and analyze vast amounts of data to uncover trading opportunities. With AI Investment Web, you can leverage this advanced technology to enhance your trading decisions and maximize your returns.</p>
+
+                                        <h3>How Neural Networks Work</h3>
+                                        <p>Much like the human brain, a neural network is composed of interconnected neurons that process information. Each neuron functions as a mathematical function, collecting and classifying data according to specific architectures. This setup allows neural networks to perform tasks similar to traditional statistical methods, such as curve fitting and regression analysis, but with greater precision and efficiency.</p>
+
+                                        <h3>AI Investment Web: Your Edge in the Market</h3>
+                                        <ul class="list-unstyled li-space-lg indent">
+
+                                            <li class="media">
+                                                <i class="fas fa-square"></i>
+                                                <div class="media-body"><strong>AI-Powered Insights</strong>
+                                                    <p>Our platform utilizes cutting-edge AI and neural networks to deliver daily buy and sell signals. By analyzing historical time-series data, our neural networks identify subtle patterns and nonlinear interdependencies that other methods may miss, providing you with a competitive edge in the market.</p>
+                                                </div>
+                                            </li>
+                                            <li class="media">
+                                                <i class="fas fa-square"></i>
+                                                <div class="media-body"><strong>Customized Solutions</strong>
+                                                    <p>Each stock is unique, and so are our solutions. AI Investment Web tailors its neural network models to match the specific characteristics of each stock, offering personalized trading signals that enhance your investment strategy.</p>
+                                                </div>
+                                            </li>
+                                            <li class="media">
+                                                <i class="fas fa-square"></i>
+                                                <div class="media-body"><strong>Continuous Learning</strong>
+                                                    <p>Our neural network system continually learns from previous outputs to refine its predictions. This adaptive learning process ensures that your trading strategies remain effective in dynamic market conditions.</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+
+                                        <h3>Advantages of Neural Networks</h3>
+                                        <ul class="list-unstyled li-space-lg indent">
+
+                                            <li class="media">
+                                                <i class="fas fa-square"></i>
+                                                <div class="media-body"><strong>Efficiency and Consistency</strong>
+                                                    <p>Neural networks operate continuously and consistently, far surpassing human capabilities. They process data quickly and accurately, providing reliable trading signals around the clock.</p>
+                                                </div>
+                                            </li>
+                                            <li class="media">
+                                                <i class="fas fa-square"></i>
+                                                <div class="media-body"><strong>Enhanced Pattern Recognition</strong>
+                                                    <p>These networks are adept at detecting complex patterns and interdependencies in data, allowing for more accurate predictions and better trading decisions.</p>
+                                                </div>
+                                            </li>
+                                            <li class="media">
+                                                <i class="fas fa-square"></i>
+                                                <div class="media-body"><strong>Risk Management</strong>
+                                                    <p>While neural networks offer powerful predictive capabilities, transparency in their processes is essential. AI Investment Web incorporates risk management trading logic to ensure that predictions align with market realities, providing a balanced approach to trading.</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+
+                                    </div> </div> <div class="text-container">
+                                    <h3>Business Applications</h3>
+                                    <p>Neural networks are invaluable tools in finance, used for analyzing transaction histories, understanding asset movements, and predicting market outcomes. AI Investment Web harnesses this technology to provide you with actionable insights and strategic trading opportunities.</p>
+                                </div> <div class="text-container">
+                                    <h3>Conclusion</h3>
+                                    <p>AI Investment Web is at the forefront of financial market analysis, using neural networks to deliver unparalleled insights and trading signals. Whether you are a seasoned investor or new to trading, our platform offers the tools and intelligence you need to make informed decisions and achieve your financial goals.</p>
+                                </div> <div class="text-container last">
+                                    <h3>Explore AI Investment Web Today</h3>
+                                    <p>Unlock the full potential of neural networks with AI Investment Web. Enhance your trading strategies, improve your market predictions, and stay ahead of the competition. Join us now and experience the future of trading.</p>
+                                    <a class="btn-outline-reg" href="aiiindex.html">BACK</a>
+                                </div> </div>
+                        </div> </div>
+                </div> </div> <div id="paper1" class="ex-basic-2">
+
+                <div class="container">
+                    <div class="card">
+                        <div class="card-body">                        
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">
+                                        <div class="text-container">
+
+                                            <h2>Adaptive Market Analysis Using Neural Networks</h2>
+                                            <p>
+                                                &nbsp;
+                                            </p>                                    
+                                            <h3>Abstract</h3>
+                                            <p>
+                                                This paper presents a comprehensive overview of our neural network architecture designed to facilitate adaptive market analysis. The architecture consists of two distinct phases: the Learning Phase and the Real-Time Prediction Phase. This dual-phase approach ensures that our system can dynamically respond to evolving market conditions, optimizing trading decisions through the integration of the latest data and machine learning capabilities. Additionally, we discuss the technical advancements of our system, such as automated reversal pattern recognition, and address a key limitation concerning the transparency of decision-making.
+                                            </p>
+
+                                            <h3>1. Introduction</h3>
+                                            <p>
+                                                Neural networks have revolutionized various fields by providing sophisticated methods for data analysis and pattern recognition. In the context of financial markets, neural networks offer the potential to enhance trading strategies by identifying complex patterns in historical and real-time data. This paper details our neural network architecture, which is specifically designed for adaptive market analysis. 
+                                            </p>                                    
+                                            <h3>2. Neural Network Architecture</h3>
+                                            <p>
+                                                Our neural network architecture is structured to perform adaptive market analysis through two primary phases: the Learning Phase and the Real-Time Prediction Phase.
+                                            </p>  
+                                            <h3>2.1 Learning Phase</h3>
+                                            <p>
+                                                In the Learning Phase, historical stock data is analyzed using the Moving Average Convergence Divergence (MACD) technical indicator to generate signals. These signals serve as input data for supervised learning within our Neural Network AI. The process involves several key steps:
+                                            </p>  
+
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Data Collection and Preprocessing</strong>
+                                                        <p>Historical stock data is collected and processed to compute MACD signals. These signals provide a basis for identifying trends and generating training data for the neural network.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Training Data Engine</strong>
+                                                        <p>The Training Data Engine creates precise input-output pairs for the neural network's supervised learning. These pairs are used to train the neural network to recognize patterns and predict outcomes based on historical data.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Feedback Control</strong>
+                                                        <p>Feedback control mechanisms are implemented to ensure the network evolves continuously. By incorporating new data and adjusting its parameters, the network enriches its training dataset, maintaining its relevance and accuracy over time.</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <h3>2.2 Real-Time Prediction Phase</h3>
+                                            <p>
+                                                In the Real-Time Prediction Phase, the system uses real-time stock data to generate live predictions of buy or sell signals. The process includes:
+                                            </p>  
+
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Real-Time Data Processing</strong>
+                                                        <p>The system processes real-time stock data to make immediate predictions. Unlike traditional methods that attempt to predict future prices, our AI system adapts to current market trends.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Signal Generation and Recalibration</strong>
+                                                        <p>If the AI-generated signal proves incorrect, the decision logic undergoes recalibration. This recalibration process improves the accuracy of subsequent predictions by learning from past errors and adapting to new market conditions.</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <h3>3. Technical Advancement: Automated Reversal Pattern Recognition</h3>
+                                            <p>
+                                                One of the paramount advantages of our design is the utilization of neural networks to autonomously discern and learn primary reversal patterns governing buy and sell signals. This approach eliminates the need for manual visual inspection of price charts by human analysts. Instead, our system employs complex pattern recognition algorithms to identify subtle, yet statistically significant, reversal indicators. Key aspects include:
+                                            </p>
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Pattern Recognition Algorithms</strong>
+                                                        <p>These algorithms are capable of detecting intricate patterns within large datasets, enabling the system to recognize reversal signals that might be missed by traditional methods.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Enhanced Precision and Timeliness</strong>
+                                                        <p>By reducing reliance on human intervention, our system can make more precise and timely trading decisions. This leads to improved strategy effectiveness and optimized trading outcomes.</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                        </div> </div> <h3>4. Key Limitation: Lack of Transparency in Decision-Making</h3>
+                                    <p>
+                                        Despite its advantages, our approach has an inherent limitation in its lack of transparency. The neural network AI generates buy and sell signals without providing explicit, interpretable rules or reasons for its decisions. Key points include:
+                                    </p>
+                                    <ul class="list-unstyled li-space-lg indent">
+
+                                        <li class="media">
+                                            <i class="fas fa-square"></i>
+                                            <div class="media-body"><strong>Opaque Decision Processes</strong>
+                                                <p>Unlike traditional methods where decision rules are visible and understandable, the neural network’s decision-making process remains a "black box." This opacity can make it difficult to understand why certain predictions are made.</p>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <i class="fas fa-square"></i>
+                                            <div class="media-body"><strong>Challenges in Validation and Verification</strong>
+                                                <p>The accuracy of the neural network's predictions can only be assessed retrospectively. This makes it challenging to validate and verify the system’s real-time predictions, potentially reducing trust and usability among users who prefer clear, interpretable decision rules.</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                </div> </div> <div class="text-container last">
+                                <h3>5. Conclusion</h3>
+                                <p>
+                                    Our neural network architecture represents a significant advancement in adaptive market analysis, offering enhanced precision and efficiency through sophisticated pattern recognition and continuous learning capabilities. However, the lack of transparency in its decision-making process remains a notable limitation that needs to be addressed to fully harness the potential of neural networks in financial trading.                                
+                                </p>
+                                <a class="btn-outline-reg" href="aiiindex.html">BACK</a>
+                            </div> </div> </div> 
+                </div> <div id="paper2" class="ex-basic-2">
+                    <div class="container">
+                        <div class="card">
+                            <div class="card-body">                              
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-12">
+                                            <div class="text-container">
+
+                                                <h2>Hierarchical Neural Network Architecture for Adaptive Algorithmic Trading</h2>
+                                                <h4>Multi-Layered Neural Network Refinement and Automated Signal Execution</h4>
+                                                <p style="font-size: 0.9rem; color: #666;">AII Web &middot; May 2, 2026</p>
+                                                
+                                                <h3>Abstract</h3>
+                                                <p>
+                                                    This research presents a hierarchical neural network (NN) architecture that bridges the gap between raw market momentum identification and risk-mitigated execution. The fundamental design philosophy inverts the conventional supervised-learning approach: rather than training on all available price data, the system first generates a high-frequency transaction set and then systematically purges negative and low-alpha positions — retaining only high-conviction 'success patterns' for deep backpropagation training (Models TR30–TR31). A three-layer filtering stack (TR30, TR31, TR32) iteratively cleanses training data, culminating in TR33, a consensus execution engine that aligns signals with broader market trend direction. Implemented in Java via an AI-Assisted Software Engineering (AASE) workflow — approximately 70% of functional code generated by Large Language Models and rigorously human-verified — the system has been live-tested on the Alpaca paper trading platform across major index ETFs (SPY, DIA), with all results publicly accessible.
+                                                </p>
+
+                                                <h3>I. Design Philosophy &amp; Core Methodology</h3>
+                                                <p>
+                                                    The fundamental limitation of conventional supervised trading models is that they train indiscriminately on all available price history, forcing the network to fit noise alongside genuine signal. This architecture inverts that paradigm. The core idea is to first generate a high-frequency trading set across broad market data, then aggressively filter it — discarding every negative and low-profit position — leaving only the high-profit trades. A backpropagation neural network is then trained exclusively on these surviving 'winning' patterns, teaching it to recognize only the technical conditions that historically precede significant moves.
+                                                </p>
+                                                <p>
+                                                    This three-stage process — generate broadly, prune aggressively, retrain on the residual — is the central innovation of the TR architecture. Each model in the stack acts as a quality filter for the model below it, progressively increasing the margin requirements and decreasing the false-positive rate.
+                                                </p>
+
+                                                <ul class="list-unstyled li-space-lg indent">
+                                                    <li class="media">
+                                                        <i class="fas fa-square"></i>
+                                                        <div class="media-body"><strong>A. High-Volume Signal Generation</strong>
+                                                            <p>The pipeline begins by generating a wide array of candidate trades derived from initial NN predictions on directional bias (long or short). This intentionally broad sweep creates the raw dataset from which high-alpha patterns are later isolated.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li class="media">
+                                                        <i class="fas fa-square"></i>
+                                                        <div class="media-body"><strong>B. Alpha-Pattern Filtering</strong>
+                                                            <p>Training data is filtered to exclude all negative-profit and marginal transactions. This prevents the network from learning statistical noise or low-probability entry signals that would dilute predictive accuracy in live execution.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li class="media">
+                                                        <i class="fas fa-square"></i>
+                                                        <div class="media-body"><strong>C. Targeted Backpropagation</strong>
+                                                            <p>A backpropagation neural network is trained exclusively on the isolated high-profit dataset to identify the specific technical signatures — the precise combination of indicator states — that characterize high-probability winning trades.</p>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+
+                                                <h3>II. Hierarchical Model Architecture</h3>
+                                                <p>
+                                                    The innovation lies in the vertical integration of three distinct processing layers, each serving as a quality filter for the subsequent stage. Table I summarizes the configuration of each model in the stack.
+                                                </p>
+
+                                                <p class="caption-text">Table I. Model Stack Configuration Summary</p>
+                                                <table class="academic-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Model</th>
+                                                            <th>Role</th>
+                                                            <th>Key Threshold</th>
+                                                            <th>Primary Output</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><strong>TR30</strong></td>
+                                                            <td>Baseline trend classifier</td>
+                                                            <td>Confidence &ge; 0.70</td>
+                                                            <td>Long/Short signal</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>TR31</strong></td>
+                                                            <td>Profit filter &amp; retrainer</td>
+                                                            <td>Net P&amp;L maximized</td>
+                                                            <td>Success-only dataset</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>TR32</strong></td>
+                                                            <td>Conservative filter</td>
+                                                            <td>Stricter margin gap</td>
+                                                            <td>High-conviction signals only</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>TR33</strong></td>
+                                                            <td>Consensus executor</td>
+                                                            <td>TR31 vs TR32 best signal</td>
+                                                            <td>Live trade order</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <ul class="list-unstyled li-space-lg indent">
+                                                    <li class="media">
+                                                        <i class="fas fa-square"></i>
+                                                        <div class="media-body"><strong>A. TR30: Baseline Trend Identification</strong>
+                                                            <p>TR30 is the foundation layer. It analyzes raw directional momentum using a 3-month sliding window over a 5-year historical dataset. Its 20-parameter input vector includes MACD, RSI, EMA, and volume-weighted price action. A backpropagation NN determines trend probability and emits a binary classification:</p>
+                                                            <p>&bull; <strong>Bullish:</strong> target vector <span class="code-inline">[0.9, 0.1]</span> when P_future &gt; P_current<br>
+                                                            &bull; <strong>Bearish:</strong> target vector <span class="code-inline">[0.1, 0.9]</span> when P_future &lt; P_current</p>
+                                                            <p>A confidence gate suppresses any signal where the model's internal confidence falls below 0.70, ensuring only high-certainty directional calls propagate downstream.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li class="media">
+                                                        <i class="fas fa-square"></i>
+                                                        <div class="media-body"><strong>B. TR31: Strategic Profit Filtering</strong>
+                                                            <p>TR31 introduces financial viability by simulating trades from TR30's raw output and evaluating real-world performance. A parameter sweep optimizes the performance threshold to maximize net P&amp;L. All negative-profit trades are then purged from the training set, and the model is retrained exclusively on the 'success-only' residual using backpropagation — teaching it the precise characteristics of winning entry conditions.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li class="media">
+                                                        <i class="fas fa-square"></i>
+                                                        <div class="media-body"><strong>C. TR32: Advanced Conservative Filtering</strong>
+                                                            <p>TR32 applies a stricter set of statistical requirements than TR31. It demands a significantly larger profit-percentage margin and removes a higher proportion of low-profit trades, resulting in a model that triggers only on setups with substantial historical edge. TR32 prioritizes capital preservation over trade frequency.</p>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+
+                                                <h3>III. Signal Trading &amp; Execution Logic</h3>
+                                                
+                                                <ul class="list-unstyled li-space-lg indent">
+                                                    <li class="media">
+                                                        <i class="fas fa-square"></i>
+                                                        <div class="media-body"><strong>A. TR33: Signal Consensus &amp; Validation</strong>
+                                                            <p>TR33 manages the transition from neural analysis to live order execution and mitigates 'black box' risk through a consensus mechanism:</p>
+                                                            <p>&bull; <strong>Dual-layer verification:</strong> a trade fires only on the best-performing signal identified by either TR31 or TR32.<br>
+                                                            &bull; <strong>Trend alignment:</strong> TR30_trend is queried to confirm the signal aligns with the broader market regime.<br>                                                            
+                                                            &bull; <strong>Price boundary check:</strong> 
+                                                            signals are validated based on their historical price position. If the current price sits within the 30%&ndash;70% range of the historical window, both TR31 and TR32 must emit identical signals to execute. Otherwise, if the price falls outside this range, the system defaults to the signal of whichever model (TR31 or TR32) currently boasts the best performance.
+                                                            <br>
+                                                            &bull; <strong>Daily retraining:</strong> the full pipeline — data fetch, simulation, and training — repeats daily to adapt to shifting market conditions.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li class="media">
+                                                        <i class="fas fa-square"></i>
+                                                        <div class="media-body"><strong>B. Risk Management Framework</strong>
+                                                            <p><strong>Dynamic protection:</strong> trailing stops and hard stop-loss orders are evaluated by checking the stop loss module before each final signal.</p>
+                                                            <p><strong>Over-trading prevention:</strong> multiple intra-day transactions on the same instrument are restricted to control slippage and commission drag.</p>
+                                                            <p><strong>System reset:</strong> at 450 iterations the system triggers an INITIAL reset, forcing a fresh re-learning phase to prevent weight decay and overfitting.</p>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+
+                                                <h3>IV. Implementation &amp; AI-Assisted Development</h3>
+                                                <p>
+                                                    The codebase is written in Java, Python and developed under an AI-Assisted Software Engineering (AASE) workflow. Approximately 70% of functional logic and boilerplate code was generated by Large Language Models (LLMs) using natural-language descriptions of the desired logic flow. This approach significantly accelerated the development cycle without sacrificing structural integrity.
+                                                </p>
+                                                <p>
+                                                    All core architecture decisions, logic flows, and risk-management frameworks were designed entirely by the development team. Every line of LLM-generated code underwent strict manual oversight, refactoring, and latency optimization before integration.
+                                                </p>
+                                                <p>
+                                                    The AASE model demonstrates that human-directed AI code generation, when paired with rigorous human verification, can produce production-grade trading infrastructure at significantly reduced development cost.
+                                                </p>
+
+                                                <h3>V. Empirical Results</h3>
+                                                <p>
+                                                    The TR33 strategy has been back-tested and live-tested via the Alpaca paper trading platform across major index ETFs (SPY, DIA). All trade records, performance logs, and execution metrics are publicly accessible and unedited, providing a transparent, real-time view of the strategy's day-to-day behavior.
+                                                </p>
+                                                <p>
+                                                    This trading bot system operates as a fully automatic architecture, continuously transmitting generated signals directly to the Alpaca trading server to execute buy and sell transactions instantly. No human action or manual intervention is required at any stage of the live deployment pipeline.
+                                                </p>
+                                                <p>
+                                                    Real-time performance data and automated trade logs are available at:<br>
+                                                    <strong>Performance Dashboard:</strong> <a href="https://iiswebapi.onrender.com/aimain/aidashboard.html" target="_blank">https://iiswebapi.onrender.com/aimain/aidashboard.html</a>
+                                                </p>
+
+                                                <h3>VI. Technical Considerations &amp; Limitations</h3>
+                                                <ul class="list-unstyled li-space-lg indent">
+                                                    <li class="media">
+                                                        <i class="fas fa-square"></i>
+                                                        <div class="media-body"><strong>A. Automated Pattern Recognition</strong>
+                                                            <p>The system autonomously identifies reversal and continuation patterns without human intervention during live operation, reducing emotional bias and improving decision latency relative to discretionary approaches.</p>
+                                                        </div>
+                                                    </li>
+                                                    <li class="media">
+                                                        <i class="fas fa-square"></i>
+                                                        <div class="media-body"><strong>B. Transparency Limitation</strong>
+                                                            <p>While multi-layer filtering substantially improves signal quality, the internal weight matrices of each neural network remain opaque. The system partially addresses this through Technical Analysis (TA) Scores (e.g., Bullish Score: 70) as a secondary, human-readable validation layer overlaid on each signal — providing interpretable context without exposing raw weights.</p>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+
+                                                <h3>VII. Conclusion</h3>
+                                                <p>
+                                                    This hierarchical approach effectively filters market noise by training exclusively on high-alpha patterns extracted from high-frequency datasets. The generate-prune-retrain loop — the core design insight — prevents the network from fitting low-probability signals and focuses its predictive capacity on setups with demonstrated historical edge.
+                                                </p>
+                                                <p>
+                                                    By combining AI-accelerated development with rigorous financial pruning across three model layers, the architecture achieves superior risk-adjusted returns relative to standard buy-and-hold benchmarks in the tested period.
+                                                </p>
+                                                <p>
+                                                    Future work will explore extending the filtering stack to additional asset classes and integrating reinforcement learning for adaptive stop-loss calibration.
+                                                </p>
+
+                                            </div> </div>
+                                    </div>
+                                    <a class="btn-outline-reg" href="aiiindex.html">BACK</a>
+                                </div> </div> </div> </div> </div> <div id="mfaq" class="ex-basic-2">
+                        <div class="container">
+                            <h2 class="title" style="color: darkblue">Available Add-on Feature</h2>
+                        </div> </div> <div id="scanner" class="ex-basic-2">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">
+                                        <div class="text-container">
+
+                                            <h2>Advanced Stock Scanner Feature</h2>
+                                            <p>
+                                                Unlock the potential of the market with our cutting-edge Stock Scanner feature. Designed to give you a competitive edge, this innovative tool actively searches for promising bullish stocks, leveraging the power of AI neural networks to ensure you get the best opportunities for your investments. 
+                                            </p>                                    
+
+                                            <h3>How It Works</h3>
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Comprehensive Market Analysis</strong>
+                                                        <p>Our system continuously monitors the stock market, scanning a vast array of stocks to identify those with the potential to surge.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>AI-Powered Filtering</strong>
+                                                        <p>Utilizing sophisticated AI neural networks, the Stock Scanner meticulously analyzes each identified stock, filtering out only the most promising bullish candidates. This advanced filtering process ensures that you receive high-quality, actionable insights.</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <h3>Why Choose Our Stock Scanner?</h3>
+
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Enhanced Accuracy</strong>
+                                                        <p>By harnessing the power of AI, our Stock Scanner can detect complex patterns and trends that traditional methods might miss, providing you with more accurate and reliable stock picks.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Effortless Efficiency</strong>
+                                                        <p>Save time and effort with our automated scanning and filtering process. Instead of sifting through countless stocks manually, let our AI do the heavy lifting, delivering only the most promising bullish stocks directly to you.</p>
+                                                    </div>
+                                                </li>                                    
+                                            </ul>
+                                            <h3>Purchase Add On Feature</h3>
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillPriceS20	$40.00</strong>
+                                                        <p>
+                                                            Billing Stock Scan for Bullish Nasdaq Stock
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillPriceS22	$40.00</strong>
+                                                        <p>
+                                                            Billing Stock Scan for Bullish SP500 Stock
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillPriceS26	$40.00</strong>
+                                                        <p>
+                                                            Billing Stock Scan for Bullish Toronto Stock
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                            </ul>                                
+                                        </div> <h3>Get Started Today</h3>
+                                        <p>
+                                            Don't miss out on the opportunity to revolutionize your trading strategy with our advanced Stock Scanner. Sign up now to experience the power of AI-driven market analysis and start uncovering the most promising bullish stocks on the stock market.
+                                        </p>                            
+                                    </div> <a class="btn-outline-reg" href="Mlogin.html#pricing">BACK</a>
+                                </div> </div> </div> </div> <div id="fundF" class="ex-basic-2">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">
+                                        <div class="text-container">
+
+                                            <h2>Fund Manager Portfolio Feature</h2>
+                                            <p>
+                                                Unlock the potential of expert trading strategies by subscribing to our exclusive Fund Manager Portfolios. Gain access to professional traders' portfolios and receive real-time notifications on stock signal changes.
+                                            </p>                                    
+
+                                            <h3>Why Subscribe to Our Fund Manager Portfolios?</h3>
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Access Expert Insights</strong>
+                                                        <p>Review and follow the portfolios of professional traders. Learn from their strategies and replicate their success in your own trading endeavors.
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Stay Informed with Real-Time Notifications</strong>
+                                                        <p>Never miss an opportunity. Receive instant notifications whenever there is a change in stock signals, allowing you to make timely and informed decisions.
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Comprehensive Portfolio Review</strong>
+                                                        <p>Gain full visibility into the fund managers’ portfolios. Analyze their investment choices and performance metrics to better understand market movements and trends.
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <h3>Key Benefits</h3>
+                                            <p>Join Our Community of Successful Traders.
+                                            </p>
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Professional Guidance</strong>
+                                                        <p>Benefit from the expertise of seasoned traders. Our fund managers employ advanced strategies and market analysis to curate their portfolios.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Enhanced Decision-Making</strong>
+                                                        <p>Stay ahead of the market with timely updates and insights. Make informed trading decisions with the confidence of professional backing.</p>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                            <h3>Purchase Add On Feature</h3>
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillMgr-fund11	$60.00</strong>
+                                                        <p>
+                                                            High_Growth_Fund Mgr
+                                                            <br>
+                                                            Feature: Growth Fund Manager - Multi-Sector Long/Short Strategy. This system-driven manager utilizes advanced analytics to identify strategic long and short positions across high-potential growth sectors. The fund dynamically allocates capital across a diversified landscape, including Healthcare, Technology Innovators, Blue-Chip Equities, Precious Metals, and Dividend Growth to optimize returns and manage volatility.
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillMgr-fund13	$60.00</strong>
+                                                        <p>
+                                                            Index_Fund_Mgr
+                                                            <br>
+                                                            Feature: Algorithmic Fund Manager - US Equity Index Strategy. This system-driven manager utilizes advanced analytics to identify strategic long and short positions within US Index ETFs. By dynamically allocating capital across high-potential growth sectors, the fund leverages broader market trends to capture alpha while maintaining a disciplined approach to risk management.
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillMgr-fund15	$60.00</strong>
+                                                        <p>
+                                                            High_Return_Fund Mgr
+                                                            <br>
+                                                            Feature: Proprietary Intelligence Manager - Internal Database Optimization. This system-driven manager utilizes a sophisticated search architecture to scan our proprietary internal database for high-conviction equities. By leveraging exclusive data insights to identify strategic long and short positions, the fund dynamically allocates capital to the highest-performing assets identified by our internal quantitative models.
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillMgr-fund23	$60.00</strong>
+                                                        <p>
+                                                            Politician_value Mgr
+                                                            <br>
+                                                            Feature: Legislative Sentiment Tracker - Institutional Political Intelligence. This system-driven manager monitors high-value transaction data disclosed under the STOCK Act to identify strategic long and short positions. The fund focuses exclusively on high-conviction trades by US policymakers, filtering for significant activity exceeding $100,000 within the trailing 90-day window. By tracking this unique alternative data source, the fund seeks to capture alpha based on the legislative and economic insights of institutional insiders.
+                                                        </p>
+                                                    </div>
+                                                </li>                                                
+                                            </ul>                                
+                                        </div> <h3>Subscribe Today</h3>
+                                        <p>
+                                            Don’t miss out on the advantages of professional trading strategies. Subscribe to our Fund Manager Portfolios and take your trading to the next level. 
+                                            Experience the power of expert trading with AI Investment Web. Your journey to smarter, more profitable investing begins here.                            </p>                            
+                                    </div> <a class="btn-outline-reg" href="Mlogin.html#pricing">BACK</a>
+                                </div> </div> </div> </div> <div id="customnn" class="ex-basic-2">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">
+                                        <div class="text-container">
+
+                                            <h2>Custom AI Models Feature</h2>
+                                            <p>
+                                                Unlock the full potential of your trading strategy by subscribing to our custom Neural Network AI models, developed in collaboration with our expert partners. These models have been rigorously tested and proven to deliver profitable trading outcomes. 
+                                            </p>                                    
+
+                                            <h3>Why Choose Our Custom AI Models?</h3>
+
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Proven Profitability</strong>
+                                                        <p>Benefit from AI models that have a track record of success. Our custom models are designed to enhance your trading performance and maximize returns.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Expert Collaboration</strong>
+                                                        <p>Developed by industry experts, our AI models incorporate advanced strategies and insights, providing you with a robust and reliable trading tool.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Tailored to Your Needs</strong>
+                                                        <p>Our AI models are customizable to fit your specific trading preferences and goals. Whether you are a beginner or an experienced trader, our models can be tailored to suit your needs.</p>
+                                                    </div>
+                                                </li>                                    
+                                            </ul>
+
+                                            <h3>Key Features</h3>
+
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Advanced Neural Network Technology</strong>
+                                                        <p>Leverage state-of-the-art AI technology to analyze market trends and generate accurate trading signals.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>Continuous Improvement</strong>
+                                                        <p>
+                                                            Our models are continuously updated and refined based on real-time market data, ensuring they remain effective in dynamic market conditions.
+                                                        </p>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+
+                                            <h3>Purchase Add On Feature</h3>
+                                            <ul class="list-unstyled li-space-lg indent">
+
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillCustTR-NN91	$100.00</strong>
+                                                        <p>
+                                                            Experience the TR_NN91, an AI-driven trading model custom-developed to capture market equilibrium. By synchronizing the momentum-based insights of the TR31 and TR32 neural networks, this strategy only emits signals when high-confidence thresholds are met. This dual-model approach filters out market noise and reduces the risks inherent in single-strategy systems.                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillCustTR-NN92	$100.00</strong>
+                                                        <p>
+                                                            Experience the TR_NN92, where neural network intelligence meets disciplined rule-based logic. This model captures market trends by aligning the momentum data of TR31 and TR32. With its integrated sideways-trend filter, TR_NN92 significantly reduces false entries, offering a refined and resilient approach to automated trading.                                                        </p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillCustTR-NN93	$100.00</strong>
+                                                        <p>
+                                                        Experience TR_NN93, where neural network intelligence meets disciplined rule-based logic. This model captures market trends by aligning the momentum data of TR31 and TR32, utilizing a consecutive-signal verification process. By requiring the current signal to confirm the previous one before execution, TR_NN93 filters out market noise, significantly enhancing entry accuracy and maximizing profit potential.                                                    </div>
+                                                </li>                                                
+                                                <li class="media">
+                                                    <i class="fas fa-square"></i>
+                                                    <div class="media-body"><strong>BillCustTR-NN81	$100.00</strong>
+                                                        <p>
+                                                        Experience TR_NN81, a powerful synthesis of the Lorentzian ML-Hybrid algorithm from Tradingview web system. We’ve taken one of the industry's most respected trading frameworks and optimized it for our system to capture high-probability opportunities. TR_NN81 transforms advanced mathematical classification into actionable signals, delivering a sophisticated edge in today’s competitive markets. 
+                                                </li>
+                                            </ul>
+                                        </div> <h3>Subscribe Today</h3>
+                                        <p>
+                                            Don't miss out on the opportunity to enhance your trading strategy with our custom Neural Network AI models. Subscribe now and join the ranks of successful traders who have unlocked profitable trading opportunities with our cutting-edge technology.                            </p>                            
+                                    </div> <a class="btn-outline-reg" href="Mlogin.html#pricing">BACK</a>
+                                </div> </div> </div> </div> <div class="container-fluid bg-dark text-light footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
+                        <div class="container py-5">
+                            <div class="row g-5">
+                                <div class="col-lg-3 col-md-6">
+                                    <h4 class="text-white mb-4">Our Office</h4>
+
+                                    <p class="mb-2"><i class="fa fa-globe me-3"></i>version <span id="iisverid"></span></p>
+<!--                                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>91 E 4th St Oswego, New York(NY)</p>
+                                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>(585) 468-5638</p>
+                                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@aiiweb.com</p>-->
+                                    <div class="d-flex pt-2">
+                                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-twitter"></i></a>
+                                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
+                                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-youtube"></i></a>
+                                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-linkedin-in"></i></a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <h4 class="text-white mb-4">Services</h4>
+                                    <a class="btn btn-link" href="Mfeature.html#feature">AI Feature</a>
+                                    <a class="btn btn-link" href="Mperform.html">Performance</a>
+                                    <a class="btn btn-link" href="Mlogindemo.html">Demo Account</a>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <h4 class="text-white mb-4">Quick Links</h4>
+                                    <a class="btn btn-link" href="aiiindex.html#about">About Us</a>
+                                    <a class="btn btn-link" href="aiiindex.html#contactUs">Contact Us</a>
+                                    <a class="btn btn-link" href="Mlogin.html#loginId">Login</a>
+                                    <a class="btn btn-link" href="Mlogindisclaimer.html">Terms & Condition</a>
+                                </div>
+                                </div>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+                    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+                    <script src="aimain/lib/wow/wow.min.js"></script>
+                    <script src="aimain/lib/easing/easing.min.js"></script>
+                    <script src="aimain/lib/waypoints/waypoints.min.js"></script>
+                    <script src="aimain/lib/owlcarousel/owl.carousel.min.js"></script>
+                    <script src="aimain/lib/counterup/counterup.min.js"></script>
+
+                    <script src="aimain/js/main.js"></script>
+                    <script src="aimain/jsmain/iisweb.js"></script>
+                    <script src="aimain/jsmain/aiiindex_menu.js"></script>                                 
+                    </body>
+
+                    </html>
+

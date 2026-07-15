@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="initIISURL_java" th:data-value="${init_iisurl_java}">   
+    <meta id="initIISURL_python" data-value="{{ init_iisurl_python }}">  
+    <link href="aimain/img/favicon.ico" rel="icon">             
+    <title>AII Stock App - Account Statements</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AeQXwgKYhKjAEQdawqFQDXYYRiEffGIJgMfgDnKeecf0zmk_XPC-Q4_ZUGTZ6LySeC85bDHIm-zgh_hs&currency=CAD&disable-funding=paylater"></script>     
+
+    <script src="aimain/jsmain/iisweb.js"></script>         
+    <script src="aimain/aisub/jssub/aiiindex_submenu.js"></script>         
+    <script src="aimain/aiapp/js/aiappayment.js"></script>
+    <link href="aimain/aiapp/css/blink.css" rel="stylesheet">    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        html, body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; 
+            height: 100vh; 
+            width: 100vw;
+            display: block;
+        }
+
+        #app-container {
+            height: 100vh;
+            width: 100%; 
+            display: flex;
+            flex-direction: column;
+            background-color: #161b22; 
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+        }
+
+        #main-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-bottom: 4rem;
+            background-color: #161b22; 
+
+            &::-webkit-scrollbar { display: none; }
+            -ms-overflow-style: none;  
+            scrollbar-width: none;  
+        }
+        
+        .nav-icon { font-size: 16px; }
+        .text-green-500 { color: #34d399; }
+        .text-red-500 { color: #f87171; }
+        .text-sky-400 { color: #38b2ac; }
+
+        .icon-home::before { content: "🏠"; }
+        .icon-positions::before { content: "📈"; }
+        .icon-config::before { content: "⚙️"; }
+        .icon-profile::before { content: "👤"; }
+    </style> 
+        
+</head>
+<body>
+    <div id="app-container" class="mx-auto bg-gray-900 w-full sm:max-w-xl md:max-w-3xl lg:max-w-5xl h-screen flex flex-col">
+        
+        <header id="fixed-header" class="bg-gray-900 border-b border-gray-700 w-full p-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <button id="back-button" class="text-sky-400 mr-3 text-2xl font-light hover:text-sky-300 transition">&larr;</button>
+                <h1 class="text-xl font-bold text-white">Billing Statements</h1>
+            </div>
+            <button id="refresh-button" class="text-2xl text-sky-400 hover:text-sky-300 transition" aria-label="Refresh Data">
+                <span class="refresh-icon">&#x21BB;</span>
+            </button>
+        </header>
+
+        <div id="main-content" class="flex-grow overflow-y-auto">
+            </div>
+    </div>
+    
+    <nav id="nav-bar" class="fixed bottom-0 left-0 right-0 z-20 bg-gray-900 border-t border-gray-700 w-full sm:max-w-xl md:max-w-3xl lg:max-w-5xl mx-auto">
+        <div class="flex justify-around items-center h-16 w-full">
+            <button class="nav-item flex flex-col items-center justify-center p-2 transition text-gray-400" data-page="#">
+                <span class="icon-home nav-icon"></span>
+                <span class="text-xs mt-1">Home</span>
+            </button>
+
+            <button class="nav-item flex flex-col items-center justify-center p-2 transition text-gray-400" data-page="#">
+                <span class="icon-positions nav-icon"></span>
+                <span class="text-xs mt-1">Positions</span>
+            </button>
+
+            <button class="nav-item flex flex-col items-center justify-center p-2 transition text-gray-400" data-page="#">
+                <span class="icon-config nav-icon"></span>
+                <span class="text-xs mt-1">Config</span>
+            </button>
+
+            <button class="nav-item flex flex-col items-center justify-center p-2 transition text-sky-400 border-t-2 border-sky-400" data-page="#">
+                <span class="icon-profile nav-icon"></span>
+                <span class="text-xs mt-1">Profile</span>
+            </button>
+        </div>
+    </nav>
+
+    <div id="loading-spinner" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/60 backdrop-blur-[2px]">
+        <div class="flex flex-col items-center justify-center h-full min-h-[100px] p-2">
+            <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-sky-400 mb-2"></div>
+            <p class="text-gray-400 text-sm">Waiting for the data from the backend...</p>
+        </div>
+    </div>    
+</body>
+</html>
