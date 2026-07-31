@@ -7,7 +7,7 @@ var iisurl_ORACLE = "http://40.233.87.254:8081";
 var iisurl_ORACLE_JAVA = "http://132.145.102.207:8081";
 var iisurl_RENDER = "https://iiswebapi.onrender.com";
 var iisurl_LOCAL = "http://localhost:8081"; //"http://localhost:5000"; //"http://localhost:8080";
-var iisurl = iisurl_ORACLE; //iisurl_LOCAL;  //iisurl_ORACLE; //iisurl_LOCAL; 
+var iisurl = iisurl_LOCAL;  //iisurl_ORACLE; //iisurl_LOCAL; 
 
 
 var android_app1 = false;

@@ -249,22 +249,32 @@ function loadEquityHistory() {
 
 //     Monthly P&L derived from equity history       
 function buildMonthlyChart(data) {
+  if (!data || data.length === 0) return;
+
   const monthly = {};
 
-  data.forEach((p) => {
+  data.forEach((p, idx) => {
     const month = p.date.substring(0, 7); // YYYY-MM
-    if (!monthly[month]) monthly[month] = { start: p.equity, end: p.equity };
-    monthly[month].end = p.equity; // keep updating end until last day of month
+    
+    if (!monthly[month]) {
+      // FIX: If it's the first data point overall, start baseline is 0.
+      // Otherwise, start baseline is the previous day's ending equity.
+      const prevEquity = idx > 0 ? data[idx - 1].equity : 0;
+      monthly[month] = { start: prevEquity, end: p.equity };
+    }
+    
+    monthly[month].end = p.equity; // keeps updating to the latest equity of the month
   });
 
   const labels = Object.keys(monthly).map(m => {
-    const d = new Date(m + '-01');
+    // Adding time zone offset to prevent Date object from rolling back a day
+    const d = new Date(m + '-02');
     return d.toLocaleDateString('en-US', { month: 'short' });
   });
 
-  // Monthly gain = end % minus start % of that month
+  // Calculate monthly gain = end % minus start %
   const values = Object.values(monthly).map(m =>
-    parseFloat((m.end - m.start).toFixed(4))
+    parseFloat((m.end - m.start).toFixed(2))
   );
 
   if (monthlyChartInst) monthlyChartInst.destroy();
@@ -291,8 +301,7 @@ function buildMonthlyChart(data) {
             label: function(ctx) {
               const val = ctx.parsed.y;
               const sign = val >= 0 ? '+' : '';
-              const decimals = Math.abs(val) < 1 ? 4 : 2;
-              return ` ${sign}${val.toFixed(decimals)}%`;
+              return ` ${sign}${val.toFixed(2)}%`;
             }
           }
         }
@@ -308,8 +317,7 @@ function buildMonthlyChart(data) {
             color: '#888',
             callback: function(v) {
               const sign = v >= 0 ? '+' : '';
-              const decimals = Math.abs(v) < 1 ? 4 : 2;
-              return sign + parseFloat(v.toFixed(decimals)) + '%';
+              return sign + parseFloat(v.toFixed(2)) + '%';
             }
           },
           grid: { color: 'rgba(0,0,0,0.05)' }
@@ -317,7 +325,7 @@ function buildMonthlyChart(data) {
       }
     }
   });
-}         
+}       
 // function buildMonthlyChart(data) {
 //   const monthly = {};
 //   data.forEach((p, i) => {
