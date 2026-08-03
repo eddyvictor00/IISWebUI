@@ -2,6 +2,7 @@
 // Add this at the very top of aidashboard.js
 const urlParams = new URLSearchParams(window.location.search);
 const custId = urlParams.get('cust') || '0'; // Defaults to 0 if ?cust= is missing
+const fundId = urlParams.get('fundid') || '0'; // Defaults to 0 if ?cust= is missing
 
 let equityChartInst = null;
 let winLossChartInst = null;
@@ -14,7 +15,7 @@ function fmtPct(n) { const v = parseFloat(n); return (v >= 0 ? '+' : '') + v.toF
 //     Metrics                                                
 function loadMetrics() {
   $.ajax({
-      url: iisurl + '/cust/' + custId + '/acc/0/aplaca/metrics',
+      url: iisurl + '/cust/' + custId + '/acc/0/fund/'+fundId+'/aplaca/metrics',
       crossDomain: true,
       cache: false,
       timeout: INT_TIMOUT, //120 sec,
@@ -64,7 +65,7 @@ function loadMetrics() {
 //     Equity curve      
 function loadEquityHistory() {
   $.ajax({
-    url: iisurl + '/cust/' + custId + '/acc/0/aplaca/equityhistory',
+    url: iisurl + '/cust/' + custId + '/acc/0/fund/'+fundId+'/aplaca/equityhistory',
     crossDomain: true,
     cache: false,
     timeout: INT_TIMOUT,
@@ -185,7 +186,7 @@ function loadEquityHistory() {
 }                         
 // function loadEquityHistory() {
 //   $.ajax({
-//     url: iisurl + '/cust/' + custId + '/acc/0/aplaca/equityhistory',
+//     url: iisurl + '/cust/' + custId + '/acc/0/fund/'+fundId+'/aplaca/equityhistory',
 //     crossDomain: true,
 //     cache: false,
 //     timeout: INT_TIMOUT, //120 sec,
@@ -365,7 +366,7 @@ function buildMonthlyChart(data) {
 //     Positions                                         
 function loadPositions() {
   $.ajax({
-    url: iisurl + '/cust/' + custId + '/acc/0/aplaca/positions',
+    url: iisurl + '/cust/' + custId + '/acc/0/fund/'+fundId+'/aplaca/positions',
     crossDomain: true,
     cache: false,
     timeout: INT_TIMOUT, //120 sec,
@@ -404,7 +405,7 @@ function loadPositions() {
 }
 function loadTrades() {
   $.ajax({
-    url: iisurl + '/cust/' + custId + '/acc/0/aplaca/trades',
+    url: iisurl + '/cust/' + custId + '/acc/0/fund/'+fundId+'/aplaca/trades',
     crossDomain: true,
     cache: false,
     timeout: INT_TIMOUT, //120 sec,
@@ -450,7 +451,7 @@ function loadTrades() {
 //     Account label                                         
 function loadAccount() {
   $.ajax({
-    url: iisurl + '/cust/' + custId + '/acc/0/aplaca/account',
+    url: iisurl + '/cust/' + custId + '/acc/0/fund/'+fundId+'/aplaca/account',
     crossDomain: true,
     cache: false,
     timeout: INT_TIMOUT, //120 sec,
