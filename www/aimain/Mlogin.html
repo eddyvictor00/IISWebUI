@@ -7,10 +7,12 @@
         <meta name="author" content="" />
         <meta
             name="keywords"
-            content="Stock Market BUY SELL Artificial Neural Network Prediction" />
+            content="Stock Market BUY SELL Artificial Neural Network Prediction"
+        />
         <meta
             name="description"
-            content="AIIWeb (AI Investment) Stock Signal Prediction Using Neural Network AI for buy or sell prediction. This application provides useful trade information for stock prices analysis and AI trading decision (Buy or Sell signal) for stock exchange market." />
+            content="AIIWeb (AI Investment) Stock Signal Prediction Using Neural Network AI for buy or sell prediction. This application provides useful trade information for stock prices analysis and AI trading decision (Buy or Sell signal) for stock exchange market."
+        />
 
         <!-- Favicon -->
         <link href="aimain/img/favicon.ico" rel="icon" />
@@ -20,21 +22,25 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
             href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap"
-            rel="stylesheet" />
+            rel="stylesheet"
+        />
 
         <!-- Icon Font Stylesheet -->
         <link
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-            rel="stylesheet" />
+            rel="stylesheet"
+        />
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
-            rel="stylesheet" />
+            rel="stylesheet"
+        />
 
         <!-- Libraries Stylesheet -->
         <link href="aimain/lib/animate/animate.min.css" rel="stylesheet" />
         <link
             href="aimain/lib/owlcarousel/assets/owl.carousel.min.css"
-            rel="stylesheet" />
+            rel="stylesheet"
+        />
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="aimain/css/bootstrap.min.css" rel="stylesheet" />
@@ -52,57 +58,66 @@
         <!-- Spinner Start -->
         <div
             id="spinner"
-            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-
-        <!-- Account Created Modal Start -->
-        <div
-            class="modal fade"
-            id="account-created-modal"
-            tabindex="-1"
-            aria-labelledby="account-created-modal-label"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="account-created-modal-label">
-                            Account Created
-                        </h5>
-                        <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Your account was created successfully.
-                        <div class="mt-2 small text-muted">
-                            Login email: <span id="account-created-email"></span>
+            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"
+        >
+            <!-- Account Created Modal Start -->
+            <div
+                class="modal fade"
+                id="account-created-modal"
+                tabindex="-1"
+                aria-labelledby="account-created-modal-label"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5
+                                class="modal-title"
+                                id="account-created-modal-label"
+                            >
+                                Account Created
+                            </h5>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button
-                            type="button"
-                            class="btn btn-primary"
-                            data-bs-dismiss="modal">
-                            Continue to Login
-                        </button>
+                        <div class="modal-body">
+                            Your account was created successfully.
+                            <div class="mt-2 small text-muted">
+                                Login email:
+                                <span id="account-created-email"></span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-bs-dismiss="modal"
+                            >
+                                Continue to Login
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Account Created Modal End -->
+            <!-- Account Created Modal End -->
 
             <div
                 class="spinner-border text-primary"
                 role="status"
-                style="width: 3rem; height: 3rem"></div>
+                style="width: 3rem; height: 3rem"
+            ></div>
         </div>
         <!-- Spinner End -->
 
         <!-- Navbar Start -->
         <div
             class="container-fluid fixed-top px-0 wow fadeIn"
-            data-wow-delay="0.1s">
+            data-wow-delay="0.1s"
+        >
             <div class="top-bar row gx-0 align-items-center d-none d-lg-flex">
                 <div class="col-lg-6 px-5 text-start">
                     <small
@@ -124,7 +139,8 @@
 
             <nav
                 class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn"
-                data-wow-delay="0.1s">
+                data-wow-delay="0.1s"
+            >
                 <a href="aiiindex.html" class="navbar-brand ms-4 ms-lg-0">
                     <h1 class="display-5 text-primary m-0">AII Web</h1>
                 </a>
@@ -132,14 +148,16 @@
                     type="button"
                     class="navbar-toggler me-4"
                     data-bs-toggle="collapse"
-                    data-bs-target="#navbarCollapse">
+                    data-bs-target="#navbarCollapse"
+                >
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div
                         id="m-main"
                         class="navbar-nav ms-auto p-4 p-lg-0"
-                        style="display">
+                        style="display"
+                    >
                         <a
                             href="aiiindex.html"
                             onclick="return myMenu(1);"
@@ -210,15 +228,19 @@
                     <div class="d-none d-lg-flex ms-2">
                         <a
                             class="btn btn-light btn-sm-square rounded-circle ms-3"
-                            href="">
+                            href=""
+                        >
                             <small
-                                class="fab fa-facebook-f text-primary"></small>
+                                class="fab fa-facebook-f text-primary"
+                            ></small>
                         </a>
                         <a
                             class="btn btn-light btn-sm-square rounded-circle ms-3"
-                            href="">
+                            href=""
+                        >
                             <small
-                                class="fab fa-linkedin-in text-primary"></small>
+                                class="fab fa-linkedin-in text-primary"
+                            ></small>
                         </a>
                     </div>
                 </div>
@@ -229,7 +251,8 @@
         <!-- Page Header Start -->
         <div
             class="container-fluid page-header mb-5 wow fadeIn"
-            data-wow-delay="0.1s">
+            data-wow-delay="0.1s"
+        >
             <div class="container">
                 <h1 class="display-3 mb-4 animated slideInDown">Login</h1>
                 <nav aria-label="breadcrumb animated slideInDown"></nav>
@@ -241,16 +264,19 @@
         <div id="loginId" class="container-fluid facts my-5 py-5">
             <div class="container py-5" id="tag-login" style="display:">
                 <section
-                    class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+                    class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4"
+                >
                     <div class="container">
                         <div class="row justify-content-center">
                             <div
-                                class="col-lg-5 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                                class="col-lg-5 col-md-6 d-flex flex-column align-items-center justify-content-center"
+                            >
                                 <div class="card mb-3">
                                     <div class="card-body">
                                         <div class="pt-4 pb-2">
                                             <h5
-                                                class="card-title text-center pb-0 fs-4">
+                                                class="card-title text-center pb-0 fs-4"
+                                            >
                                                 Login to Your Account
                                             </h5>
                                             <p class="text-center">
@@ -270,7 +296,8 @@
                                                 name="txtusername"
                                                 class="form-control"
                                                 id="txtusername"
-                                                required />
+                                                required
+                                            />
                                         </div>
 
                                         <div class="col-12">
@@ -284,7 +311,8 @@
                                                 name="txtpassword"
                                                 class="form-control"
                                                 id="txtpassword"
-                                                required />
+                                                required
+                                            />
                                         </div>
 
                                         <div class="col-12">
@@ -295,10 +323,12 @@
                                                     name="chck-rememberme"
                                                     value="true"
                                                     id="chck-rememberme"
-                                                    checked />
+                                                    checked
+                                                />
                                                 <label
                                                     class="form-check-label"
-                                                    for="chck-rememberme"></label>
+                                                    for="chck-rememberme"
+                                                ></label>
                                                 <small
                                                     >The information provided
                                                     through this application is
@@ -321,7 +351,8 @@
                                                     type="submit"
                                                     name="btn-login"
                                                     id="btn-login"
-                                                    class="btn btn-primary w-100">
+                                                    class="btn btn-primary w-100"
+                                                >
                                                     Login
                                                 </button>
                                             </form>
@@ -362,16 +393,19 @@
 
             <div class="container py-5" id="tag-newreg" style="display: none">
                 <section
-                    class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+                    class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4"
+                >
                     <div class="container">
                         <div class="row justify-content-center">
                             <div
-                                class="col-lg-5 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                                class="col-lg-5 col-md-6 d-flex flex-column align-items-center justify-content-center"
+                            >
                                 <div class="card mb-3">
                                     <div class="card-body">
                                         <div class="pt-4 pb-2">
                                             <h5
-                                                class="card-title text-center pb-0 fs-4">
+                                                class="card-title text-center pb-0 fs-4"
+                                            >
                                                 Create New Account
                                             </h5>
                                             <p class="text-center">
@@ -387,13 +421,15 @@
                                                 >First Name</label
                                             >
                                             <div
-                                                class="input-group has-validation">
+                                                class="input-group has-validation"
+                                            >
                                                 <input
                                                     type="text"
                                                     name="txtregfirst"
                                                     class="form-control"
                                                     id="txtregfirst"
-                                                    required />
+                                                    required
+                                                />
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -403,13 +439,15 @@
                                                 >Last Name</label
                                             >
                                             <div
-                                                class="input-group has-validation">
+                                                class="input-group has-validation"
+                                            >
                                                 <input
                                                     type="text"
                                                     name="txtreglast"
                                                     class="form-control"
                                                     id="txtreglast"
-                                                    required />
+                                                    required
+                                                />
                                             </div>
                                         </div>
 
@@ -420,13 +458,15 @@
                                                 >User Email</label
                                             >
                                             <div
-                                                class="input-group has-validation">
+                                                class="input-group has-validation"
+                                            >
                                                 <input
                                                     type="text"
                                                     name="txtregemail"
                                                     class="form-control"
                                                     id="txtregemail"
-                                                    required />
+                                                    required
+                                                />
                                             </div>
                                         </div>
 
@@ -441,7 +481,8 @@
                                                 name="txtregpassword"
                                                 class="form-control"
                                                 id="txtregpassword"
-                                                required />
+                                                required
+                                            />
                                         </div>
                                         <div class="col-12">
                                             <label
@@ -454,13 +495,15 @@
                                                 name="txtretypepassword"
                                                 class="form-control"
                                                 id="txtretypepassword"
-                                                required />
+                                                required
+                                            />
                                         </div>
                                         <div class="col-12">
                                             <br />
                                             <label
                                                 for="pricemodel"
-                                                class="form-label">
+                                                class="form-label"
+                                            >
                                                 <a href="Mlogin.html#pricing"
                                                     ><strong
                                                         >Select a price
@@ -471,7 +514,8 @@
                                             <div class="custom-select-wrap">
                                                 <select
                                                     id="pricemodel"
-                                                    class="form-control">
+                                                    class="form-control"
+                                                >
                                                     <option value="0">
                                                         Basic Price plan - $50
                                                         for max 2 stocks
@@ -500,7 +544,8 @@
                                                 name="txtpromo"
                                                 class="form-control"
                                                 id="txtpromo"
-                                                required />
+                                                required
+                                            />
                                         </div>
 
                                         <div class="col-12">
@@ -509,7 +554,8 @@
                                                 name="btn-submitnewreg"
                                                 id="btn-submitnewreg"
                                                 class="btn btn-primary w-100"
-                                                type="submit">
+                                                type="submit"
+                                            >
                                                 Submit
                                             </button>
                                         </div>
@@ -550,7 +596,8 @@
                 <div
                     class="text-center mx-auto wow fadeInUp"
                     data-wow-delay="0.1s"
-                    style="max-width: 600px">
+                    style="max-width: 600px"
+                >
                     <div class="title-box text-center">
                         <h2 class="title" style="color: darkblue">Pricing</h2>
                     </div>
@@ -559,10 +606,10 @@
                 </div>
                 <div class="row g-4 wow fadeInUp" data-wow-delay="0.3s">
                     <!-- Pricing -->
-                    <div id="pricing" class="cards-2">
+                    <div id="pricing" class="cards-2 container-fluid">
                         <div class="row">
-                            <div class="col-lg-12">
-                                <!-- Card-->
+                            <!-- Card 1: Demo Account -->
+                            <div class="col-lg-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="card-title">
@@ -623,8 +670,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- end of card -->
-                                <!-- Card-->
+                            </div>
+                            <!-- end of card -->
+
+                            <!-- Card 2: Basic -->
+                            <div class="col-lg-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="card-title">Basic</div>
@@ -684,10 +734,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- end of card -->
-                                <!-- end of card -->
+                            </div>
+                            <!-- end of card -->
 
-                                <!-- Card-->
+                            <!-- Card 3: Standard -->
+                            <div class="col-lg-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="card-title">Standard</div>
@@ -747,14 +798,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- end of card -->
-                                <!-- end of card -->
+                            </div>
+                            <!-- end of card -->
 
-                                <!-- Card-->
+                            <!-- Card 4: Premium -->
+                            <div class="col-lg-3 col-md-6">
                                 <div class="card">
-                                    <!--<div class="label">
-                                        <p class="best-value">Best Value</p>
-                                    </div> -->
                                     <div class="card-body">
                                         <div class="card-title">Premium</div>
                                         <div class="price">
@@ -804,7 +853,6 @@
                                                 </div>
                                             </li>
                                         </ul>
-
                                         <div class="button-wrapper">
                                             <a
                                                 class="btn-solid-reg page-scroll"
@@ -814,24 +862,20 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- end of card -->
-                                <!-- end of card -->
                             </div>
-                            <!-- end of col -->
+                            <!-- end of card -->
                         </div>
                         <!-- end of row -->
                     </div>
                     <!-- end of cards-2 -->
                     <!-- end of pricing -->
 
-                    <div class="container">
+                    <!-- Add-on Features Container -->
+                    <div class="container mt-4">
                         <div class="title-box text-center">
                             <h2 class="title" style="color: darkblue">
                                 Available Add-on Feature
                             </h2>
-                            <!-- <div class="button-wrapper">
-                                <a class="btn-solid-reg page-scroll" href="MFAQ.html#scanner" >Advanced Stock Scanner Feature</a>
-                            </div>                             -->
                             <div class="button-wrapper">
                                 <a
                                     class="btn-solid-reg page-scroll"
@@ -860,7 +904,8 @@
         <!-- Footer Start -->
         <div
             class="container-fluid bg-dark text-light footer mt-5 py-5 wow fadeIn"
-            data-wow-delay="0.1s">
+            data-wow-delay="0.1s"
+        >
             <div class="container py-5">
                 <div class="row g-5">
                     <div class="col-lg-3 col-md-6">
@@ -957,9 +1002,11 @@
         <script type="text/javascript" src="aimain/jsmain/iisweb.js"></script>
         <script
             type="text/javascript"
-            src="aimain/jsmain/aiiindex_menu.js"></script>
+            src="aimain/jsmain/aiiindex_menu.js"
+        ></script>
         <script
             type="text/javascript"
-            src="aimain/jsmain/aiiMlogin.js"></script>
+            src="aimain/jsmain/aiiMlogin.js"
+        ></script>
     </body>
 </html>
