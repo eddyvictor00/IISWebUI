@@ -57,6 +57,21 @@ h6,
     opacity: 1;
 }
 
+/*** Navbar Button ***/
+
+/* Force high contrast text on the navbar button */
+.navbar-nav .btn.nav-link {
+    color: #ffffff !important; /* High contrast white text */
+}
+
+/* Ensure hover state remains readable */
+.navbar-nav .btn.nav-link:hover,
+.navbar-nav .btn.nav-link:focus {
+    color: #ffffff !important;
+    background-color: #0056b3; /* Slightly darker shade on hover for visual feedback */
+    border-color: #0056b3;
+}
+
 /*** Button ***/
 .btn {
     transition: 0.5s;
