@@ -590,7 +590,7 @@
         </div>
         <!-- Login End -->
 
-        <!-- Pricing Start -->
+<!-- Pricing Start -->
         <div id="pricing" class="container-xxl service py-5">
             <div class="container">
                 <div
@@ -606,12 +606,13 @@
                 </div>
                 <div class="row g-4 wow fadeInUp" data-wow-delay="0.3s">
                     <!-- Pricing -->
-                    <div id="pricing" class="cards-2 container-fluid">
-                        <div class="row">
+                    <div id="pricing" class="cards-2 container-fluid px-0">
+                        <!-- Changed gx-4 to gx-2 to shrink spacing between boxes -->
+                        <div class="row gx-2 gy-4 d-flex flex-wrap align-items-stretch" style="margin-left: 0; margin-right: 0;">
                             <!-- Card 1: Demo Account -->
-                            <div class="col-lg-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
+                            <div class="col-lg-3 col-md-6 mb-4 d-flex px-1">
+                                <div class="card w-100" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; padding: 15px;">
+                                    <div class="card-body" style="display: flex; flex-direction: column; height: 100%; padding: 0;">
                                         <div class="card-title">
                                             Demo Account
                                         </div>
@@ -621,7 +622,7 @@
                                         </div>
                                         <div class="frequency">monthly</div>
                                         <div class="divider"></div>
-                                        <ul class="list-unstyled li-space-lg">
+                                        <ul class="list-unstyled li-space-lg" style="flex-grow: 1;">
                                             <li class="media">
                                                 <i class="fas fa-check"></i>
                                                 <div class="media-body">
@@ -661,7 +662,7 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                        <div class="button-wrapper">
+                                        <div class="button-wrapper" style="margin-top: auto;">
                                             <a
                                                 class="btn-solid-reg page-scroll"
                                                 href="Mlogindemo.html"
@@ -674,9 +675,9 @@
                             <!-- end of card -->
 
                             <!-- Card 2: Basic -->
-                            <div class="col-lg-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
+                            <div class="col-lg-3 col-md-6 mb-4 d-flex px-1">
+                                <div class="card w-100" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; padding: 15px;">
+                                    <div class="card-body" style="display: flex; flex-direction: column; height: 100%; padding: 0;">
                                         <div class="card-title">Basic</div>
                                         <div class="price">
                                             <span class="currency">$</span
@@ -684,7 +685,7 @@
                                         </div>
                                         <div class="frequency">monthly</div>
                                         <div class="divider"></div>
-                                        <ul class="list-unstyled li-space-lg">
+                                        <ul class="list-unstyled li-space-lg" style="flex-grow: 1;">
                                             <li class="media">
                                                 <i class="fas fa-check"></i>
                                                 <div class="media-body">
@@ -725,7 +726,7 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                        <div class="button-wrapper">
+                                        <div class="button-wrapper" style="margin-top: auto;">
                                             <a
                                                 class="btn-solid-reg page-scroll"
                                                 onclick="return regFunction(2);"
@@ -738,9 +739,9 @@
                             <!-- end of card -->
 
                             <!-- Card 3: Standard -->
-                            <div class="col-lg-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
+                            <div class="col-lg-3 col-md-6 mb-4 d-flex px-1">
+                                <div class="card w-100" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; padding: 15px;">
+                                    <div class="card-body" style="display: flex; flex-direction: column; height: 100%; padding: 0;">
                                         <div class="card-title">Standard</div>
                                         <div class="price">
                                             <span class="currency">$</span
@@ -748,7 +749,7 @@
                                         </div>
                                         <div class="frequency">monthly</div>
                                         <div class="divider"></div>
-                                        <ul class="list-unstyled li-space-lg">
+                                        <ul class="list-unstyled li-space-lg" style="flex-grow: 1;">
                                             <li class="media">
                                                 <i class="fas fa-check"></i>
                                                 <div class="media-body">
@@ -789,7 +790,7 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                        <div class="button-wrapper">
+                                        <div class="button-wrapper" style="margin-top: auto;">
                                             <a
                                                 class="btn-solid-reg page-scroll"
                                                 onclick="return regFunction(2);"
@@ -802,9 +803,9 @@
                             <!-- end of card -->
 
                             <!-- Card 4: Premium -->
-                            <div class="col-lg-3 col-md-6">
-                                <div class="card">
-                                    <div class="card-body">
+                            <div class="col-lg-3 col-md-6 mb-4 d-flex px-1">
+                                <div class="card w-100" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; padding: 15px;">
+                                    <div class="card-body" style="display: flex; flex-direction: column; height: 100%; padding: 0;">
                                         <div class="card-title">Premium</div>
                                         <div class="price">
                                             <span class="currency">$</span
@@ -812,7 +813,7 @@
                                         </div>
                                         <div class="frequency">monthly</div>
                                         <div class="divider"></div>
-                                        <ul class="list-unstyled li-space-lg">
+                                        <ul class="list-unstyled li-space-lg" style="flex-grow: 1;">
                                             <li class="media">
                                                 <i class="fas fa-check"></i>
                                                 <div class="media-body">
@@ -853,7 +854,7 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                        <div class="button-wrapper">
+                                        <div class="button-wrapper" style="margin-top: auto;">
                                             <a
                                                 class="btn-solid-reg page-scroll"
                                                 onclick="return regFunction(2);"
@@ -896,7 +897,7 @@
                 <!-- end of cards-2 -->
             </div>
         </div>
-        <!-- Pricing End -->
+        <!-- Pricing End -->        
 
         <!--         Footer Start 
                 <iframe src="aiiTPfooter.html" onload="this.before((this.contentDocument.body || this.contentDocument).children[0]);this.remove()"></iframe>
