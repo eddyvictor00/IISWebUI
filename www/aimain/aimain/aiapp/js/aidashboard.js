@@ -2,7 +2,6 @@
 // Add this at the very top of aidashboard.js
 const urlParams = new URLSearchParams(window.location.search);
 const custId = urlParams.get('cust') || '0'; // Defaults to 0 if ?cust= is missing
-const fundId = urlParams.get('fundid') || '0'; // Defaults to 0 if ?cust= is missing
 
 let equityChartInst = null;
 let winLossChartInst = null;
@@ -15,7 +14,7 @@ function fmtPct(n) { const v = parseFloat(n); return (v >= 0 ? '+' : '') + v.toF
 //     Metrics                                                
 function loadMetrics() {
   $.ajax({
-      url: iisurl + '/cust/' + custId + '/acc/0/fund/'+fundId+'/aplaca/metrics',
+      url: iisurl + '/cust/' + custId + '/acc/0/aplaca/metrics',
       crossDomain: true,
       cache: false,
       timeout: INT_TIMOUT, //120 sec,
@@ -65,7 +64,7 @@ function loadMetrics() {
 //     Equity curve      
 function loadEquityHistory() {
   $.ajax({
-    url: iisurl + '/cust/' + custId + '/acc/0/fund/'+fundId+'/aplaca/equityhistory',
+    url: iisurl + '/cust/' + custId + '/acc/0/aplaca/equityhistory',
     crossDomain: true,
     cache: false,
     timeout: INT_TIMOUT,
@@ -186,7 +185,7 @@ function loadEquityHistory() {
 }                         
 // function loadEquityHistory() {
 //   $.ajax({
-//     url: iisurl + '/cust/' + custId + '/acc/0/fund/'+fundId+'/aplaca/equityhistory',
+//     url: iisurl + '/cust/' + custId + '/acc/0/aplaca/equityhistory',
 //     crossDomain: true,
 //     cache: false,
 //     timeout: INT_TIMOUT, //120 sec,
@@ -250,32 +249,22 @@ function loadEquityHistory() {
 
 //     Monthly P&L derived from equity history       
 function buildMonthlyChart(data) {
-  if (!data || data.length === 0) return;
-
   const monthly = {};
 
-  data.forEach((p, idx) => {
+  data.forEach((p) => {
     const month = p.date.substring(0, 7); // YYYY-MM
-    
-    if (!monthly[month]) {
-      // FIX: If it's the first data point overall, start baseline is 0.
-      // Otherwise, start baseline is the previous day's ending equity.
-      const prevEquity = idx > 0 ? data[idx - 1].equity : 0;
-      monthly[month] = { start: prevEquity, end: p.equity };
-    }
-    
-    monthly[month].end = p.equity; // keeps updating to the latest equity of the month
+    if (!monthly[month]) monthly[month] = { start: p.equity, end: p.equity };
+    monthly[month].end = p.equity; // keep updating end until last day of month
   });
 
   const labels = Object.keys(monthly).map(m => {
-    // Adding time zone offset to prevent Date object from rolling back a day
-    const d = new Date(m + '-02');
+    const d = new Date(m + '-01');
     return d.toLocaleDateString('en-US', { month: 'short' });
   });
 
-  // Calculate monthly gain = end % minus start %
+  // Monthly gain = end % minus start % of that month
   const values = Object.values(monthly).map(m =>
-    parseFloat((m.end - m.start).toFixed(2))
+    parseFloat((m.end - m.start).toFixed(4))
   );
 
   if (monthlyChartInst) monthlyChartInst.destroy();
@@ -302,7 +291,8 @@ function buildMonthlyChart(data) {
             label: function(ctx) {
               const val = ctx.parsed.y;
               const sign = val >= 0 ? '+' : '';
-              return ` ${sign}${val.toFixed(2)}%`;
+              const decimals = Math.abs(val) < 1 ? 4 : 2;
+              return ` ${sign}${val.toFixed(decimals)}%`;
             }
           }
         }
@@ -318,7 +308,8 @@ function buildMonthlyChart(data) {
             color: '#888',
             callback: function(v) {
               const sign = v >= 0 ? '+' : '';
-              return sign + parseFloat(v.toFixed(2)) + '%';
+              const decimals = Math.abs(v) < 1 ? 4 : 2;
+              return sign + parseFloat(v.toFixed(decimals)) + '%';
             }
           },
           grid: { color: 'rgba(0,0,0,0.05)' }
@@ -326,7 +317,7 @@ function buildMonthlyChart(data) {
       }
     }
   });
-}       
+}         
 // function buildMonthlyChart(data) {
 //   const monthly = {};
 //   data.forEach((p, i) => {
@@ -366,7 +357,7 @@ function buildMonthlyChart(data) {
 //     Positions                                         
 function loadPositions() {
   $.ajax({
-    url: iisurl + '/cust/' + custId + '/acc/0/fund/'+fundId+'/aplaca/positions',
+    url: iisurl + '/cust/' + custId + '/acc/0/aplaca/positions',
     crossDomain: true,
     cache: false,
     timeout: INT_TIMOUT, //120 sec,
@@ -405,7 +396,7 @@ function loadPositions() {
 }
 function loadTrades() {
   $.ajax({
-    url: iisurl + '/cust/' + custId + '/acc/0/fund/'+fundId+'/aplaca/trades',
+    url: iisurl + '/cust/' + custId + '/acc/0/aplaca/trades',
     crossDomain: true,
     cache: false,
     timeout: INT_TIMOUT, //120 sec,
@@ -451,7 +442,7 @@ function loadTrades() {
 //     Account label                                         
 function loadAccount() {
   $.ajax({
-    url: iisurl + '/cust/' + custId + '/acc/0/fund/'+fundId+'/aplaca/account',
+    url: iisurl + '/cust/' + custId + '/acc/0/aplaca/account',
     crossDomain: true,
     cache: false,
     timeout: INT_TIMOUT, //120 sec,
