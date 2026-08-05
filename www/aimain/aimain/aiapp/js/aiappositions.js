@@ -1430,11 +1430,11 @@ function renderListOnly() {
                         <span class="${itemGainClass} text-base font-bold">${p.openPNL >= 0 ? '+' : ''}${p.openPNL.toFixed(2)}</span>
                     </div>
                     <div class="flex justify-between items-center text-xs">
-                        <div class="text-gray-400">Qty: ${p.qty} | Avg: ${p.avgPrice.toFixed(2)}</div>
+                        <div class="text-gray-400">Qty: ${p.qty} | Avg price: ${p.avgPrice.toFixed(2)}</div>
                         <div class="${itemGainClass} text-right">(${p.pnlPercent >= 0 ? '+' : ''}${p.pnlPercent.toFixed(2)}%)</div>
                     </div>
                     <div class="flex justify-between items-center text-xs mt-1 text-gray-500">
-                        <span>Cl: ${p.curPrice.toFixed(2)} ${p.percentSt}</span>
+                        <span>Close at ${p.curPrice.toFixed(2)} ${p.percentSt}</span>
                         <span>Mkt Value: ${p.marketValue.toFixed(0)}</span>
                     </div>
                 </div>`;
