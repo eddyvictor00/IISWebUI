@@ -169,6 +169,7 @@ var tradingBotObjStr = "";
 var tradingBotObj = "";
 var msgObjStr = "";
 
+
 var custDataSt = custObj.data;
 
 try {
@@ -1969,6 +1970,15 @@ function handleTradingBotView() {
 
 
 function renderTradingBotForm() {
+
+    var alpacalink = "";
+
+    var link = "https://iiswebapi.onrender.com/aimain/aidashboard.html?cust=" + custObj.username;
+    // link = "http://127.0.0.1:5500/www/aimain/aidashboard.html?cust=" + custObj.username;   
+    alpacalink = "<a href=\"" + link + "\" target=\"_blank\" class=\"flex items-center justify-center bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-xl shadow transition duration-200 text-sm gap-2\">"
+                    + "<span></span>Open Alpaca Dashboard\n"
+                    + "</a>";
+
     return `
         <div class="p-4 sm:p-6 space-y-6">
             <div class="flex items-center space-x-4 mb-6">
@@ -2011,7 +2021,8 @@ function renderTradingBotForm() {
                         <label class="flex items-center space-x-3">
                             <input type="checkbox" id="bot_ALPACA_status" class="form-checkbox h-5 w-5 text-sky-500 rounded border-gray-700 bg-gray-900">
                             <span class="text-gray-300">Enable Automated Trading</span>
-                        </label>                                    
+                        </label>
+                        ${alpacalink}                                    
                         
                     </div>
                     <p class="mt-3 text-xs text-gray-500">Status: <span id="myALPACA_info_id"></span></span> <br> <span id="myALPACA_msg_id"></span></p>
@@ -2187,6 +2198,7 @@ function renderTradingBotForm() {
                 $("#bot_ALPACA_ssell").prop("checked", tradingBotObj.A_SS === 0);                                   
                 $("#bot_ALPACA_status").prop("checked", tradingBotObj.St_A === 0);
                 $("#myALPACA_info_id").html("Failed"); 
+
             
                 if (tradingBotObj.A_Msg.length > 0){
                     $("#myALPACA_info_id").html("Success"); 
