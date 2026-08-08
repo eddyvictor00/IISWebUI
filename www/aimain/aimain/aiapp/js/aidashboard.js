@@ -8,9 +8,21 @@ let equityChartInst = null;
 let winLossChartInst = null;
 let monthlyChartInst = null;
 
-function fmt(n) { return parseFloat(n).toFixed(2); }
-function fmtDollar(n) { const v = parseFloat(n); return (v >= 0 ? '+$' : '-$') + Math.abs(v).toFixed(2); }
-function fmtPct(n) { const v = parseFloat(n); return (v >= 0 ? '+' : '') + v.toFixed(2) + '%'; }
+function fmt(n) { 
+  return (n === undefined || n === null || isNaN(n)) ? '' : parseFloat(n).toFixed(2); 
+}
+
+function fmtDollar(n) { 
+  if (n === undefined || n === null || isNaN(n)) return '';
+  const v = parseFloat(n); 
+  return (v >= 0 ? '+$' : '-$') + Math.abs(v).toFixed(2); 
+}
+
+function fmtPct(n) { 
+  if (n === undefined || n === null || isNaN(n)) return '';
+  const v = parseFloat(n); 
+  return (v >= 0 ? '+' : '') + v.toFixed(2) + '%'; 
+}
 
 //     Metrics                                                
 function loadMetrics() {
@@ -22,43 +34,64 @@ function loadMetrics() {
       beforeSend: function () {
           $("#loader").show();
       },
-      error: function () {
-          alert('Network failure. Please try again later.');
-          window.location.href = "aiiend.html";
-      },
       success: function(m) {
-      document.getElementById('totalReturn').textContent  = fmtPct(m.totalReturnPct);
-      document.getElementById('winRate').textContent      = m.winRate + '%';
-      document.getElementById('winCount').textContent     = m.winningTrades + ' of ' + m.totalTrades + ' trades';
-      document.getElementById('sharpe').textContent       = fmt(m.sharpeRatio);
-      document.getElementById('drawdown').textContent     = m.maxDrawdown + '%';
-      document.getElementById('riskReward').textContent   = fmt(m.riskRewardRatio) + ' : 1';
-      document.getElementById('totalPnl').textContent     = fmtDollar(m.totalPnL);
-      document.getElementById('totalInves').textContent   = 'Investment $' + (m.investment).toFixed(0);
-      document.getElementById('stockList').textContent    = '(' + m.stockList + ')'; 
-      document.getElementById('firstdate').textContent    = '(' + m.firstDate + ')'; 
+        if (!m) return;
 
-      // Win/loss donut
-      const wins   = m.winningTrades;
-      const losses = m.losingTrades;
-      const wPct   = Math.round(wins / m.totalTrades * 100);
-      const lPct   = 100 - wPct;
-      if (winLossChartInst) winLossChartInst.destroy();
-      winLossChartInst = new Chart(document.getElementById('winLossChart'), {
-        type: 'doughnut',
-        data: {
-          labels: ['Wins ' + wPct + '%', 'Losses ' + lPct + '%'],
-          datasets: [{ data: [wins, losses], backgroundColor: ['#1D9E75','#E24B4A'], borderWidth: 0 }]
-        },
-        options: {
-          responsive: true, maintainAspectRatio: false, cutout: '72%',
-          plugins: { legend: { display: false } }
-        }
-      });
-    },
-    error: function() {
-      console.error('Failed to load metrics');
-    }
+        document.getElementById('totalReturn').textContent  = fmtPct(m.totalReturnPct);
+        document.getElementById('winRate').textContent      = (m.winRate !== undefined && m.winRate !== null) ? m.winRate + '%' : '';
+        
+        document.getElementById('winCount').textContent     = (m.winningTrades !== undefined && m.totalTrades !== undefined) 
+          ? m.winningTrades + ' of ' + m.totalTrades + ' trades' 
+          : '';
+          
+        document.getElementById('sharpe').textContent       = fmt(m.sharpeRatio);
+        document.getElementById('drawdown').textContent     = (m.maxDrawdown !== undefined && m.maxDrawdown !== null) ? m.maxDrawdown + '%' : '';
+        document.getElementById('riskReward').textContent   = (m.riskRewardRatio !== undefined && m.riskRewardRatio !== null && !isNaN(m.riskRewardRatio)) 
+          ? fmt(m.riskRewardRatio) + ' : 1' 
+          : '';
+          
+        document.getElementById('totalPnl').textContent     = fmtDollar(m.totalPnL);
+        document.getElementById('totalInves').textContent   = (m.investment !== undefined && m.investment !== null && !isNaN(m.investment)) 
+          ? 'Investment $' + parseFloat(m.investment).toFixed(0) 
+          : '';
+          
+        document.getElementById('stockList').textContent    = m.stockList ? '(' + m.stockList + ')' : ''; 
+        document.getElementById('firstdate').textContent    = m.firstDate ? '(' + m.firstDate + ')' : ''; 
+
+        // Win/loss donut
+        const wins   = m.winningTrades || 0;
+        const losses = m.losingTrades || 0;
+        const total  = m.totalTrades || 0;
+        const wPct   = total > 0 ? Math.round(wins / total * 100) : 0;
+        const lPct   = total > 0 ? 100 - wPct : 0;
+        
+        if (winLossChartInst) winLossChartInst.destroy();
+        winLossChartInst = new Chart(document.getElementById('winLossChart'), {
+          type: 'doughnut',
+          data: {
+            labels: ['Wins ' + wPct + '%', 'Losses ' + lPct + '%'],
+            datasets: [{ data: [wins, losses], backgroundColor: ['#1D9E75','#E24B4A'], borderWidth: 0 }]
+          },
+          options: {
+            responsive: true, maintainAspectRatio: false, cutout: '72%',
+            plugins: { legend: { display: false } }
+          }
+        });
+      },
+      error: function() {
+        console.error('Failed to load metrics');
+        // Clear all text on error
+        document.getElementById('totalReturn').textContent = '';
+        document.getElementById('winRate').textContent     = '';
+        document.getElementById('winCount').textContent    = '';
+        document.getElementById('sharpe').textContent      = '';
+        document.getElementById('drawdown').textContent    = '';
+        document.getElementById('riskReward').textContent  = '';
+        document.getElementById('totalPnl').textContent    = '';
+        document.getElementById('totalInves').textContent  = '';
+        document.getElementById('stockList').textContent   = '';
+        document.getElementById('firstdate').textContent   = '';
+      }
   });
 }
 
