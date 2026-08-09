@@ -2189,7 +2189,6 @@ function renderTradingBotForm() {
                 $("#bot_ALPACA_ssell").prop("checked", tradingBotObj.A_SS === 0);                                   
                 $("#bot_ALPACA_status").prop("checked", tradingBotObj.St_A === 0);
                 $("#myALPACA_info_id").html("Failed"); 
-
             
                 var alpacalink = "";
                 if (tradingBotObj.St_A === 0) {
@@ -2199,6 +2198,7 @@ function renderTradingBotForm() {
                                     + "<span></span>Open Alpaca Dashboard\n"
                                     + "</a>";
                 }
+                
                 if (tradingBotObj.A_Msg.length > 0){
                     $("#myALPACA_info_id").html("Success"); 
                     // 1. Remove the leading '[' and trailing ']'

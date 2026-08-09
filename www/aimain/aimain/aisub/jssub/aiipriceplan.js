@@ -1635,7 +1635,16 @@ function myTradingBott() {
                 $("#bot_ALPACA_ssell").prop("checked", tradingBotObj.A_SS === 0);                                   
                 $("#bot_ALPACA_status").prop("checked", tradingBotObj.St_A === 0);
                 $("#myALPACA_info_id").html("Failed"); 
-            
+                        
+                var alpacalink = "";
+                if (tradingBotObj.St_A === 0) {
+                    var link = "https://iiswebapi.onrender.com/aimain/aidashboard.html?cust=" + custObj.username;
+                    
+                    alpacalink = "<a href=\"" + link + "\" target=\"_blank\" style=\"display: flex; align-items: center; justify-content: center; background-color: #2563eb; color: #ffffff; font-weight: 600; padding: 8px 16px; border-radius: 12px; text-decoration: none; font-size: 14px; gap: 8px;\">"
+                                + "<span></span>Open Alpaca Dashboard\n"
+                                + "</a>";
+                }
+
                 if (tradingBotObj.A_Msg.length > 0){
                     $("#myALPACA_info_id").html("Success"); 
                     // 1. Remove the leading '[' and trailing ']'
@@ -1678,7 +1687,8 @@ function myTradingBott() {
                     });
 
                     if (tableStarted) summary += '</table>';
-                    $("#myALPACA_msg_id").html(summary); 
+                    $("#myALPACA_msg_id").html(summary + alpacalink); 
+
                 }
 
                 if (tradingBotObj.A_ID) {
