@@ -488,8 +488,8 @@ function iniTRmodel() {
                         }
                         htmlSys += "<br><br>Internal System Message:"
                                 + "<br>Tr subStatus: " + trsubstatus + ""
-                                + "<br>Current Msg: (" + objData.nnst + ")"
-                                + "<br>Previous Msg: (" + objData.dst + ")";
+                                + "<br>Current Msg: (" + objData.nnst + ")";
+                                // + "<br>Previous Msg: (" + objData.dst + ")";
 
 
                         if (stockData !== null) {
