@@ -891,7 +891,7 @@ function myInitsubsFund() {
                         var price = 60;
                         var priceSt = Number(price).toLocaleString('en-US', {style: 'currency', currency: 'USD'});
                         col3 = priceSt;
-                        col2 = 'Current Total: ' + totSt + ' - ' + accName;
+                        col2 = 'Performance: ' + totSt + ' - ' + accName;
                         col4 = msgSt;
 
                         var found = false;
