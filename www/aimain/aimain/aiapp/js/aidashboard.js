@@ -37,6 +37,13 @@ function loadMetrics() {
       success: function(m) {
         if (!m) return;
 
+      if (m.investment !== undefined && m.investment !== null && !isNaN(m.investment)) {
+        var value = parseFloat(m.investment) + parseFloat(m.totalPnL);
+        const label = 'Live via Alpaca - Portfolio value: $' + value.toLocaleString();
+    
+        document.getElementById('accountLabel').textContent = label;
+      }
+
         document.getElementById('totalReturn').textContent  = fmtPct(m.totalReturnPct);
         document.getElementById('winRate').textContent      = (m.winRate !== undefined && m.winRate !== null) ? m.winRate + '%' : '';
         
@@ -496,10 +503,10 @@ function loadAccount() {
         window.location.href = "aiiend.html";
     },       
     success: function(a) {
-      const label = parseFloat(a.equity) > 0
-        ? 'Live via Alpaca - Portfolio value: $' + parseFloat(a.equity).toLocaleString()
-        : 'Paper trading account';
-      document.getElementById('accountLabel').textContent = label;
+      // const label = parseFloat(a.equity) > 0
+      //   ? 'Live via Alpaca - Portfolio value: $' + parseFloat(a.equity).toLocaleString()
+      //   : 'Paper trading account';
+      // document.getElementById('accountLabel').textContent = label;
       document.getElementById('accountdescLabel').textContent = a.desc;
     }
   });
