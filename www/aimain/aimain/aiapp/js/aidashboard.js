@@ -320,17 +320,30 @@ function exportCsv() {
   // Disabled - CSV export hidden per request
   return;
 }
-
+//     Load everything                                         
 function loadAll() {
-  var spinner = document.getElementById('spinner'); if(spinner) spinner.style.display = 'inline';
-  loadAccount().then(function(){
-    loadMetrics().then(function(){ 
-      $.when(loadEquityHistory(), loadPositions(), loadTrades()).then(function(){
-        var spinner2 = document.getElementById('spinner'); if(spinner2) spinner2.style.display = 'none';
-      });
-    });
+  document.getElementById('spinner').style.display = 'inline';
+  Promise.all([
+    new Promise(res => { loadMetrics(); setTimeout(res, 800); }),
+    new Promise(res => { loadEquityHistory(); setTimeout(res, 800); }),
+    new Promise(res => { loadPositions(); setTimeout(res, 800); }),
+    new Promise(res => { loadTrades(); setTimeout(res, 800); }),
+    new Promise(res => { loadAccount(); setTimeout(res, 800); })
+  ]).then(() => {
+    document.getElementById('spinner').style.display = 'none';
   });
 }
+
+// function loadAll() {
+//   var spinner = document.getElementById('spinner'); if(spinner) spinner.style.display = 'inline';
+//   loadAccount().then(function(){
+//     loadMetrics().then(function(){ 
+//       $.when(loadEquityHistory(), loadPositions(), loadTrades()).then(function(){
+//         var spinner2 = document.getElementById('spinner'); if(spinner2) spinner2.style.display = 'none';
+//       });
+//     });
+//   });
+// }
 
 
 // Attach event listeners and start timers when DOM structure is ready
