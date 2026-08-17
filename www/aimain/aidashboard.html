@@ -95,100 +95,105 @@
           </div>
       </nav>
   </div>
+
   <div class="container-fluid">
       <div class="dashboard-padding-wrapper">
         
         <div class="dashboard-header-row">
           <div>
-            <h1 style="font-size:22px; font-weight:600; margin: 0;">Performance dashboard</h1>
-            <p style="font-size:12px; color:#aaa; margin: 4px 0 0 0;" id="accountLabel">Loading account...</p>
-            <p style="font-size:12px; color:#aaa; margin: 4px 0 0 0;" id="accountdescLabel"></p>
-            <!-- <span style="font-size: 13px; font-weight: 600; color: #333; margin: 4px 0 0 0;" id="accountdescLabel"></span>             -->
-            
+            <h1 style="font-size:22px; font-weight:600; margin: 0; display:flex; align-items:center;">
+              <span class="live-dot"></span> Live Paper Trading
+            </h1>
+            <div style="font-size:12px; color:#888; margin-top:4px;" id="accountLabel">Loading Alpaca paper account...</div>
+            <div style="font-size:11px; color:#aaa;" id="accountdescLabel"></div>
           </div>
-          <div style="display:flex; align-items:center; gap:10px;">
+          <div style="display:flex; gap:8px; align-items:center;">
             <span class="spinner" id="spinner">Refreshing...</span>
-            <button class="refresh-btn" id="refreshBtn">Refresh</button>
+            <button id="refreshBtn" class="refresh-btn"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+            <!-- <button id="downloadCsvBtn" class="refresh-btn" style="background:#222; color:#fff; border-color:#222;"><i class="bi bi-download"></i> Export CSV</button> -->
+          </div>
+        </div>
+        <!-- NEW: Honest live status -->
+        <div class="live-box" id="liveStatusBox">
+          <div class="item">
+            <strong><span class="live-dot"></span><span id="botStatus">Checking bot...</span></strong>
+            <span id="lastHeartbeat">Last API ping: -</span><br>
+            <span id="apiStatus" style="font-family:monospace;">GET /v2/account: pending</span>
+          </div>
+          <div class="item">
+            <strong id="liveEquity">Equity: -</strong>
+            <span id="liveCash">Cash: - | Buying Power: -</span><br>
+            <span id="livePnlDay">Day P&L: -</span>
+          </div>
+          <div class="item">
+            <strong id="accountType">Alpaca PAPER Account - Not Real Money</strong>
+            <span>Forward test since: <span id="firstdate">-</span> <span id="stockList"></span></span><br>
+            <span>Mode: <span style="color:#1d9e75; font-weight:600;">Fully Automated - No Manual Intervention</span></span>
           </div>
         </div>
 
         <div class="metric-grid">
           <div class="metric-card">
-            <div class="metric-label">Total return</div>
-            <div class="metric-value pos" id="totalReturn"> </div>
-            <div class="metric-sub">Inception since <span id="firstdate"></span></div>
+            <div class="metric-label">Total Return (Paper)</div>
+            <div class="metric-value" id="totalReturn"> </div>
+            <div class="metric-sub">Since inception, incl. slippage est.</div>
           </div>
           <div class="metric-card">
-            <div class="metric-label">Win rate</div>
+            <div class="metric-label">Win rate (Paper)</div>
             <div class="metric-value" id="winRate"> </div>
             <div class="metric-sub" id="winCount"> </div>
           </div>
           <div class="metric-card">
             <div class="metric-label">Sharpe ratio</div>
             <div class="metric-value" id="sharpe"> </div>
-            <div class="metric-sub">Annualised</div>
+            <div class="metric-sub">Annualised, paper fills</div>
           </div>
           <div class="metric-card">
             <div class="metric-label">Max drawdown</div>
             <div class="metric-value neg" id="drawdown"> </div>
-            <div class="metric-sub">Peak to trough</div>
+            <div class="metric-sub">Peak to trough (never reset)</div>
           </div>
           <div class="metric-card">
-            <div class="metric-label">Risk / reward</div>
+            <div class="metric-label">Profit Factor</div>
             <div class="metric-value" id="riskReward"> </div>
-            <div class="metric-sub">Avg win vs loss</div>
+            <div class="metric-sub">Avg win / avg loss</div>
           </div>
           <div class="metric-card">
-            <div class="metric-label">Total P&L</div>
+            <div class="metric-label">Total P&L (Paper)</div>
             <div class="metric-value pos" id="totalPnl"> </div>
             <div class="metric-sub" id="totalInves"></div>
           </div>
         </div>
 
         <div class="card">
-          <div class="card-title">Equity curve</div>
-          <div style="position:relative; height:220px;">
-            <canvas id="equityChart" role="img" aria-label="Equity curve over time">Loading...</canvas>
+          <div class="card-title">Paper Equity Curve (Live-Forward, Never Reset) <span style="font-size:11px; color:#888; font-weight:400;">Source: Alpaca /v2/account/portfolio/history</span></div>
+          <div style="position:relative; height:260px;">
+            <canvas id="equityChart" role="img" aria-label="Equity curve">Loading...</canvas>
           </div>
         </div>
 
         <div class="charts-row">
           <div class="card">
-            <div class="card-title">Win / loss breakdown</div>
+            <div class="card-title">Win / loss breakdown (Live Paper)</div>
             <div style="position:relative; height:160px;">
-              <canvas id="winLossChart" role="img" aria-label="Win vs loss donut chart">Loading...</canvas>
+              <canvas id="winLossChart">Loading...</canvas>
             </div>
           </div>
           <div class="card">
-            <div class="card-title">Monthly P&L</div>
+            <div class="card-title">Monthly P&L (Paper, with costs)</div>
             <div style="position:relative; height:160px;">
               <canvas id="monthlyChart" role="img" aria-label="Monthly P&L bar chart">Loading...</canvas>
             </div>
           </div>
         </div>
 
-        <div class="card transparency-box">
-          <div style="font-size: 13px; font-weight: 600; color: #333; display: flex; align-items: center; gap: 6px;">
-            <i class="bi bi-shield-check text-primary" style="font-size: 16px;"></i> Verified Alpaca Integration
-          </div>
-          <p style="font-size:12px; color:#666; margin: 4px 0 0 0;">
-            Our dedication to full transparency gives you a complete view of performance. Unlike typical alternative signal layers or unverified trading tools, we offer auditable records for peace of mind.
-          </p>
-          <ul class="transparency-list">
-            <li><i class="bi bi-check-circle-fill"></i> Every trade includes a real execution timestamp and true fill price</li>
-            <li><i class="bi bi-check-circle-fill"></i> Direct integration with Alpaca provides official full history exports</li>
-            <li><i class="bi bi-check-circle-fill"></i> Metrics track actual broker fills, eliminating hypothetical or fabricated returns</li>
-            <li><i class="bi bi-check-circle-fill"></i> Fully auditable track record to remove "faked performance" objections</li>
-          </ul>
-        </div>
-
         <div class="card">
-          <div class="card-title">Real Time Open positions <span id="stockList"></span></div>
+          <div class="card-title">Live Open Positions <span style="font-size:11px; font-weight:400; color:#888;" id="positionsTimestamp"></span></div>
           <table>
             <thead>
               <tr>
-                <th>Symbol</th><th>Qty</th><th>Avg entry</th>
-                <th>Current</th><th>Unrealised P&L</th><th>Change</th>
+                <th>Symbol</th><th>Qty</th><th>Avg entry (Alpaca)</th>
+                <th>Current (Alpaca)</th><th>Unrealised P&L</th><th>Change</th>
               </tr>
             </thead>
             <tbody id="positionsBody">
@@ -196,32 +201,43 @@
             </tbody>
           </table>
         </div>
+
         <div class="card">
-          <div class="card-title">Recent trades</div>
+          <div class="card-title">
+            Recent Live Paper Fills - Auditable
+            <span style="font-size:11px; font-weight:400; color:#888;">Includes order_id, fill price, qty, commission, slippage est.</span>
+          </div>
+          <div style="overflow-x:auto;">
           <table>
             <thead>
               <tr>
-                <th>Symbol</th><th>Signal</th><th>Fill price</th>
-                <th>Qty</th><th>Date</th>
+                <th>Symbol</th><th>Side</th><th>Fill Price (Alpaca)</th>
+                <th>Qty</th><th>Est. Commission + Slippage</th><th>Order ID / Time (EST)</th>
               </tr>
             </thead>
             <tbody id="tradesBody">
-              <tr><td colspan="5" style="color:#aaa; text-align:center; padding:16px;">Loading...</td></tr>
+              <tr><td colspan="6" style="color:#aaa; text-align:center; padding:16px;">Loading...</td></tr>
             </tbody>
           </table>
+          </div>
+          <div style="font-size:11px; color:#888; margin-top:10px;">Tip: Copy Order ID and verify in Alpaca dashboard or via <code>GET /v2/orders/:order_id</code></div>
+        </div>
+
+        <div class="warning-box">
+          <strong><i class="bi bi-exclamation-triangle"></i> Transparency & Methodology - What this dashboard IS and IS NOT:</strong><br>
+          <b>IS:</b> This is a <b>live-forward test on Alpaca PAPER trading (not real money)</b>. The TR33 bot has been running continuously since <span id="firstdate2">-</span> without manual trade edits. Trades are market orders executed at natural market prices. Every fill comes from Alpaca API with real <code>filled_at</code> and <code>filled_avg_price</code>. Full history export available via CSV button.<br><br>
+          <b>IS NOT:</b> This is NOT real-money P&L, NOT a backtest, and NOT financial advice. Paper trading has $0 commission and zero slippage in simulation - real trading will perform worse. We estimate $0.00 commission + $0.02/share slippage in metrics, but actual live slippage is not charged by Alpaca paper. Metrics include all trades, wins AND losses, with no purging. Equity curve is never reset (even after drawdowns).<br><br>
+          <b>Research:</b> Our model architecture (TR30-TR33) is described in <a href="MFAQ.html#paper2">MFAQ</a>. We are aware of survivorship bias risk when filtering to success-only data, so we now train on both wins and losses and use walk-forward validation. <b>Past paper performance does not guarantee future real results.</b>
         </div>
 
         <div style="background: #fff; border-radius: 12px; border: 1px solid #e8e8e8; padding: 14px 20px; margin-bottom: 16px;">
-          <div style="font-size:11px; font-weight:600; color:#666; text-transform:uppercase; margin-bottom:4px; letter-spacing:0.5px;">Performance Methodology & Compliance Notes</div>
-          <p style="font-size: 11px; color: #777; margin: 0 0 8px 0; line-height: 1.5;">
-            <strong>Educational Signal Tracking Notice:</strong> All data, alerts, and market operations provided on this dashboard are strictly intended for educational signals and informational purposes only. This information does not constitute personalized financial or legal advice. Please consult with a legal professional before implementing or reacting to automated signaling frameworks.
-          </p>
-          <p style="font-size: 11px; color: #777; margin: 0; line-height: 1.5;">
-            <strong>Trading Assumptions:</strong> Metrics and curves displayed operate under specific structural criteria: (1) Each standard asset transaction allocates an approximate value baseline of $6,000; (2) Transactions are simulated and executed at natural market prices; (3) Dynamic calculation adjustments for order slippage and specific broker commission structures are not applied inside these active summaries.
+          <div style="font-size:11px; font-weight:600; color:#666; text-transform:uppercase; margin-bottom:6px;">Compliance</div>
+          <p style="font-size: 11px; color: #777; margin: 0; line-height: 1.6;">
+            This dashboard is for educational research purposes only. Not registered with CIRO / OSC. Does not constitute personalized financial, legal, or investment advice. If you are in Ontario, Canada, consult a licensed advisor before copying any signals. All code and logs are for transparency. For questions contact the developer via research page.
           </p>
         </div>
 
-        <p class="disclaimer">Past performance does not guarantee future results. For informational purposes only.</p>
+        <p class="disclaimer">Last updated: <span id="lastUpdated"></span> | Bot version: TR33 live-forward | Data source: Alpaca Markets Paper API v2</p>
       </div>
   </div>
 
