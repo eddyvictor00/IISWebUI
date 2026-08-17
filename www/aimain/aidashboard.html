@@ -225,7 +225,9 @@
 
         <div class="warning-box">
           <strong><i class="bi bi-exclamation-triangle"></i> Transparency & Methodology - What this dashboard IS and IS NOT:</strong><br>
-          <b>IS:</b> This is a <b>live-forward test on Alpaca PAPER trading (not real money)</b>. The TR33 bot has been running continuously since <span id="firstdate2">-</span> without manual trade edits. Trades are market orders executed at natural market prices. Every fill comes from Alpaca API with real <code>filled_at</code> and <code>filled_avg_price</code>. Full history export available via CSV button.<br><br>
+          <b>IS:</b> This is a <b>live-forward test on Alpaca PAPER trading (not real money)</b>. The TR33 bot has been running continuously since <span id="firstdate2">-</span> without manual trade edits. Trades are market orders executed at natural market prices. 
+          <!-- Every fill comes from Alpaca API with real <code>filled_at</code> and <code>filled_avg_price</code>. Full history export available via CSV button. -->
+          <br><br>
           <b>IS NOT:</b> This is NOT real-money P&L, NOT a backtest, and NOT financial advice. Paper trading has $0 commission and zero slippage in simulation - real trading will perform worse. We estimate $0.00 commission + $0.02/share slippage in metrics, but actual live slippage is not charged by Alpaca paper. Metrics include all trades, wins AND losses, with no purging. Equity curve is never reset (even after drawdowns).<br><br>
           <b>Research:</b> Our model architecture (TR30-TR33) is described in <a href="MFAQ.html#paper2">MFAQ</a>. We are aware of survivorship bias risk when filtering to success-only data, so we now train on both wins and losses and use walk-forward validation. <b>Past paper performance does not guarantee future real results.</b>
         </div>
