@@ -13,6 +13,9 @@ let lastEquityData = [];
 let firstTradeDateStr = null;
 const PER_SYMBOL = 6000;
 
+let currentTotalReturnPct = 0;
+
+
 function fmt(n) { return (n === undefined || n === null || isNaN(n)) ? '-' : parseFloat(n).toFixed(2); }
 function fmtDollar(n) { 
   if (n === undefined || n === null || isNaN(n)) return '-';
@@ -49,6 +52,7 @@ function updateNumSymbolsUI(stockListArray) {
   // Stock list display in warning box
   var slWarn = document.getElementById('stockList_warning'); if(slWarn) slWarn.textContent = stockListArray.join(',');
   var slMain = document.getElementById('stockList'); if(slMain) slMain.textContent = '(' + stockListArray.join(',') + ')';
+
 }
 
 function loadMetrics() {
@@ -62,7 +66,22 @@ function loadMetrics() {
         // Dynamic: get stock list from metrics (conf.A_Sym)
         if (m.stockList) {
           var list = parseStockList(m.stockList);
-          if (list.length > 0) updateNumSymbolsUI(list);
+          if (list.length > 0) {
+            updateNumSymbolsUI(list);
+        
+            var deployedCapital = list.length  * PER_SYMBOL; // e.g. 9 * 6000 = 54000
+            if (deployedCapital > 0 && !isNaN(m.totalPnL)) {
+              // Return on deployed = (Total Return % * $100,000) / Deployed Capital
+              var deployedReturn = (m.totalPnL * 100) / deployedCapital;
+              
+              var depEl = document.getElementById('deployed_return_pct');
+              if (depEl) depEl.textContent = fmtPct(deployedReturn);
+              
+              var honEl = document.getElementById('honest_return_pct');
+              if (honEl) honEl.textContent = fmtPct(m.totalReturnPct);
+            }              
+
+          }
         }
         
         var value = (m.investment !== undefined && m.totalPnL !== undefined) ? parseFloat(m.investment) + parseFloat(m.totalPnL) : null;
@@ -95,6 +114,7 @@ function loadMetrics() {
             options: { responsive: true, maintainAspectRatio: false, cutout: '72%', plugins: { legend: { display: false } } }
           });
         }
+      
       }
   });
 }
@@ -301,6 +321,7 @@ function loadAccount() {
       var botStatusEl = document.getElementById('botStatus');
       var heartbeatEl = document.getElementById('lastHeartbeat');
       var apiStatusEl = document.getElementById('apiStatus');
+
       if(equityEl && a.equity) equityEl.textContent = 'Equity: $' + parseFloat(a.equity).toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:2}) + ' (Paper)';
       if(cashEl && a.cash) cashEl.textContent = 'Cash: $' + parseFloat(a.cash).toLocaleString(undefined,{minimumFractionDigits:2}) + ' | Buying Power: $' + parseFloat(a.buying_power || a.cash*2).toLocaleString(undefined,{minimumFractionDigits:2});
       if(pnlDayEl) {

@@ -206,12 +206,14 @@
           <b>IS:</b> This is a <b>live-forward test on Alpaca PAPER trading (not real money)</b> with <span id="num_symbols_warning">9</span> leveraged ETFs (<span id="stockList_warning">CHAU,DRN,FAS,SPXL,TECL,WEBL,DGP,ERX,UCO</span>), $6k per symbol (max $<span id="deployed_capital_warning">54</span>k deployed, $<span id="cash_buffer_warning">46</span>k cash buffer). The TR33 bot has been running continuously since <span id="firstdate2">-</span> without manual trade edits. Chart starts at first live fill on <span id="firstdate_chart3">2026-04-30</span> - pre-inception -100% flatline removed. Trades are market orders at natural market prices. 
           <!-- Every fill from Alpaca API with real <code>filled_at</code> and <code>filled_avg_price</code>. -->
           <br><br>
-          <b>IS NOT:</b> This is NOT real-money P&L, NOT a backtest, NOT financial advice. Paper has $0 commission, zero slippage - real will be worse. We estimate $0.00 commission + $0.02/share slippage, but actual paper slippage not charged by Alpaca. Metrics include all trades, wins AND losses, no purging. Equity curve never reset. <b>Return calculated on full $100k (industry standard), not $<span id="deployed_capital_warning2">54</span>k deployed. On deployed, return would be higher (~16.87%) but we report honest 9.11%.</b> <b>Past paper performance does not guarantee future real results.</b>
+          <b>IS NOT:</b> This is NOT real-money P&L, NOT a backtest, NOT financial advice. Paper has $0 commission, zero slippage - real will be worse. We estimate $0.00 commission + $0.02/share slippage, but actual paper slippage not charged by Alpaca. Metrics include all trades, wins AND losses, no purging. Equity curve never reset.
+          <br><br><b>Return calculated on full $100k (industry standard), not $<span id="deployed_capital_warning2">54</span>k deployed. On deployed, return would be higher (~<span id="deployed_return_pct">16.87%</span>) but we report honest <span id="honest_return_pct">9.11%</span>.</b>
+
         </div>
         <div style="background: #fff; border-radius: 12px; border: 1px solid #e8e8e8; padding: 14px 20px; margin-bottom: 16px;">
           <div style="font-size:11px; font-weight:600; color:#666; text-transform:uppercase; margin-bottom:6px;">Compliance</div>
           <p style="font-size: 11px; color: #777; margin: 0; line-height: 1.6;">
-            <strong>Educational Signal Tracking Notice:</strong> This dashboard is for educational research purposes only. Not registered with CIRO / OSC. Does not constitute personalized financial, legal, or investment advice. Please consult with a legal professional before implementing or reacting to automated signaling frameworks.
+            <strong>Educational Signal Tracking Notice:</strong> This dashboard is for educational research purposes only. Not registered with CIRO / OSC. Does not constitute personalized financial, legal, or investment advice. Past paper performance does not guarantee future real results.
             <br>Starting capital $100k paper, $6k per symbol x <span id="num_symbols_compliance">9</span> = $<span id="deployed_capital_compliance">54</span>k max deployed, $<span id="cash_buffer_compliance">46</span>k buffer. 
           </p>
         </div>
