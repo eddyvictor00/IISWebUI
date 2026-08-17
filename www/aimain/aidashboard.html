@@ -24,52 +24,43 @@
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Heebo', sans-serif; background: #f5f5f5; color: #222; padding-top: 100px; } /* Space for fixed-top header */
-    
-    /* Fixed Top Header Styles matching MFAQ layout context */
+    body { font-family: 'Heebo', sans-serif; background: #f5f5f5; color: #222; padding-top: 100px; }
     .fixed-top { position: fixed; top: 0; right: 0; left: 0; z-index: 1030; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-    .navbar-light .navbar-nav .nav-link { color: #555; font-weight: 500; padding: 25px 15px; }
-    .navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link.active { color: #007bff; }
-    
     .dashboard-padding-wrapper { padding: 24px; max-width: 1300px; margin: 0 auto; }
-    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
+    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 20px; }
     .metric-card { background: #fff; border-radius: 10px; padding: 14px 16px; border: 1px solid #e8e8e8; }
-    .metric-label { font-size: 12px; color: #888; margin-bottom: 4px; }
+    .metric-label { font-size: 11px; color: #888; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
     .metric-value { font-size: 22px; font-weight: 600; }
     .metric-sub { font-size: 11px; color: #aaa; margin-top: 2px; }
-    .card { background: #fff; border-radius: 12px; border: 1px solid #e8e8e8; padding: 16px 20px; margin-bottom: 16px; box-shadow: none !important; }
-    .card-title { font-size: 13px; font-weight: 500; color: #888; margin-bottom: 12px; }
+    .card { background: #fff; border-radius: 12px; border: 1px solid #e8e8e8; padding: 16px 20px; margin-bottom: 16px; }
+    .card-title { font-size: 13px; font-weight: 600; color: #333; margin-bottom: 4px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; }
+    .card-subtitle { font-size: 11px; color: #888; font-weight: 400; margin-bottom: 12px; line-height: 1.5; }
     .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
     table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    th { text-align: left; font-size: 12px; color: #888; padding: 6px 8px; border-bottom: 1px solid #f0f0f0; font-weight: 500; }
+    th { text-align: left; font-size: 11px; color: #888; padding: 8px; border-bottom: 1px solid #f0f0f0; font-weight: 600; text-transform:uppercase; }
     td { padding: 9px 8px; border-bottom: 1px solid #f5f5f5; }
-    tr:last-child td { border-bottom: none; }
     .badge { font-size: 11px; padding: 2px 8px; border-radius: 99px; font-weight: 500; }
     .buy  { background: #e1f5ee; color: #0f6e56; }
     .sell { background: #faece7; color: #993c1d; }
-    .win  { background: #eaf3de; color: #3b6d11; }
-    .loss { background: #fcebeb; color: #a32d2d; }
-    .pos  { color: #1d9e75; font-weight: 500; }
-    .neg  { color: #d85a30; font-weight: 500; }
-    .refresh-btn { font-size: 12px; color: #888; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 5px 12px; cursor: pointer; }
-    .dashboard-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .pos  { color: #1d9e75; font-weight: 600; }
+    .neg  { color: #d85a30; font-weight: 600; }
+    .refresh-btn { font-size: 12px; color: #555; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+    .dashboard-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap:wrap; gap:12px; }
     .spinner { display: none; font-size: 12px; color: #aaa; }
-    .disclaimer { font-size: 11px; color: #bbb; margin-top: 16px; }
-    .bar-wrap { background: #f0f0f0; border-radius: 2px; height: 4px; width: 80px; }
-    .bar-fill { height: 4px; border-radius: 2px; }
-
-    /* New styles for the transparency card */
-    .transparency-box { background: #fafafa; border-left: 4px solid #007bff; padding: 12px 16px; border-radius: 0 8px 8px 0; margin-bottom: 16px; }
-    .transparency-list { list-style: none; margin: 10px 0 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .transparency-list li { font-size: 12px; color: #444; display: flex; align-items: center; gap: 6px; }
-    .transparency-list li i { color: #1d9e75; font-size: 14px; }
-    @media (max-width: 768px) { .transparency-list { grid-template-columns: 1fr; } }
+    .disclaimer { font-size: 11px; color: #999; margin-top: 16px; line-height:1.5; }
+    .live-box { background: #fff; border: 1px solid #d1e7dd; border-left: 5px solid #1d9e75; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px; }
+    .live-box .item { font-size:12px; }
+    .live-box .item strong { display:block; font-size:13px; color:#222; }
+    .live-box .item span { color:#666; font-size:11px; }
+    .live-dot { height:10px; width:10px; background:#1d9e75; border-radius:50%; display:inline-block; animation: blink 1.5s infinite; margin-right:6px; }
+    @keyframes blink { 0% { opacity:1 } 50% { opacity:0.3 } 100% { opacity:1 } }
+    .warning-box { background:#fff8e6; border-left:4px solid #ffb020; padding:12px 16px; border-radius:0 8px 8px 0; margin-bottom:16px; font-size:12px; color:#664d03; line-height:1.5; }
+    @media (max-width: 768px) { .live-box { grid-template-columns: 1fr; } .charts-row { grid-template-columns: 1fr; } }
   </style>
-        <meta id="initIISURL_java" th:data-value="${init_iisurl_java}">   
-        <meta id="initIISURL_python" data-value="{{ init_iisurl_python }}">     
+  <meta id="initIISURL_java" th:data-value="${init_iisurl_java}">   
+  <meta id="initIISURL_python" data-value="{{ init_iisurl_python }}">     
 </head>
 <body>
-
   <div class="container-fluid fixed-top px-0">
       <nav class="navbar navbar-expand-lg navbar-light bg-white py-lg-0 px-lg-5">
           <a href="aiiindex.html" class="navbar-brand ms-4 ms-lg-0">
@@ -82,27 +73,18 @@
               <div id="m-main" class="navbar-nav ms-auto p-4 p-lg-0">                        
                   <a href="aiiindex.html" class="nav-item nav-link">Home</a>
                   <a href="aiiindex.html#about" class="nav-item nav-link">About</a>
-                  <a href="aiiindex.html#service" class="nav-item nav-link">Services</a>
-                  <a href="#" class="nav-item nav-link active">Dashboard</a>
-
-              </div>
-              <div class="d-none d-lg-flex ms-2 align-items-center">
-                  <div class="position-relative ms-3 d-flex align-items-center">
-                      <img class="rounded-circle" src="aimain/aisub/img/user.jpg" alt="User Profile" style="width: 40px; height: 40px; border: 2px solid #007bff;">
-                      <div id="userinfoid" class="ms-2" style="font-size: 13px; font-weight: 500;"></div>                        
-                  </div>
+                  <a href="MFAQ.html" class="nav-item nav-link">Research</a>
+                  <a href="#" class="nav-item nav-link active">Live Paper Dashboard</a>
               </div>
           </div>
       </nav>
   </div>
-
   <div class="container-fluid">
       <div class="dashboard-padding-wrapper">
-        
         <div class="dashboard-header-row">
           <div>
             <h1 style="font-size:22px; font-weight:600; margin: 0; display:flex; align-items:center;">
-              <span class="live-dot"></span> Live Paper Trading
+              <span class="live-dot"></span> Live Paper Trading - TR33
             </h1>
             <div style="font-size:12px; color:#888; margin-top:4px;" id="accountLabel">Loading Alpaca paper account...</div>
             <div style="font-size:11px; color:#aaa;" id="accountdescLabel"></div>
@@ -110,10 +92,8 @@
           <div style="display:flex; gap:8px; align-items:center;">
             <span class="spinner" id="spinner">Refreshing...</span>
             <button id="refreshBtn" class="refresh-btn"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
-            <!-- <button id="downloadCsvBtn" class="refresh-btn" style="background:#222; color:#fff; border-color:#222;"><i class="bi bi-download"></i> Export CSV</button> -->
           </div>
         </div>
-        <!-- NEW: Honest live status -->
         <div class="live-box" id="liveStatusBox">
           <div class="item">
             <strong><span class="live-dot"></span><span id="botStatus">Checking bot...</span></strong>
@@ -128,15 +108,14 @@
           <div class="item">
             <strong id="accountType">Alpaca PAPER Account - Not Real Money</strong>
             <span>Forward test since: <span id="firstdate">-</span> <span id="stockList"></span></span><br>
-            <span>Mode: <span style="color:#1d9e75; font-weight:600;">Fully Automated - No Manual Intervention</span></span>
+            <span>Mode: <span style="color:#1d9e75; font-weight:600;">Fully Automated - <span id="num_symbols_header">9</span> Symbols</span></span>
           </div>
         </div>
-
         <div class="metric-grid">
           <div class="metric-card">
             <div class="metric-label">Total Return (Paper)</div>
             <div class="metric-value" id="totalReturn"> </div>
-            <div class="metric-sub">Since inception, incl. slippage est.</div>
+            <div class="metric-sub">Since inception, <span id="num_symbols_sub">9</span> symbols</div>
           </div>
           <div class="metric-card">
             <div class="metric-label">Win rate (Paper)</div>
@@ -166,8 +145,11 @@
         </div>
 
         <div class="card">
-          <div class="card-title">Paper Equity Curve (Live-Forward, Never Reset) <span style="font-size:11px; color:#888; font-weight:400;">Source: Alpaca /v2/account/portfolio/history</span></div>
-          <div style="position:relative; height:260px;">
+          <div class="card-title">Paper Equity Curve (Live-Forward, Never Reset)</div>
+          <div class="card-subtitle">
+            Source: Alpaca /v2/account/portfolio/history | Start: first live fill on <span id="firstdate_chart">2026-04-30</span> | Pre-inception -100% removed | <span id="num_symbols_equity">9</span> symbols x $6k = $<span id="deployed_capital">54</span>k max deployed, $<span id="cash_buffer">46</span>k cash buffer | Return on full $100k | Never reset
+          </div>
+          <div style="position:relative; height:320px;">
             <canvas id="equityChart" role="img" aria-label="Equity curve">Loading...</canvas>
           </div>
         </div>
@@ -175,18 +157,17 @@
         <div class="charts-row">
           <div class="card">
             <div class="card-title">Win / loss breakdown (Live Paper)</div>
-            <div style="position:relative; height:160px;">
+            <div style="position:relative; height:180px;">
               <canvas id="winLossChart">Loading...</canvas>
             </div>
           </div>
           <div class="card">
-            <div class="card-title">Monthly P&L (Paper, with costs)</div>
-            <div style="position:relative; height:160px;">
-              <canvas id="monthlyChart" role="img" aria-label="Monthly P&L bar chart">Loading...</canvas>
+            <div class="card-title">Monthly P&L </div>
+            <div style="position:relative; height:180px;">
+              <canvas id="monthlyChart">Loading...</canvas>
             </div>
           </div>
         </div>
-
         <div class="card">
           <div class="card-title">Live Open Positions <span style="font-size:11px; font-weight:400; color:#888;" id="positionsTimestamp"></span></div>
           <table>
@@ -201,11 +182,10 @@
             </tbody>
           </table>
         </div>
-
         <div class="card">
           <div class="card-title">
             Recent Live Paper Fills - Auditable
-            <span style="font-size:11px; font-weight:400; color:#888;">Includes order_id, fill price, qty, commission, slippage est.</span>
+            <span style="font-size:11px; font-weight:400; color:#888;">Includes order_id, fill price, qty</span>
           </div>
           <div style="overflow-x:auto;">
           <table>
@@ -220,26 +200,19 @@
             </tbody>
           </table>
           </div>
-          <div style="font-size:11px; color:#888; margin-top:10px;">Tip: Copy Order ID and verify in Alpaca dashboard or via <code>GET /v2/orders/:order_id</code></div>
         </div>
-
         <div class="warning-box">
           <strong><i class="bi bi-exclamation-triangle"></i> Transparency & Methodology - What this dashboard IS and IS NOT:</strong><br>
-          <b>IS:</b> This is a <b>live-forward test on Alpaca PAPER trading (not real money)</b>. The TR33 bot has been running continuously since <span id="firstdate2">-</span> without manual trade edits. Trades are market orders executed at natural market prices. 
-          <!-- Every fill comes from Alpaca API with real <code>filled_at</code> and <code>filled_avg_price</code>. Full history export available via CSV button. -->
-          <br><br>
-          <b>IS NOT:</b> This is NOT real-money P&L, NOT a backtest, and NOT financial advice. Paper trading has $0 commission and zero slippage in simulation - real trading will perform worse. We estimate $0.00 commission + $0.02/share slippage in metrics, but actual live slippage is not charged by Alpaca paper. Metrics include all trades, wins AND losses, with no purging. Equity curve is never reset (even after drawdowns).<br><br>
-          <b>Research:</b> Our model architecture (TR30-TR33) is described in <a href="MFAQ.html#paper2">MFAQ</a>. We are aware of survivorship bias risk when filtering to success-only data, so we now train on both wins and losses and use walk-forward validation. <b>Past paper performance does not guarantee future real results.</b>
+          <b>IS:</b> This is a <b>live-forward test on Alpaca PAPER trading (not real money)</b> with <span id="num_symbols_warning">9</span> leveraged ETFs (<span id="stockList_warning">CHAU,DRN,FAS,SPXL,TECL,WEBL,DGP,ERX,UCO</span>), $6k per symbol (max $<span id="deployed_capital_warning">54</span>k deployed, $<span id="cash_buffer_warning">46</span>k cash buffer). The TR33 bot has been running continuously since <span id="firstdate2">-</span> without manual trade edits. Chart starts at first live fill on <span id="firstdate_chart3">2026-04-30</span> - pre-inception -100% flatline removed. Trades are market orders at natural market prices. Every fill from Alpaca API with real <code>filled_at</code> and <code>filled_avg_price</code>.<br><br>
+          <b>IS NOT:</b> This is NOT real-money P&L, NOT a backtest, NOT financial advice. Paper has $0 commission, zero slippage - real will be worse. We estimate $0.00 commission + $0.02/share slippage, but actual paper slippage not charged by Alpaca. Metrics include all trades, wins AND losses, no purging. Equity curve never reset. <b>Return calculated on full $100k (industry standard), not $<span id="deployed_capital_warning2">54</span>k deployed. On deployed, return would be higher (~16.87%) but we report honest 9.11%.</b> <b>Past paper performance does not guarantee future real results.</b>
         </div>
-
         <div style="background: #fff; border-radius: 12px; border: 1px solid #e8e8e8; padding: 14px 20px; margin-bottom: 16px;">
           <div style="font-size:11px; font-weight:600; color:#666; text-transform:uppercase; margin-bottom:6px;">Compliance</div>
           <p style="font-size: 11px; color: #777; margin: 0; line-height: 1.6;">
-            This dashboard is for educational research purposes only. Not registered with CIRO / OSC. Does not constitute personalized financial, legal, or investment advice. If you are in Ontario, Canada, consult a licensed advisor before copying any signals. All code and logs are for transparency. For questions contact the developer via research page.
+            This dashboard is for educational research purposes only. Not registered with CIRO / OSC. Does not constitute personalized financial, legal, or investment advice. Starting capital $100k paper, $6k per symbol x <span id="num_symbols_compliance">9</span> = $<span id="deployed_capital_compliance">54</span>k max deployed, $<span id="cash_buffer_compliance">46</span>k buffer (46%). Return on full $100k. If you are in Ontario, Canada, consult a licensed advisor before copying any signals.
           </p>
         </div>
-
-        <p class="disclaimer">Last updated: <span id="lastUpdated"></span> | Bot version: TR33 live-forward | Data source: Alpaca Markets Paper API v2</p>
+        <p class="disclaimer">Last updated: <span id="lastUpdated"></span> | Bot version: TR33 live-forward | Data source: Alpaca Markets Paper API v2 | Audit: Start first fill <span id="firstdate_chart4">2026-04-30</span> | <span id="num_symbols_footer">9</span> x $6k = $<span id="deployed_capital_footer">54</span>k | Pre-inception removed</p>
       </div>
   </div>
 
