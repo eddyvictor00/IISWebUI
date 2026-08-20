@@ -1320,20 +1320,17 @@ function InitFundStock(selCategoryFId) {
 }
 
 function initFundTR(flinkid) {
-//    $("#grtxt1").show(0);
-
     if (stockFundObjList.length == 0) {
         $("#mytrid").html("Error. Please refresh the Market page again....");
         return;
     }
-
 
     if (stockFundId == 0) {
         stockObj = stockFundObjList[0];
         stockFundId = stockObj.id;
     } else {
         var tempStFundId = 0;
-        for (i = 0; i < stockFundObjList.length; i++) {
+        for (var i = 0; i < stockFundObjList.length; i++) {
             stockObj = stockFundObjList[i];
             if (stockFundId == stockObj.id) {
                 tempStFundId = stockFundId;
@@ -1346,56 +1343,44 @@ function initFundTR(flinkid) {
         }
     }
 
+    // FIX 1: Reset array before populating to avoid accumulating duplicate entries
+    mockMarketMoversData = [];
 
-    var htmlName = "";
-    htmlName += '<table class="table text-start align-middle table-bordered table-hover mb-0">';
-    htmlName += '<thead>';
-    htmlName += '<tr class="text-dark">';
-    htmlName += '<th scope="col">Symbol</th>';
-    htmlName += '<th scope="col">Signal</th>';
-    htmlName += '<th scope="col">Profit % </th>';
-    htmlName += '</tr>';
-    htmlName += '</thead>';
-    htmlName += '<tbody>';
-
-    for (i = 0; i < stockFundObjList.length; i++) {
+    // FIX 2: Single loop (removed accidental nested duplicate for-loop)
+    for (var i = 0; i < stockFundObjList.length; i++) {
         var stockObjTmp = stockFundObjList[i];
-        for (i = 0; i < stockFundObjList.length; i++) {
-            var stockObjTmp = stockFundObjList[i];
-            var perform = stockObjTmp.perform;
-            var perSt = perform.toFixed(0); // performance '%';                
-            if (perform != 0) {
-                if (perform < 10) {
-                    if (perform > -10) {
-                        perSt = perform.toFixed(2);
-                        perSt = perSt.replace("0.00", "0");
-                    }
+        var perform = stockObjTmp.perform;
+        var perSt = perform.toFixed(0);             
+        if (perform != 0) {
+            if (perform < 10) {
+                if (perform > -10) {
+                    perSt = perform.toFixed(2);
+                    perSt = perSt.replace("0.00", "0");
                 }
             }
-
-            var fclose = stockObjTmp.afstockInfo.fclose;
-            var prevClose = stockObjTmp.prevClose;
-            var change = (fclose - prevClose);
-            var changeper = (100 * (fclose - prevClose)/prevClose);
-            const newPosition = { 
-                symbol: stockObjTmp.symbol, 
-                name: stockObjTmp.stockname, 
-                price: stockObjTmp.afstockInfo.fclose, 
-                change: change, 
-                percent: changeper, 
-                signal: stockObjTmp.trsignal,
-                category: mockDashboardData.selCategory,
-                flinkid: flinkid
-            };
-
-            mockMarketMoversData.push(newPosition);     
-            marketMoversData  = mockMarketMoversData  
-
         }
+
+        var fclose = stockObjTmp.afstockInfo.fclose;
+        var prevClose = stockObjTmp.prevClose;
+        var change = (fclose - prevClose);
+        var changeper = (100 * (fclose - prevClose)/prevClose);
+        const newPosition = { 
+            symbol: stockObjTmp.symbol, 
+            name: stockObjTmp.stockname, 
+            price: stockObjTmp.afstockInfo.fclose, 
+            change: change, 
+            percent: changeper, 
+            signal: stockObjTmp.trsignal,
+            category: mockDashboardData.selCategory,
+            flinkid: flinkid
+        };
+
+        mockMarketMoversData.push(newPosition);     
     }
+
+    marketMoversData = mockMarketMoversData;
     filterAndRenderMovers(mockDashboardData.selCategory);
 }
-
 
 function initMarketFun() {
     $.ajax({
