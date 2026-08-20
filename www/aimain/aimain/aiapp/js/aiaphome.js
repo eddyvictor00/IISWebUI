@@ -1233,40 +1233,40 @@ function fetchAndRenderFundMetrics(fundId) {
 
             const html = `
                 <!-- Dynamic Grid: 2 columns on mobile, 3 on tablet, 5 on desktop -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
                     
                     <!-- Card 1: Total Return -->
-                    <div class="bg-gray-800 p-3 rounded-xl border border-gray-700/60 shadow-sm flex flex-col justify-between">
+                    <div class="bg-gray-800 p-2.5 sm:p-3 rounded-xl border border-gray-700/60 shadow-sm flex flex-col justify-between">
                         <p class="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">Total Return (Paper)</p>
-                        <p class="text-lg sm:text-xl font-bold my-1 ${totalReturnClass}">${totalReturnSign}${m.totalReturnPct.toFixed(2)}%</p>
+                        <p class="text-base sm:text-lg font-bold my-0.5 ${totalReturnClass}">${totalReturnSign}${m.totalReturnPct.toFixed(2)}%</p>
                         <p class="text-[10px] sm:text-[11px] text-gray-400">Since inception, ${symbolCount} symbols</p>
                     </div>
 
                     <!-- Card 2: Win Rate -->
-                    <div class="bg-gray-800 p-3 rounded-xl border border-gray-700/60 shadow-sm flex flex-col justify-between">
+                    <div class="bg-gray-800 p-2.5 sm:p-3 rounded-xl border border-gray-700/60 shadow-sm flex flex-col justify-between">
                         <p class="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">Win Rate (Paper)</p>
-                        <p class="text-lg sm:text-xl font-bold my-1 text-white">${m.winRate.toFixed(1)}%</p>
+                        <p class="text-base sm:text-lg font-bold my-0.5 text-white">${m.winRate.toFixed(1)}%</p>
                         <p class="text-[10px] sm:text-[11px] text-gray-400">${m.winningTrades}W / ${m.losingTrades}L of ${m.totalTrades}</p>
                     </div>
 
                     <!-- Card 3: Sharpe Ratio -->
-                    <div class="bg-gray-800 p-3 rounded-xl border border-gray-700/60 shadow-sm flex flex-col justify-between">
+                    <div class="bg-gray-800 p-2.5 sm:p-3 rounded-xl border border-gray-700/60 shadow-sm flex flex-col justify-between">
                         <p class="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">Sharpe Ratio</p>
-                        <p class="text-lg sm:text-xl font-bold my-1 text-white">${m.sharpeRatio.toFixed(2)}</p>
+                        <p class="text-base sm:text-lg font-bold my-0.5 text-white">${m.sharpeRatio.toFixed(2)}</p>
                         <p class="text-[10px] sm:text-[11px] text-gray-400">Annualised, paper fills</p>
                     </div>
 
                     <!-- Card 4: Max Drawdown -->
-                    <div class="bg-gray-800 p-3 rounded-xl border border-gray-700/60 shadow-sm flex flex-col justify-between">
+                    <div class="bg-gray-800 p-2.5 sm:p-3 rounded-xl border border-gray-700/60 shadow-sm flex flex-col justify-between">
                         <p class="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">Max Drawdown</p>
-                        <p class="text-lg sm:text-xl font-bold my-1 ${drawdownClass}">${m.maxDrawdown.toFixed(2)}%</p>
+                        <p class="text-base sm:text-lg font-bold my-0.5 ${drawdownClass}">${m.maxDrawdown.toFixed(2)}%</p>
                         <p class="text-[10px] sm:text-[11px] text-gray-400">Peak to trough</p>
                     </div>
 
-                    <!-- Card 5: Profit Factor (Spans 2 cols on mobile for clean balance) -->
-                    <div class="col-span-2 sm:col-span-1 bg-gray-800 p-3 rounded-xl border border-gray-700/60 shadow-sm flex flex-col justify-between">
+                    <!-- Card 5: Profit Factor -->
+                    <div class="col-span-2 sm:col-span-1 bg-gray-800 p-2.5 sm:p-3 rounded-xl border border-gray-700/60 shadow-sm flex flex-col justify-between">
                         <p class="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">Profit Factor</p>
-                        <p class="text-lg sm:text-xl font-bold my-1 text-white">${m.profitFactor.toFixed(2)} : 1</p>
+                        <p class="text-base sm:text-lg font-bold my-0.5 text-white">${m.profitFactor.toFixed(2)} : 1</p>
                         <p class="text-[10px] sm:text-[11px] text-gray-400">Avg win / avg loss</p>
                     </div>
 
