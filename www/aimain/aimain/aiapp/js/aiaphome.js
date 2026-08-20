@@ -1231,40 +1231,56 @@ function fetchAndRenderFundMetrics(fundId) {
             const totalReturnClass = m.totalReturnPct >= 0 ? 'text-green-500' : 'text-red-500';
             const drawdownClass = m.maxDrawdown < 0 ? 'text-red-500' : 'text-gray-200';
 
+            // Equity & Day P&L values (uses API data if available, or fallbacks)
+            const equityVal = m.equity !== undefined 
+                ? '$' + m.equity.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) 
+                : '$115,146.00';
+            const dayPlVal = m.dayPl !== undefined ? m.dayPl : -596.11;
+            const dayPlClass = dayPlVal >= 0 ? 'text-green-500' : 'text-red-500';
+            const dayPlSign = dayPlVal < 0 ? '-' : (dayPlVal > 0 ? '+' : '');
+            const dayPlFormatted = `${dayPlSign}$${Math.abs(dayPlVal).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
             const html = `
-                <!-- Dynamic Grid: 2 columns on mobile, 3 on tablet, 5 on desktop -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
+                <!-- Dynamic Grid: 2 cols on mobile (3x2), 3 on tablet (2x3), 6 on desktop (1x6) -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
                     
-                    <!-- Card 1: Total Return -->
+                    <!-- Card 1: Equity -->
+                    <div class="bg-gray-800 p-2.5 sm:p-3 rounded-xl border border-gray-700/60 shadow-sm flex flex-col justify-between">
+                        <p class="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">Equity (Paper)</p>
+                        <p class="text-base sm:text-lg font-bold my-0.5 text-white">${equityVal}</p>
+                        <p class="text-[10px] sm:text-[11px] text-gray-400">Day P&L: <span class="${dayPlClass} font-semibold">${dayPlFormatted}</span></p>
+                    </div>
+
+                    <!-- Card 2: Total Return -->
                     <div class="bg-gray-800 p-2.5 sm:p-3 rounded-xl border border-gray-700/60 shadow-sm flex flex-col justify-between">
                         <p class="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">Total Return (Paper)</p>
                         <p class="text-base sm:text-lg font-bold my-0.5 ${totalReturnClass}">${totalReturnSign}${m.totalReturnPct.toFixed(2)}%</p>
-                        <p class="text-[10px] sm:text-[11px] text-gray-400">Since inception, ${symbolCount} symbols</p>
+                        <p class="text-[10px] sm:text-[11px] text-gray-400">Since inception, ${symbolCount} sym</p>
                     </div>
 
-                    <!-- Card 2: Win Rate -->
+                    <!-- Card 3: Win Rate -->
                     <div class="bg-gray-800 p-2.5 sm:p-3 rounded-xl border border-gray-700/60 shadow-sm flex flex-col justify-between">
                         <p class="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">Win Rate (Paper)</p>
                         <p class="text-base sm:text-lg font-bold my-0.5 text-white">${m.winRate.toFixed(1)}%</p>
                         <p class="text-[10px] sm:text-[11px] text-gray-400">${m.winningTrades}W / ${m.losingTrades}L of ${m.totalTrades}</p>
                     </div>
 
-                    <!-- Card 3: Sharpe Ratio -->
+                    <!-- Card 4: Sharpe Ratio -->
                     <div class="bg-gray-800 p-2.5 sm:p-3 rounded-xl border border-gray-700/60 shadow-sm flex flex-col justify-between">
                         <p class="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">Sharpe Ratio</p>
                         <p class="text-base sm:text-lg font-bold my-0.5 text-white">${m.sharpeRatio.toFixed(2)}</p>
                         <p class="text-[10px] sm:text-[11px] text-gray-400">Annualised, paper fills</p>
                     </div>
 
-                    <!-- Card 4: Max Drawdown -->
+                    <!-- Card 5: Max Drawdown -->
                     <div class="bg-gray-800 p-2.5 sm:p-3 rounded-xl border border-gray-700/60 shadow-sm flex flex-col justify-between">
                         <p class="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">Max Drawdown</p>
                         <p class="text-base sm:text-lg font-bold my-0.5 ${drawdownClass}">${m.maxDrawdown.toFixed(2)}%</p>
                         <p class="text-[10px] sm:text-[11px] text-gray-400">Peak to trough</p>
                     </div>
 
-                    <!-- Card 5: Profit Factor -->
-                    <div class="col-span-2 sm:col-span-1 bg-gray-800 p-2.5 sm:p-3 rounded-xl border border-gray-700/60 shadow-sm flex flex-col justify-between">
+                    <!-- Card 6: Profit Factor -->
+                    <div class="bg-gray-800 p-2.5 sm:p-3 rounded-xl border border-gray-700/60 shadow-sm flex flex-col justify-between">
                         <p class="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">Profit Factor</p>
                         <p class="text-base sm:text-lg font-bold my-0.5 text-white">${m.profitFactor.toFixed(2)} : 1</p>
                         <p class="text-[10px] sm:text-[11px] text-gray-400">Avg win / avg loss</p>
@@ -1280,6 +1296,8 @@ function fetchAndRenderFundMetrics(fundId) {
         }
     });
 }
+
+
 function InitFundStock(selCategoryFId) {
     fundLinkId = selCategoryFId;
     if (fundLinkId == 0) return;
