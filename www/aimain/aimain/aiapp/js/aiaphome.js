@@ -1147,17 +1147,15 @@ function filterAndRenderMovers(category) {
     $(`.market-category-btn[data-category="${category}"]`).removeClass('bg-gray-700').addClass('bg-sky-600');
 }
 // 2. Modified renderMarketPage to include category buttons and event listener setup
-// 2. Modified renderMarketPage to include category buttons and event listener setup
 function renderMarketPage($container) {
-    // Note: The HTML must be set first before binding events to the new elements.
     $container.html(`
         <div class="p-3">
             <h1 class="text-xl font-bold mb-4">Fund Mgr Portfolio</h1>
             
-            <!-- Moved Discover Categories (now Discover Fund Mgr) above Stock Positions -->
+            <!-- Discover Fund Mgr -->
             <div class="bg-gray-800 p-3 rounded-lg shadow-sm mb-4">
                 <h2 class="text-base font-semibold text-gray-300 mb-2">Discover Fund Mgr</h2>
-                <div id="category-buttons-container" class="grid grid-cols-3 gap-2 text-sm text-center">
+                <div id="category-buttons-container" class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm text-center">
                     <div class="market-category-btn bg-gray-700 p-2 rounded-md hover:bg-gray-600 transition cursor-pointer" data-category="market1" data-categoryid="${mockDashboardData.market1FId}">${mockDashboardData.market1}</div>
                     <div class="market-category-btn bg-gray-700 p-2 rounded-md hover:bg-gray-600 transition cursor-pointer" data-category="market2" data-categoryid="${mockDashboardData.market2FId}">${mockDashboardData.market2}</div>
                     <div class="market-category-btn bg-gray-700 p-2 rounded-md hover:bg-gray-600 transition cursor-pointer" data-category="market3" data-categoryid="${mockDashboardData.market3FId}">${mockDashboardData.market3}</div>
@@ -1165,6 +1163,10 @@ function renderMarketPage($container) {
                 </div>
             </div>
 
+            <!-- Fund Performance Metrics Cards -->
+            <div id="fund-metrics-container" class="mb-4"></div>
+
+            <!-- Stock Positions -->
             <div class="bg-gray-800 p-3 rounded-lg shadow-sm">
                 <h2 class="text-base font-semibold text-gray-300 mb-3">Stock Positions</h2>
                 <div id="market-movers-list" class="space-y-3">
@@ -1172,47 +1174,122 @@ function renderMarketPage($container) {
                 </div>
             </div>
             
-            <!-- Educational & Informational Disclaimer -->
             <div class="p-3 mt-4 text-center border-t border-gray-800">
                 <p class="text-xs text-gray-500 leading-relaxed italic">
-                    For educational and informational purposes only. Past performance is not indicative of future results. This is not financial advice. Paper trading figures do not reflect real-market friction.
+                    For educational and informational purposes only. Past performance is not indicative of future results.
                 </p>
             </div>                
         </div>
     `);
     
-    // Attach the click handler to the parent container AFTER the HTML is injected.
+    // Click Handler for Switching Fund Managers
     $container.off('click', '.market-category-btn').on('click', '.market-category-btn', function() {
         const selectedCategory = $(this).data('category'); 
         const selectedCategoryid = $(this).data('categoryid'); 
         mockDashboardData.selCategory = selectedCategory;
         mockDashboardData.selCategoryFId = selectedCategoryid; 
-        filteredData = marketMoversData.filter(mover => mover.category === selectedCategory);
-        if (filteredData.length == 0) {
-            InitFundStock(mockDashboardData.selCategoryFId);
-        }
+        
+        InitFundStock(mockDashboardData.selCategoryFId);
         filterAndRenderMovers(selectedCategory);
     });
 
-    // Initial data fetch and render (defaults to 'All')
-    backend.getMarketMovers().done(data => {
-        // Use the globally tracked category for initial render
+    // ------------------------------------------------------------------
+    // FIX: Automatically load initial fund metrics and positions on tab open
+    // ------------------------------------------------------------------
+    const defaultFundId = mockDashboardData.selCategoryFId || mockDashboardData.market1FId;
+    if (defaultFundId) {
+        InitFundStock(defaultFundId);
+    }
+
+    backend.getMarketMovers().done(() => {
         filterAndRenderMovers(currentMarketCategory);
-    }).fail(() => {
-        $('#market-movers-list').html('<p class="text-red-500 text-xs text-center">Failed to load market data.</p>');
+    });
+}
+
+function fetchAndRenderFundMetrics(fundId) {
+    if (!fundId || fundId === 0) return;
+
+    const $metricsContainer = $('#fund-metrics-container');
+    $metricsContainer.html(showLoading($('<div />')));
+
+    const metricsUrl = `${iisurl}/cust/${custObj.username}/acc/${accId}/fund/${fundId}/userfund/metrics`;
+
+    $.ajax({
+        url: metricsUrl,
+        crossDomain: true,
+        cache: false,
+        timeout: INT_TIMOUT,
+        success: function(response) {
+            if (!response || !response.metrics) {
+                $metricsContainer.empty();
+                return;
+            }
+
+            const m = response.metrics;
+            const symbolCount = m.stockList ? m.stockList.split(',').filter(Boolean).length : 0;
+            const totalReturnSign = m.totalReturnPct >= 0 ? '+' : '';
+            const totalReturnClass = m.totalReturnPct >= 0 ? 'text-green-500' : 'text-red-500';
+            const drawdownClass = m.maxDrawdown < 0 ? 'text-red-500' : 'text-gray-200';
+
+            const html = `
+                <div class="flex space-x-3 overflow-x-auto pb-2 scrollbar-none">
+                    <!-- Card 1: Total Return -->
+                    <div class="min-w-[160px] flex-1 bg-gray-800 p-3 rounded-xl border border-gray-700 shadow-sm flex flex-col justify-between">
+                        <p class="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">Total Return (Paper)</p>
+                        <p class="text-xl font-bold my-1 ${totalReturnClass}">${totalReturnSign}${m.totalReturnPct.toFixed(2)}%</p>
+                        <p class="text-[11px] text-gray-400">Since inception, ${symbolCount} symbols</p>
+                    </div>
+
+                    <!-- Card 2: Win Rate -->
+                    <div class="min-w-[160px] flex-1 bg-gray-800 p-3 rounded-xl border border-gray-700 shadow-sm flex flex-col justify-between">
+                        <p class="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">Win Rate (Paper)</p>
+                        <p class="text-xl font-bold my-1 text-white">${m.winRate.toFixed(1)}%</p>
+                        <p class="text-[11px] text-gray-400">${m.winningTrades}W / ${m.losingTrades}L of ${m.totalTrades} trades</p>
+                    </div>
+
+                    <!-- Card 3: Sharpe Ratio -->
+                    <div class="min-w-[160px] flex-1 bg-gray-800 p-3 rounded-xl border border-gray-700 shadow-sm flex flex-col justify-between">
+                        <p class="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">Sharpe Ratio</p>
+                        <p class="text-xl font-bold my-1 text-white">${m.sharpeRatio.toFixed(2)}</p>
+                        <p class="text-[11px] text-gray-400">Annualised, paper fills</p>
+                    </div>
+
+                    <!-- Card 4: Max Drawdown -->
+                    <div class="min-w-[160px] flex-1 bg-gray-800 p-3 rounded-xl border border-gray-700 shadow-sm flex flex-col justify-between">
+                        <p class="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">Max Drawdown</p>
+                        <p class="text-xl font-bold my-1 ${drawdownClass}">${m.maxDrawdown.toFixed(2)}%</p>
+                        <p class="text-[11px] text-gray-400">Peak to trough</p>
+                    </div>
+
+                    <!-- Card 5: Profit Factor -->
+                    <div class="min-w-[160px] flex-1 bg-gray-800 p-3 rounded-xl border border-gray-700 shadow-sm flex flex-col justify-between">
+                        <p class="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">Profit Factor</p>
+                        <p class="text-xl font-bold my-1 text-white">${m.profitFactor.toFixed(2)} : 1</p>
+                        <p class="text-[11px] text-gray-400">Avg win / avg loss</p>
+                    </div>
+                </div>
+            `;
+
+            $metricsContainer.html(html);
+        },
+        error: function() {
+            $metricsContainer.empty();
+        }
     });
 }
 
 function InitFundStock(selCategoryFId) {
     fundLinkId = selCategoryFId;
-    if (fundLinkId == 0) {
-        return;
-    }
+    if (fundLinkId == 0) return;
+
+    // Fetch card metrics for the selected fund manager
+    fetchAndRenderFundMetrics(fundLinkId);
+
     $.ajax({
         url: iisurl + "/cust/" + custObj.username + "/acc/" + accId + "/fundlinkbest/" + fundLinkId + "/st",
         crossDomain: true,
         cache: false,
-        timeout: INT_TIMOUT, //120 sec,
+        timeout: INT_TIMOUT,
         beforeSend: function () {
             $("#loader").show();
         },
@@ -1220,17 +1297,15 @@ function InitFundStock(selCategoryFId) {
             window.location.href = "aiiend.html";
         },
         success: handleResult
-    }); // use promises
-    function handleResult(resultStockList) {
+    });
 
+    function handleResult(resultStockList) {
         if ((resultStockList === null) || (resultStockList === "")) {
-//            $('#error_message').fadeIn().html('Network error. Please try again later. ');
             window.location.href = "aiiend.html";
             return;
         }
 
         stockFundObjListStr = JSON.stringify(resultStockList, null, '\t');
-
         stockFundObjList = JSON.parse(stockFundObjListStr);
 
         iisDataObj.stockFundObjListStr = stockFundObjListStr;
@@ -1239,7 +1314,6 @@ function InitFundStock(selCategoryFId) {
         window.localStorage.setItem(iisWebSession, JSON.stringify(iisWebObj));
 
         initFundTR(fundLinkId);
-        return;
     }
 }
 
