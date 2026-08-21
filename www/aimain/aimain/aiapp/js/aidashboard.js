@@ -92,14 +92,16 @@ function loadMetrics() {
         var el;
         el = document.getElementById('totalReturn'); if(el) el.textContent = fmtPct(m.totalReturnPct);
         el = document.getElementById('winRate'); if(el) el.textContent = (m.winRate !== undefined) ? m.winRate + '%' : '-';
-        el = document.getElementById('winCount'); if(el) el.textContent = (m.winningTrades !== undefined) ? m.winningTrades + 'W / ' + m.losingTrades + 'L of ' + m.totalTrades + ' trades (incl. losses)' : '';
+        el = document.getElementById('winCount'); if(el) el.textContent = (m.winningTrades !== undefined) ? m.winningTrades + 'W / ' + m.losingTrades + 'L of ' + m.totalTrades + ' trades' : '';
         el = document.getElementById('sharpe'); if(el) el.textContent = fmt(m.sharpeRatio);
         el = document.getElementById('drawdown'); if(el) el.textContent = (m.maxDrawdown !== undefined) ? '-' + Math.abs(m.maxDrawdown) + '%' : '-';
         el = document.getElementById('riskReward'); if(el) el.textContent = (m.riskRewardRatio !== undefined && !isNaN(m.riskRewardRatio)) ? fmt(m.riskRewardRatio) + ' : 1' : '-';
         el = document.getElementById('totalPnl'); if(el) el.textContent = fmtDollar(m.totalPnL);
         el = document.getElementById('totalInves'); if(el) el.textContent = (m.investment !== undefined) ? 'Starting Paper Capital $' + parseFloat(m.investment).toFixed(0) : '';
         el = document.getElementById('stockList'); if(el) el.textContent = m.stockList ? '(' + m.stockList + ')' : ''; 
-        el = document.getElementById('firstdate'); if(el) el.textContent = m.firstDate ? m.firstDate : '-'; 
+        el = document.getElementById('firstdate'); if(el) el.textContent = m.firstDate ? m.firstDate : '-';  
+        el = document.getElementById('firstdate_sub'); if(el) el.textContent = m.firstDate ? m.firstDate : '-';  
+
         var ids = ['firstdate_chart','firstdate_chart2'];
         for (var j=0;j<ids.length;j++){ var e=document.getElementById(ids[j]); if(e) e.textContent = m.firstDate || '2026-04-30'; }
 
