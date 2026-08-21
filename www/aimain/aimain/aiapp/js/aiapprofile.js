@@ -2124,12 +2124,13 @@ function renderTradingBotForm() {
                 </div>       
 
                 <div class="flex gap-4 pt-4" id="nav_bot_button" style="display: none;">
-                    <button type="submit" class="flex-1 bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-sky-500/20">
-                        Update Trading Bot
-                    </button>
                     <button type="button" id="cancel-bot" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 rounded-xl transition-all">
                         Cancel
                     </button>
+                    <button type="submit" class="flex-1 bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-sky-500/20">
+                        Update Trading Bot
+                    </button>
+
                 </div>
 
             </form>
