@@ -982,19 +982,19 @@ function hideLoadingSpinner() {
 // Refresh on button click
 $("#refreshSpace3Btn").click(function () {
     showLoadingSpinner();
-    var resultURL = iisurl + "/cust/" + custObj.username + "/acc/" + accId + "/st/" + stockObj.symbol + "/tr/" + trName + "/tran/history/chart?month=3&t=" + new Date().getTime();
+    var resultURL = iisurl + "/cust/" + custObj.username + "/acc/" + accfundId + "/st/" + stockObj.symbol + "/tr/" + trName + "/tran/history/chart?month=3&t=" + new Date().getTime();
     $("#space3image").attr("src", resultURL);
 });
 
 $("#refreshSpace6Btn").click(function () {
     showLoadingSpinner();
-    var resultURL = iisurl + "/cust/" + custObj.username + "/acc/" + accId + "/st/" + stockObj.symbol + "/tr/" + trName + "/tran/history/chart?month=6&t=" + new Date().getTime();
+    var resultURL = iisurl + "/cust/" + custObj.username + "/acc/" + accfundId + "/st/" + stockObj.symbol + "/tr/" + trName + "/tran/history/chart?month=6&t=" + new Date().getTime();
     $("#space3image").attr("src", resultURL);
 });
 
 $("#refreshSpace12Btn").click(function () {
     showLoadingSpinner();
-    var resultURL = iisurl + "/cust/" + custObj.username + "/acc/" + accId + "/st/" + stockObj.symbol + "/tr/" + trName + "/tran/history/chart?month=12&t=" + new Date().getTime();
+    var resultURL = iisurl + "/cust/" + custObj.username + "/acc/" + accfundId + "/st/" + stockObj.symbol + "/tr/" + trName + "/tran/history/chart?month=12&t=" + new Date().getTime();
     $("#space3image").attr("src", resultURL);
 });
 
