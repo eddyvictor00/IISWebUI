@@ -1248,7 +1248,7 @@ function fetchAndRenderFundMetrics(fundId) {
                     <div class="bg-gray-800 p-2.5 sm:p-3 rounded-xl border border-gray-700/60 shadow-sm flex flex-col justify-between">
                         <p class="text-[10px] font-semibold tracking-wider text-gray-400 uppercase">Equity (Paper)</p>
                         <p class="text-base sm:text-lg font-bold my-0.5 text-white">${equityVal}</p>
-                        <p class="text-[10px] sm:text-[11px] text-gray-400">Day P&L: <span class="${dayPlClass} font-semibold">${dayPlFormatted}</span></p>
+                        <p class="text-[10px] sm:text-[11px] text-gray-400">Unrealized P&L: <span class="${dayPlClass} font-semibold">${dayPlFormatted}</span></p>
                     </div>
 
                     <!-- Card 2: Total Return -->
