@@ -1235,7 +1235,7 @@ function fetchAndRenderFundMetrics(fundId) {
             const equityVal = m.equity !== undefined 
                 ? '$' + m.equity.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) 
                 : '$115,146.00';
-            const dayPlVal = m.dayPl !== undefined ? m.dayPl : -596.11;
+            const dayPlVal = m.dayPnL !== undefined ? m.dayPnL : 0;
             const dayPlClass = dayPlVal >= 0 ? 'text-green-500' : 'text-red-500';
             const dayPlSign = dayPlVal < 0 ? '-' : (dayPlVal > 0 ? '+' : '');
             const dayPlFormatted = `${dayPlSign}$${Math.abs(dayPlVal).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
