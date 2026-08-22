@@ -2579,29 +2579,31 @@ function refreshData() {
     // This is updated to perform a hard page refresh
     window.location.reload();
 }
+
 $(document).ready(function() {
+       
+    const page = $(this).data('page');
+    // Check if the user is trying to navigate away while logged in (optional check, but good practice)
+    if (isLoggedIn && page !== 'aiapprofile') { 
+        // In a real app, this would use a router, but for a mock, we simulate navigation.
+        // For this environment, we prevent navigation away from the single file.
+        // If this were a multi-page app, we'd go to window.location.href = page + '.html';
+        console.log(`Navigating to ${page}.html (Mocked)`);
+    } else if (!isLoggedIn && page !== 'aiapprofile') {
+        console.log(`Cannot navigate until logged in.`);
+        showMessage('Please log in first.');
+    }
+    
+    // Since this is the dprofile.html file, we just re-render the profile view 
+        // Navigation handler (simulates page change)
     $('.nav-item').on('click', function() {
         const page = $(this).data('page');
-        // Check if the user is trying to navigate away while logged in (optional check, but good practice)
-        if (isLoggedIn && page !== 'aiapprofile') { 
-            // In a real app, this would use a router, but for a mock, we simulate navigation.
-            // For this environment, we prevent navigation away from the single file.
-            // If this were a multi-page app, we'd go to window.location.href = page + '.html';
-            console.log(`Navigating to ${page}.html (Mocked)`);
-        } else if (!isLoggedIn && page !== 'aiapprofile') {
-            console.log(`Cannot navigate until logged in.`);
-            showMessage('Please log in first.');
+        if (page !== 'aiapprofile') {
+            window.location.href = page + '.html';
         }
-        
-        // Since this is the dprofile.html file, we just re-render the profile view 
-         // Navigation handler (simulates page change)
-        $('.nav-item').on('click', function() {
-               const page = $(this).data('page');
-               if (page !== 'aiapprofile') {
-                   window.location.href = page + '.html';
-               }
-           });               
     });
+       
+
 // Existing logout button trigger (ensure your logout button calls handleLogout)
 $('#logout-btn').on('click', handleLogout);
 
