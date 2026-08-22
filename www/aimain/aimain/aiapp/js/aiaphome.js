@@ -824,230 +824,157 @@ const overlayHtml = `
         $('#stock-detail-overlay').remove();
     });
 }
-
-// Function to fetch and render specific details (Mock implementation)
 function fetchStockActivityDetail(symbol, name, flinkid, curprice, percent) {
-    var percentSt ="";
-    if (percent > 0) {
-        percentSt = '<span class="text-green-500">' + percent.toFixed(2) + '%' + "</span>";
-    } else {
-        percentSt = "<font style= color:red>" + percent.toFixed(2) + '%' + "</font>";
-    }
-    var trNN = "TR_NN33";
-    var urlSt = iisurl + "/cust/" + custObj.username + "/acc/" + accId + "/fundlink/" + flinkid + "/st/" + symbol + "/tr/" + trNN +"/tran";
+    var percentSt = percent > 0 
+        ? '<span class="text-green-500">' + percent.toFixed(2) + '%' + '</span>' 
+        : '<span class="text-red-500">' + percent.toFixed(2) + '%' + '</span>';
+
+    var trNN = "TR_ACC";
+    var urlSt = iisurl + "/cust/" + custObj.username + "/acc/" + accId + "/fundlink/" + flinkid + "/st/" + symbol + "/tr/" + trNN + "/tran";
+
     $.ajax({
         url: urlSt,
         crossDomain: true,
         cache: false,
-        timeout: INT_TIMOUT, //120 sec,
+        timeout: INT_TIMOUT,
         beforeSend: function () {
             $("#loader").show();
         },
         error: function () {
-//            alert('Network failure. Please try again later.');
-//            window.location.href = "aiiend.html";
+            // Render zero values gracefully on network error
+            renderStockDetailHTML(symbol, curprice, percentSt, "N/A", "N/A", 0, 0, 0, "$0", flinkid);
         },
         success: function (resultTranList) {
-
             var tranObjListStr = JSON.stringify(resultTranList, null, '\t');
             var tranObjList = JSON.parse(tranObjListStr);
 
-            if (tranObjList.length === 0) {
-                return;
-            }
-            var j = tranObjList.length - 1;
-            var prevTranObj = null;
-            var total = 0;
+            // Default zero/fallback values
+            var BSsignalStr = '<span class="text-gray-400 text-base"><big>None</big></span>';
+            var TranDate = "N/A";
+            var QuantityHeld = 0;
+            var AveragePrice = 0;
+            var MarketValue = 0;
+            var OpenPL = '<span class="text-gray-400">$0 (0.0%)</span>';
 
-            var list = [];
-            var buyOnly = 0;
-            if (trNN === "TR_ACC") {
-                buyOnly = 1;
-            }
-            var close = curprice;
-    
-            var initF = false;
-            var rowCnt = 1;
-            for (i = 0; i < tranObjList.length; i++) {
-                var tranObj = tranObjList[j - i];
+            var buyOnly = (trNN === "TR_ACC") ? 1 : 0;
+            var hasValidTran = false;
 
-                if (i === 0) {
-                    prevTranObj = tranObj;
-                }
-                var col1 = ""
-                var col2 = "";
-                var col3 = "";
-                var col4 = "";
-                var tranSt = "";
-                var tranhtml = '';
+            if (tranObjList && tranObjList.length > 0) {
+                var j = tranObjList.length - 1;
+                var prevTranObj = null;
+                var total = 0;
 
-                var itemColor = 'style="background: #f2f2f2"';
-                col1 = '<div ><strong>' + tranObj.updatedatedisplay + '</strong></div>';
-                var signal = "Buy";
-                if (tranObj.trsignal === S_BUY) {
-                    signal = "Buy";
-                } else if (tranObj.trsignal === S_SELL) {
-                    signal = "Sell";
-                    if (buyOnly === 1) {
-                        // assume buy only and no short selling
+                for (var i = 0; i < tranObjList.length; i++) {
+                    var tranObj = tranObjList[j - i];
+
+                    if (i === 0) {
                         prevTranObj = tranObj;
-                        if (tranObjList.length === 1) {
-                            tranhtml = 'No transaction ...';
-                        }
-                        continue;
                     }
-                } else {
-                    signal = "Exit";
-                }
 
-                if (signal === "Exit") {
-                    if (prevTranObj != null) {
-                        var diff = (tranObj.avgprice - prevTranObj.avgprice) * tranObj.share;
-                        if (prevTranObj.trsignal === S_BUY) {
-                            ;
-                        }
-                        if (prevTranObj.trsignal === S_SELL) {
-                            diff = -diff;
-                            if (buyOnly === 1) {
-                                // assume buy only and no short selling
-                                diff = 0;
-                                prevTranObj = tranObj;
-                                continue;
-                            }
-                        }
-                        total += diff;
-
-                        var totalSt = Number(total.toFixed(0)).toLocaleString('en-US', {style: 'currency', currency: 'USD'});
-                        var diffSt = Number(diff.toFixed(0)).toLocaleString('en-US', {style: 'currency', currency: 'USD'});
-
-                        var perTran1 = 1.0 * diff / (tranObj.share * prevTranObj.avgprice);
-                        perTran1 = perTran1 * 100;
-                        diffSt = diffSt.replace(".00", "");
-                        var tran = ' Tran on loss:' + diffSt + ' (' + perTran1.toFixed(1) + '%)';
-                        if (diff > 0) {
-                            tran = ' Tran on gain:' + diffSt + ' (' + perTran1.toFixed(1) + '%)';
-                        }
-
-                        tranhtml += 'Share=' + tranObj.share + tran; // + ' Total: ' + totalSt;
+                    if (tranObj.trsignal === S_SELL && buyOnly === 1) {
+                        prevTranObj = tranObj;
+                        continue; // Skip sell transaction for buyOnly accounts
                     }
-                } else {
-                    if (i == tranObjList.length - 1) {
-                        //calculate the result on the last one
-                        var diff = (close - tranObj.avgprice) * tranObj.share;
-                        if (tranObj.trsignal === S_BUY) {
-                            ;
-                        }
-                        if (tranObj.trsignal === S_SELL) {
-                            diff = -diff;
-                            if (buyOnly === 1) {
-                                // assume buy only and no short selling
-                                diff = 0;
-                                prevTranObj = tranObj;
-                                continue;
-                            }
-                        }
-                        total += diff;
-                        var totalSt = Number(total.toFixed(0)).toLocaleString('en-US', {style: 'currency', currency: 'USD'});
-                        var diffSt = Number(diff.toFixed(0)).toLocaleString('en-US', {style: 'currency', currency: 'USD'});
-                        var perTran = 1.0 * diff / (tranObj.share * prevTranObj.avgprice);
-                        perTran = perTran * 100;
-                        diffSt = diffSt.replace(".00", "");
-                        var perTranSt = "";
 
-                        BSsignal = tranObj.trsignal;
-                        BSsignalStr = "";
-                        if (tranObj.trsignal == 1){
-                            BSsignalStr = '<span class="text-green-500 text-base "><big> Buy</big></span>';
-                        } else if (tranObj.trsignal == 2){
-                            BSsignalStr = '<span class="text-red-500 text-base "><big> Sell</big></span>';
-                        } 
-                        if (perTran > 0) {
-                            perTranSt = '<span class="text-green-500">' + diffSt + ' (' + perTran.toFixed(1) + '%)' + '</span>';
+                    // If we reach the last record and it hasn't been skipped
+                    if (i === tranObjList.length - 1) {
+                        hasValidTran = true;
+                        var diff = (curprice - tranObj.avgprice) * tranObj.share;
+                        var perTran = (diff / (tranObj.share * (prevTranObj.avgprice || 1))) * 100;
+                        var diffSt = Number(diff.toFixed(0)).toLocaleString('en-US', { style: 'currency', currency: 'USD' }).replace(".00", "");
+
+                        if (tranObj.trsignal === 1) {
+                            BSsignalStr = '<span class="text-green-500 text-base"><big>Buy</big></span>';
+                        } else if (tranObj.trsignal === 2) {
+                            BSsignalStr = '<span class="text-red-500 text-base"><big>Sell</big></span>';
+                        }
+
+                        if (perTran >= 0) {
+                            OpenPL = '<span class="text-green-500">' + diffSt + ' (' + perTran.toFixed(1) + '%)</span>';
                         } else {
-                            perTranSt = "<font style= color:red>" + diffSt + ' (' + perTran.toFixed(1) + '%)' + "</font>";
-                        }                                  
-                        AveragePrice = tranObj.avgprice;                        
+                            OpenPL = '<span class="text-red-500">' + diffSt + ' (' + perTran.toFixed(1) + '%)</span>';
+                        }
+
+                        AveragePrice = tranObj.avgprice;
                         QuantityHeld = tranObj.share;
                         TranDate = tranObj.updatedatedisplay;
-                        OpenPL = perTranSt;
-                        MarketValue =  (tranObj.share * prevTranObj.avgprice) + diff
-                        MarketValue = MarketValue.toFixed(0) 
-
-                        var trNameChart = "TR_NN33";
-                        //"/cust/{username}/acc/{accountid}/fundlink/{accfundid}/st/{stockidsymbol}/tr/{trname}/tran/history/chart")
-                        var imageUrl = iisurl + "/cust/" + custObj.username + "/acc/" + accId + "/fundlink/" + flinkid + "/st/" + symbol + "/tr/" + trNameChart + "/tran/history/chart?month=3&t=" + new Date().getTime();
-
-                        // In a real scenario, you would fetch data from: iisurl + "/cust/" + custObj.username + "/acc/" + accId + "/stock/" + symbol
-                        const detailHtml = `
-                                <div class="text-white space-y-4">                         
-                                    <div class="space-y-2">
-                                        <p class="text-gray-400 text-sm font-bold uppercase tracking-wider px-6">Opening Price</p>
-                                        <div class="mx-6 bg-gray-900 p-3 rounded-xl border border-gray-600 flex justify-between items-center">
-                                            <span class="text-gray-400">Delayed Close:</span>
-                                            <span class="font-semibold">$${curprice.toFixed(2)} ${percentSt}</span>
-                                        </div>   
-                                    </div>                                        
-                                    <div class="space-y-2">
-                                        <p class="text-gray-400 text-sm font-bold uppercase tracking-wider px-6">Transaction Details</p>
-                                        
-                                        <div class="mx-6 bg-gray-700/50 rounded-xl overflow-hidden border border-gray-600">
-                                            <div class="flex justify-between p-3 border-b border-gray-600">
-                                                <span class="text-gray-300">Stock</span>
-                                                <span class="text-white-400 ">${symbol}</span>
-                                            </div>
-                                            <div class="flex justify-between p-1 ">
-                                                <span class="text-gray-400">Type: </span>
-                                                <span >${BSsignalStr}</span>
-                                            </div>                                                       
-                                            <div class="flex justify-between p-1 ">
-                                                <span class="text-gray-400">Transaction: </span>
-                                                <span >${TranDate}</span>
-                                            </div>                   
-                                            <div class="flex justify-between p-1 ">
-                                                <span class="text-gray-400">Quantity Held:</span>
-                                                <span >${QuantityHeld}</span>
-                                            </div>
-                                            <div class="flex justify-between p-1 ">
-                                                <span class="text-gray-400">Average Price:</span>
-                                                <span >$${AveragePrice}</span>
-                                            </div>
-                                            <div class="flex justify-between p-1 ">
-                                                <span class="text-gray-400">Market Value:</span>
-                                                <span >$${MarketValue}</span>
-                                            </div>
-                                            <div class="flex justify-between p-1 ">
-                                                <span class="text-gray-400">Profit & Loss:</span>
-                                                <span class="font-bold">${OpenPL}</span>
-                                            </div>       
-                                        </div>
-                                    </div>
-
-                                    <div class="text-white space-y-2">                         
-                                        <p class="text-gray-400 text-sm font-bold uppercase tracking-wider px-6">Price Chart (3 Months)</p>
-                                        <div class="relative bg-gray-900 overflow-hidden min-h-[200px] flex items-center justify-center -mx-6">
-                                            <div id="chart-img-spinner" class="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-500 z-10 absolute"></div>
-                                            
-                                            <img id="space3image" 
-                                                src="${imageUrl}" 
-                                                class="w-full h-auto block opacity-0 transition-opacity duration-300"
-                                                onload="handleImageLoad(this)"
-                                                onerror="reload3Image(this);" 
-                                                alt="Price Chart">
-                                        </div>
-                                    </div>
-                                </div>
-                            `;
-
-
-                        $('#stock-detail-content').html(detailHtml);    
-
+                        MarketValue = ((tranObj.share * (prevTranObj.avgprice || 0)) + diff).toFixed(0);
                     }
                 }
             }
 
+            // Render the modal content (works whether data exists or falls back to zeros)
+            renderStockDetailHTML(symbol, curprice, percentSt, BSsignalStr, TranDate, QuantityHeld, AveragePrice, MarketValue, OpenPL, flinkid);
         }
     });
+}
 
+// Helper function to build and append HTML content
+function renderStockDetailHTML(symbol, curprice, percentSt, BSsignalStr, TranDate, QuantityHeld, AveragePrice, MarketValue, OpenPL, flinkid) {
+    var trNameChart = "TR_ACC";
+    var imageUrl = iisurl + "/cust/" + custObj.username + "/acc/" + accId + "/fundlink/" + flinkid + "/st/" + symbol + "/tr/" + trNameChart + "/tran/history/chart?month=3&t=" + new Date().getTime();
+
+    const detailHtml = `
+        <div class="text-white space-y-4">                         
+            <div class="space-y-2">
+                <p class="text-gray-400 text-sm font-bold uppercase tracking-wider px-6">Opening Price</p>
+                <div class="mx-6 bg-gray-900 p-3 rounded-xl border border-gray-600 flex justify-between items-center">
+                    <span class="text-gray-400">Delayed Close:</span>
+                    <span class="font-semibold">$${curprice.toFixed(2)} ${percentSt}</span>
+                </div>   
+            </div>                                        
+            <div class="space-y-2">
+                <p class="text-gray-400 text-sm font-bold uppercase tracking-wider px-6">Transaction Details</p>
+                
+                <div class="mx-6 bg-gray-700/50 rounded-xl overflow-hidden border border-gray-600">
+                    <div class="flex justify-between p-3 border-b border-gray-600">
+                        <span class="text-gray-300">Stock</span>
+                        <span class="text-white-400">${symbol}</span>
+                    </div>
+                    <div class="flex justify-between p-1">
+                        <span class="text-gray-400">Type: </span>
+                        <span>${BSsignalStr}</span>
+                    </div>                                                       
+                    <div class="flex justify-between p-1">
+                        <span class="text-gray-400">Transaction: </span>
+                        <span>${TranDate}</span>
+                    </div>                   
+                    <div class="flex justify-between p-1">
+                        <span class="text-gray-400">Quantity Held:</span>
+                        <span>${QuantityHeld}</span>
+                    </div>
+                    <div class="flex justify-between p-1">
+                        <span class="text-gray-400">Average Price:</span>
+                        <span>$${AveragePrice}</span>
+                    </div>
+                    <div class="flex justify-between p-1">
+                        <span class="text-gray-400">Market Value:</span>
+                        <span>$${MarketValue}</span>
+                    </div>
+                    <div class="flex justify-between p-1">
+                        <span class="text-gray-400">Profit & Loss:</span>
+                        <span class="font-bold">${OpenPL}</span>
+                    </div>       
+                </div>
+            </div>
+
+            <div class="text-white space-y-2">                         
+                <p class="text-gray-400 text-sm font-bold uppercase tracking-wider px-6">Price Chart (3 Months)</p>
+                <div class="relative bg-gray-900 overflow-hidden min-h-[200px] flex items-center justify-center -mx-6">
+                    <div id="chart-img-spinner" class="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-500 z-10 absolute"></div>
+                    
+                    <img id="space3image" 
+                        src="${imageUrl}" 
+                        class="w-full h-auto block opacity-0 transition-opacity duration-300"
+                        onload="handleImageLoad(this)"
+                        onerror="reload3Image(this);" 
+                        alt="Price Chart">
+                </div>
+            </div>
+        </div>
+    `;
+
+    $('#stock-detail-content').html(detailHtml);
 }
 
 /**
