@@ -1288,14 +1288,7 @@ function renderStockDetailHtml() {
                 <span class="text-gray-400">Volume Validation (${ProfileData.fvol}x):</span>
                 <span class="font-semibold">${ProfileData.ivol}</span>
             </div>
-            <div class="flex justify-between">
-                <span class="text-gray-400">Bullish Score:</span>
-                <span class="font-semibold">${ProfileData.ibull}</span>
-            </div>    
-            <div class="flex justify-between">
-                <span class="text-gray-400">Bearish Score:</span>
-                <span class="font-semibold">${ProfileData.ibear}</span>
-            </div>                                         
+                                    
         </div>
                 `;     
                 
