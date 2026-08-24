@@ -143,16 +143,17 @@
     </style>
 </head>
 <body>
-    <!-- Full Page Loading Overlay (Updated structure and text) -->
-    <div id="loading-overlay">
-        <div class="flex flex-col items-center justify-center">
-            <div class="overlay-spinner mb-2"></div>
-            <p class="text-base text-gray-300 font-medium">Loading your data...</p>
-        </div>
-    </div>
     
     <div id="app-container" class="mx-auto bg-gray-900 w-full sm:max-w-xl md:max-w-3xl lg:max-w-5xl h-screen">
-        <div id="main-content"></div>
+        <div id="main-content">
+            <!-- Full Page Loading Overlay (Updated structure and text) -->
+            <div id="loading-overlay">
+                <div class="flex flex-col items-center justify-center">
+                    <div class="overlay-spinner mb-2"></div>
+                    <p class="text-base text-gray-300 font-medium">Loading your data...</p>
+                </div>
+            </div>            
+        </div>
     </div>
     
     <nav id="nav-bar" class="fixed bottom-0 left-0 right-0 z-20 bg-gray-900 border-t border-gray-700 w-full sm:max-w-xl md:max-w-3xl lg:max-w-5xl mx-auto">
